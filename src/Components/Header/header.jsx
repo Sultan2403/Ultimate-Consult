@@ -1,11 +1,11 @@
 export default function Header() {
   return (
-    <header className="w-screen flex justify-evenly items-center p-4">
-      <h1 className="">
+    <header className="w-screen flex justify-evenly items-center p-4 py-10 sticky">
+      <h1 className="font-medium text-2xl">
         <a href="index.html">Ultimate Consult</a>
       </h1>
       <nav className="">
-        <ul className="flex items-center w-full gap-3">
+        <ul className="flex items-center w-full gap-5">
           <li>
             <a href="#" className="hover:underline">
               Home
@@ -22,7 +22,10 @@ export default function Header() {
             </a>
           </li>
           <li>
-            <a href="#" className="hover:underline">
+            <a
+              href="#"
+              className="hover:bg-blue-500 focus:bg-blue-500 bg-blue-600 text-white px-2 py-3 rounded-3xl"
+            >
               Get Consulting!
             </a>
           </li>
