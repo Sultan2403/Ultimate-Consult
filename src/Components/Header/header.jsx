@@ -1,6 +1,6 @@
 export default function Header() {
   return (
-    <header className="w-screen flex justify-evenly items-center p-4 py-10 sticky">
+    <header className="w-screen flex justify-evenly items-center p-4 py-10 sticky bg-neutral-300">
       <h1 className="font-medium text-2xl">
         <a href="index.html">Ultimate Consult</a>
       </h1>
@@ -24,7 +24,7 @@ export default function Header() {
           <li>
             <a
               href="#"
-              className="hover:bg-blue-500 focus:bg-blue-500 bg-blue-600 text-white px-2 py-3 rounded-3xl"
+              className="hover:bg-blue-500 focus:bg-blue-500 bg-blue-600 text-white p-3 rounded-3xl"
             >
               Get Consulting!
             </a>
