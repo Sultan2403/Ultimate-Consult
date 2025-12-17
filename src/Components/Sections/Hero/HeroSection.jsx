@@ -6,9 +6,7 @@ export default function HeroSec() {
       <div className="w-full flex flex-col md:flex-row justify-evenly items-center gap-12">
         <div className="flex flex-col gap-3 flex-1 md:flex-[2] max-w-xl text-center md:text-left">
           <h1 className="font-semibold text-3xl flex flex-col gap-1">
-            <p>
-              Smart Financial Solutions for Businesses <br />
-            </p>
+            <p>Smart Financial Solutions for Businesses</p>
             <p>That Want to Grow with Confidence</p>
           </h1>
           <p className="text-gray-700 text-md">
