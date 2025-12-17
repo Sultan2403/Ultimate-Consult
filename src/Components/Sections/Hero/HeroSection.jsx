@@ -7,7 +7,6 @@ export default function HeroSec() {
         <div className="flex flex-col gap-3 flex-1 md:flex-[2] max-w-xl text-center md:text-left">
           <h1 className="font-semibold text-3xl flex flex-col gap-1">
             <p>
-              {" "}
               Smart Financial Solutions for Businesses <br />
             </p>
             <p>That Want to Grow with Confidence</p>
