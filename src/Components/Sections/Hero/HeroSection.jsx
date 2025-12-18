@@ -1,4 +1,5 @@
 import HeroImg from "../../../assets/Images/hero-sec-img.avif";
+import { Check } from "lucide-react";
 
 export default function HeroSec() {
   return (
@@ -35,6 +36,48 @@ export default function HeroSec() {
         <button className="bg-blue-700 text-white p-4 rounded-lg font-semibold">
           Get Started Today!
         </button>
+      </div>
+      <ul className="list-disc mb-20">
+        <li className="text-gray-800">
+          <span className="font-semibold text-black">
+            Bookkeeping & Accounting{" "}
+          </span>
+          - Clean, accurate, and up-to-date financial records
+        </li>
+        <li className="text-gray-800">
+          <span className="font-semibold text-black">
+            Tax Filing & Compliance
+          </span>{" "}
+          - Stay compliant and avoid penalties
+        </li>
+        <li className="text-gray-800">
+          <span className="font-semibold text-black">Financial Advisory</span> -
+          Make informed decisions that grow your business
+        </li>
+        <li className="text-gray-800">
+          <span className="font-semibold text-black">Payroll Services</span> -
+          Error-free and on-time salary processing
+        </li>
+      </ul>
+      <div className="flex flex-col gap-7 w-full items-center justify-center">
+        <h1 className="text-4xl font-bold text-blue-800">Why Choose Us?</h1>
+        <ul>
+          <li className="flex gap-2 my-2 font-medium">
+            <Check className="text-green-700" /> Accurate and dependable
+          </li>
+          <li className="flex gap-2 my-2 font-medium">
+            <Check className="text-green-700" /> Quick turnaround
+          </li>
+          <li className="flex gap-2 my-2 font-medium">
+            <Check className="text-green-700" /> Friendly support
+          </li>
+          <li className="flex gap-2 my-2 font-medium">
+            <Check className="text-green-700" /> Affordable packages
+          </li>
+          <li className="flex gap-2 my-2 font-medium">
+            <Check className="text-green-700" /> Peace of mind for your business
+          </li>
+        </ul>
       </div>
     </section>
   );
