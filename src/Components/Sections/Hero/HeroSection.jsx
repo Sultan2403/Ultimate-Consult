@@ -33,7 +33,7 @@ export default function HeroSec() {
           keeps your records clean and your decisions clearer.
         </h2>
 
-        <button className="bg-blue-700 text-white p-4 rounded-lg font-semibold">
+        <button className="bg-blue-700 text-white p-4 my-24 rounded-lg font-semibold">
           Get Started Today!
         </button>
       </div>
@@ -63,19 +63,24 @@ export default function HeroSec() {
         <h1 className="text-4xl font-bold text-blue-800">Why Choose Us?</h1>
         <ul>
           <li className="flex gap-2 my-2 font-medium">
-            <Check className="text-green-700" /> Accurate and dependable
+            <Check size={28} strokeWidth={3} className="text-green-700" />{" "}
+            Accurate and dependable
           </li>
           <li className="flex gap-2 my-2 font-medium">
-            <Check className="text-green-700" /> Quick turnaround
+            <Check size={28} strokeWidth={3} className="text-green-700" /> Quick
+            turnaround
           </li>
           <li className="flex gap-2 my-2 font-medium">
-            <Check className="text-green-700" /> Friendly support
+            <Check size={28} strokeWidth={3} className="text-green-700" />{" "}
+            Friendly support
           </li>
           <li className="flex gap-2 my-2 font-medium">
-            <Check className="text-green-700" /> Affordable packages
+            <Check size={28} strokeWidth={3} className="text-green-700" />{" "}
+            Affordable packages
           </li>
           <li className="flex gap-2 my-2 font-medium">
-            <Check className="text-green-700" /> Peace of mind for your business
+            <Check size={28} strokeWidth={3} className="text-green-700" /> Peace
+            of mind for your business
           </li>
         </ul>
       </div>
