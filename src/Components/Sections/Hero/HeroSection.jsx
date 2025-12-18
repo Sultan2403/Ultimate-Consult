@@ -37,7 +37,7 @@ export default function HeroSec() {
           Get Started Today!
         </button>
       </div>
-      <ul className="list-disc mb-20">
+      <ul className="list-disc mb-20 flex flex-col gap-3">
         <li className="text-gray-800">
           <span className="font-semibold text-black">
             Bookkeeping & Accounting{" "}
