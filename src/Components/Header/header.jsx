@@ -1,30 +1,42 @@
 export default function Header() {
   return (
-    <header className="w-screen flex justify-evenly items-center p-4 py-10 sticky bg-neutral-300">
-      <h1 className="font-medium text-2xl">
-        <a href="index.html">Ultimate Consult</a>
+    <header className="w-full flex justify-between items-center p-10 px-20 md:px-20 sticky top-0 bg-light shadow-md z-50">
+      {/* Logo */}
+      <h1 className="font-bold text-2xl text-primary">
+        <a href="#hero">Ultimate Consult</a>
       </h1>
-      <nav className="">
-        <ul className="flex items-center w-full gap-5">
+
+      {/* Navigation */}
+      <nav>
+        <ul className="flex items-center gap-6 text-dark font-medium">
           <li>
-            <a href="#" className="hover:underline">
+            <a
+              href="#hero"
+              className="hover:text-primary transition-colors duration-200"
+            >
               Home
             </a>
           </li>
           <li>
-            <a href="#" className="hover:underline">
+            <a
+              href="#about"
+              className="hover:text-primary transition-colors duration-200"
+            >
               About
             </a>
           </li>
           <li>
-            <a href="#" className="hover:underline">
+            <a
+              href="#contact"
+              className="hover:text-primary transition-colors duration-200"
+            >
               Contact
             </a>
           </li>
           <li>
             <a
-              href="#"
-              className="hover:bg-blue-500 focus:bg-blue-500 bg-blue-600 text-white p-3 rounded-3xl"
+              href="#contact"
+              className="bg-primary hover:bg-secondary text-white py-2 px-5 rounded-full transition-colors duration-300 font-semibold"
             >
               Get Consulting!
             </a>

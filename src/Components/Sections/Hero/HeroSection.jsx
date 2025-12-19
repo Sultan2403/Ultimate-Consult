@@ -1,87 +1,86 @@
-import HeroImg from "../../../assets/Images/hero-sec-img.avif";
+import HeroImg from "../../../assets/Images/hero-sec-img.jpg";
 import { Check } from "lucide-react";
 
 export default function HeroSec() {
   return (
-    <section className="p-4 px-10 mt-32 w-full flex flex-col gap-12 justify-center items-center">
-      <div className="w-full flex flex-col md:flex-row justify-evenly items-center gap-12">
-        <div className="flex flex-col gap-3 flex-1 md:flex-[2] max-w-xl text-center md:text-left">
-          <h1 className="font-semibold text-3xl flex flex-col gap-1">
-            <p>Smart Financial Solutions for Businesses</p>
-            <p>That Want to Grow with Confidence</p>
+    <section className="w-full flex flex-col justify-center items-center gap-16 px-6 md:px-20 py-16 bg-light">
+      {/* HERO HEADLINE + IMAGE */}
+      <div className="w-full flex flex-col max-w-screen-2xl md:flex-row justify-between items-center gap-12">
+        {/* Text */}
+        <div className="flex flex-col gap-6 flex-1 max-w-xl justify-center items-center text-center md:text-left">
+          <h1 className="font-bold text-3xl md:text-4xl text-dark text-wrap">
+            Smart Financial Solutions for Businesses That Want to Grow with
+            Confidence
           </h1>
           <p className="text-gray-700 text-md">
-            Accurate bookkeeping, reliable accounting, and tax compliance - so
-            you
-            <br />
-            can run your business without stress or guesswork.
+            Accurate bookkeeping, reliable accounting, and tax compliance — so
+            you can run your business without stress or guesswork.
           </p>
+          <button className="bg-primary hover:bg-secondary w-full text-white py-3 px-6 rounded-lg font-semibold transition-colors duration-300">
+            Get Started Today!
+          </button>
         </div>
+
+        {/* Image */}
         <div className="flex-1 flex justify-center max-w-sm">
           <img
-            className="rounded-[50%] w-full h-72 md:h-96 object-cover"
+            className="rounded-[50%] w-full h-72 md:h-96 object-cover shadow-lg"
             src={HeroImg}
             alt="Hero Image"
           />
         </div>
       </div>
-      <div className="text-center flex flex-col gap-12 items-center justify-center text-lg font-normal max-w-3xl mt-12 px-4 mx-auto break-words p-3">
-        <h2>
-          At Ultimate Consult, we help business owners stay organized,
-          tax-ready, and financially smart. Whether you’re a startup or an
-          established company, we provide dependable accounting support that
-          keeps your records clean and your decisions clearer.
-        </h2>
 
-        <button className="bg-blue-700 text-white p-4 my-24 rounded-lg font-semibold">
-          Get Started Today!
-        </button>
+      {/* SERVICES / FEATURES */}
+      <div className="w-full flex justify-center items-center">
+        <h3>What We Offer</h3>
+        <ul className="list-disc flex flex-col gap-3 px-4 md:px-0 text-dark text-base max-w-3xl mx-auto">
+          <li>
+            <span className="font-semibold text-primary">
+              Bookkeeping & Accounting
+            </span>{" "}
+            - Clean, accurate, and up-to-date financial records
+          </li>
+          <li>
+            <span className="font-semibold text-primary">
+              Tax Filing & Compliance
+            </span>{" "}
+            - Stay compliant and avoid penalties
+          </li>
+          <li>
+            <span className="font-semibold text-primary">
+              Financial Advisory
+            </span>{" "}
+            - Make informed decisions that grow your business
+          </li>
+          <li>
+            <span className="font-semibold text-primary">Payroll Services</span>{" "}
+            - Error-free and on-time salary processing
+          </li>
+        </ul>
       </div>
-      <ul className="list-disc mb-20 flex flex-col gap-3">
-        <li className="text-gray-800">
-          <span className="font-semibold text-black">
-            Bookkeeping & Accounting{" "}
-          </span>
-          - Clean, accurate, and up-to-date financial records
-        </li>
-        <li className="text-gray-800">
-          <span className="font-semibold text-black">
-            Tax Filing & Compliance
-          </span>{" "}
-          - Stay compliant and avoid penalties
-        </li>
-        <li className="text-gray-800">
-          <span className="font-semibold text-black">Financial Advisory</span> -
-          Make informed decisions that grow your business
-        </li>
-        <li className="text-gray-800">
-          <span className="font-semibold text-black">Payroll Services</span> -
-          Error-free and on-time salary processing
-        </li>
-      </ul>
-      <div className="flex flex-col gap-7 w-full items-center justify-center">
-        <h1 className="text-4xl font-bold text-blue-800">Why Choose Us?</h1>
-        <ul>
-          <li className="flex gap-2 my-2 font-medium">
-            <Check size={28} strokeWidth={3} className="text-green-700" />{" "}
-            Accurate and dependable
-          </li>
-          <li className="flex gap-2 my-2 font-medium">
-            <Check size={28} strokeWidth={3} className="text-green-700" /> Quick
-            turnaround
-          </li>
-          <li className="flex gap-2 my-2 font-medium">
-            <Check size={28} strokeWidth={3} className="text-green-700" />{" "}
-            Friendly support
-          </li>
-          <li className="flex gap-2 my-2 font-medium">
-            <Check size={28} strokeWidth={3} className="text-green-700" />{" "}
-            Affordable packages
-          </li>
-          <li className="flex gap-2 my-2 font-medium">
-            <Check size={28} strokeWidth={3} className="text-green-700" /> Peace
-            of mind for your business
-          </li>
+
+      {/* WHY CHOOSE US */}
+      <div className="flex flex-col gap-6 w-full max-w-3xl mx-auto text-center justify-center items-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-primary">
+          Why Choose Us?
+        </h2>
+        <ul className="flex flex-col gap-3 w-full">
+          {[
+            "Accurate and dependable",
+            "Quick turnaround",
+            "Friendly support",
+            "Affordable packages",
+            "Peace of mind for your business",
+          ].map((item, index) => (
+            <li
+              key={index}
+              className="flex w-full items-start justify-start gap-3 text-dark font-medium"
+            >
+              <Check size={24} strokeWidth={3} className="text-success" />
+              {item}
+            </li>
+          ))}
         </ul>
       </div>
     </section>
