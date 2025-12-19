@@ -32,8 +32,8 @@ export default function HeroSec() {
       </div>
 
       {/* SERVICES / FEATURES */}
-      <div className="w-full flex justify-center items-center">
-        <h3>What We Offer</h3>
+      <div className="w-full flex justify-center items-center flex-col gap-8">
+        <h1 className="font-bold text-primary text-4xl">What We Offer</h1>
         <ul className="list-disc flex flex-col gap-3 px-4 md:px-0 text-dark text-base max-w-3xl mx-auto">
           <li>
             <span className="font-semibold text-primary">
