@@ -9,8 +9,7 @@ export default function HeroSec() {
         {/* Text */}
         <div className="flex flex-col gap-6 flex-1 max-w-xl justify-center items-center text-center md:text-left">
           <h1 className="font-bold text-3xl md:text-4xl text-dark text-wrap">
-            Smart Financial Solutions for Businesses That Want to Grow with
-            Confidence
+            Smart Solutions for Businesses That Want to Grow with Confidence
           </h1>
           <p className="text-gray-700 text-md">
             Accurate bookkeeping, reliable accounting, and tax compliance — so
