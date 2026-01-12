@@ -1,11 +1,22 @@
 import HeroImg from "../../../assets/Images/hero-sec-img.jpg";
-import { Check } from "lucide-react";
+import {
+  BookOpen,
+  FileText,
+  Users,
+  Briefcase,
+  LineChart,
+  PieChart,
+  Check,
+} from "lucide-react";
 
 export default function HeroSec() {
   return (
-    <section className="w-full flex flex-col justify-center items-center gap-16 px-6 md:px-20 py-16 bg-light">
+    <section
+      id="home"
+      className="w-full flex flex-col gap-24 py-5 my-10 px-6 md:px-20 bg-light"
+    >
       {/* HERO HEADLINE + IMAGE */}
-      <div className="w-full flex flex-col max-w-screen-2xl md:flex-row justify-between items-center gap-12">
+      <div className="w-full flex flex-col max-w-screen-2xl md:flex-row justify-between items-center gap-12 mx-auto">
         {/* Text */}
         <div className="flex flex-col gap-6 flex-1 max-w-xl justify-center items-center text-center md:text-left">
           <h1 className="font-bold text-3xl md:text-4xl text-dark text-wrap">
@@ -30,41 +41,67 @@ export default function HeroSec() {
         </div>
       </div>
 
-      {/* SERVICES / FEATURES */}
-      <div className="w-full flex justify-center items-center flex-col gap-8">
-        <h1 className="font-bold text-primary text-4xl">What We Offer</h1>
-        <ul className="list-disc flex flex-col gap-3 px-4 md:px-0 text-dark text-base max-w-3xl mx-auto">
-          <li>
-            <span className="font-semibold text-primary">
-              Bookkeeping & Accounting
-            </span>{" "}
-            - Clean, accurate, and up-to-date financial records
-          </li>
-          <li>
-            <span className="font-semibold text-primary">
-              Tax Filing & Compliance
-            </span>{" "}
-            - Stay compliant and avoid penalties
-          </li>
-          <li>
-            <span className="font-semibold text-primary">
-              Financial Advisory
-            </span>{" "}
-            - Make informed decisions that grow your business
-          </li>
-          <li>
-            <span className="font-semibold text-primary">Payroll Services</span>{" "}
-            - Error-free and on-time salary processing
-          </li>
-        </ul>
+      {/* WHAT WE OFFER */}
+      <div className="w-full flex flex-col gap-12 max-w-6xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-bold text-primary text-center">
+          What We Offer
+        </h2>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            {
+              icon: <BookOpen size={22} />,
+              title: "Bookkeeping & Accounting",
+              desc: "Clean, organized, and up-to-date financial records.",
+            },
+            {
+              icon: <FileText size={22} />,
+              title: "Tax Preparation & Filing",
+              desc: "Stay compliant and avoid penalties all year round.",
+            },
+            {
+              icon: <Users size={22} />,
+              title: "Payroll Services",
+              desc: "Accurate salary processing and reports.",
+            },
+            {
+              icon: <Briefcase size={22} />,
+              title: "Business Registration Support",
+              desc: "Proper documentation and CAC registration assistance.",
+            },
+            {
+              icon: <LineChart size={22} />,
+              title: "Financial Advisory",
+              desc: "Expert guidance to make informed business decisions.",
+            },
+            {
+              icon: <PieChart size={22} />,
+              title: "Budgeting & Planning",
+              desc: "Plan for growth and optimize cash flow effectively.",
+            },
+          ].map((item, idx) => (
+            <div
+              key={idx}
+              className="group p-6 rounded-2xl bg-white border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+            >
+              <div className="flex items-center gap-3 mb-4 text-primary">
+                <div className="p-2 rounded-lg bg-blue-100">{item.icon}</div>
+                <h3 className="font-semibold text-lg text-dark">
+                  {item.title}
+                </h3>
+              </div>
+              <p className="text-sm text-gray-700">{item.desc}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* WHY CHOOSE US */}
-      <div className="flex flex-col gap-6 w-full max-w-3xl mx-auto text-center justify-center items-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-primary">
+      {/* WHY CHOOSE US */}
+      <div className="w-full max-w-6xl mx-auto flex flex-col gap-12 mt-16">
+        <h2 className="text-3xl md:text-4xl font-bold text-primary text-center">
           Why Choose Us?
         </h2>
-        <ul className="flex flex-col gap-3 w-full">
+        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           {[
             "Accurate and dependable",
             "Quick turnaround",
@@ -72,15 +109,17 @@ export default function HeroSec() {
             "Affordable packages",
             "Peace of mind for your business",
           ].map((item, index) => (
-            <li
+            <div
               key={index}
-              className="flex w-full items-start justify-start gap-3 text-dark font-medium"
+              className="flex items-center gap-3 p-5 bg-white rounded-xl shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
             >
-              <Check size={24} strokeWidth={3} className="text-success" />
-              {item}
-            </li>
+              <div className="p-3 rounded-full bg-gray-100 text-primary flex items-center justify-center">
+                <Check size={20} strokeWidth={3} />
+              </div>
+              <p className="text-gray-900 font-medium">{item}</p>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   );

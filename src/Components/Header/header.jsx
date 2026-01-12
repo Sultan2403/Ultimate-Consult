@@ -11,7 +11,7 @@ export default function Header() {
         <ul className="flex items-center gap-6 text-dark font-medium">
           <li>
             <a
-              href="#hero"
+              href="#home"
               className="hover:text-primary transition-colors duration-200"
             >
               Home

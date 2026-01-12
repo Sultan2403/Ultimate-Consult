@@ -1,5 +1,6 @@
 import "./App.css";
 import Header from "./Components/Header/header";
+import About_Sec from "./Components/Sections/About/about";
 import HeroSec from "./Components/Sections/Hero/HeroSection";
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
     <>
       <Header />
       <HeroSec />
+      <About_Sec />
     </>
   );
 }
