@@ -30,7 +30,7 @@ export default function Services_Sec() {
   ];
 
   return (
-    <section className="w-full py-16 px-6 md:px-20 bg-light">
+    <section id="services" className="w-full py-16 px-6 md:px-20 bg-light">
       <div className="max-w-6xl mx-auto flex flex-col gap-16">
         {/* Page Heading */}
         <div className="text-center">

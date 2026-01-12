@@ -110,9 +110,9 @@ export default function HeroSec() {
           ].map((item, index) => (
             <div
               key={index}
-              className="flex items-center gap-3 p-5 bg-white rounded-xl shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+              className="flex items-center gap-3 p-5  border-gray-400 border-[2px] border-solid bg-white rounded-xl shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
             >
-              <div className="p-3 rounded-full bg-gray-100 text-primary flex items-center justify-center">
+              <div className="p-3 rounded-full border-gray-400 border-[1px] bg-gray-300 text-primary flex items-center justify-center">
                 <Check size={20} strokeWidth={3} />
               </div>
               <p className="text-gray-900 font-medium">{item}</p>

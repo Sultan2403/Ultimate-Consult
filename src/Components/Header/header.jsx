@@ -27,6 +27,14 @@ export default function Header() {
           </li>
           <li>
             <a
+              href="#services"
+              className="hover:text-primary transition-colors duration-200"
+            >
+              Services
+            </a>
+          </li>
+          <li>
+            <a
               href="#contact"
               className="hover:text-primary transition-colors duration-200"
             >
