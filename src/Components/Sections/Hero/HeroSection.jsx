@@ -96,7 +96,6 @@ export default function HeroSec() {
       </div>
 
       {/* WHY CHOOSE US */}
-      {/* WHY CHOOSE US */}
       <div className="w-full max-w-6xl mx-auto flex flex-col gap-12 mt-16">
         <h2 className="text-3xl md:text-4xl font-bold text-primary text-center">
           Why Choose Us?

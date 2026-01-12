@@ -6,7 +6,9 @@ export default function About_Sec() {
       <div className="max-w-6xl mx-auto flex flex-col gap-10">
         {/* Who We Are */}
         <div className="flex flex-col gap-4 items-center text-center">
-          <h1 className="font-bold text-3xl text-blue-700">Who We Are</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-primary">
+            Who We Are
+          </h1>
           <p className="text-gray-800 max-w-3xl leading-relaxed">
             Ultimate Consult is a professional accounting and business support
             firm helping small and medium-sized businesses maintain accurate
