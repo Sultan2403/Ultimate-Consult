@@ -26,9 +26,12 @@ export default function HeroSec() {
             Accurate bookkeeping, reliable accounting, and tax compliance — so
             you can run your business without stress or guesswork.
           </p>
-          <button className="bg-primary hover:bg-secondary w-full text-white py-3 px-6 rounded-lg font-semibold transition-colors duration-300">
+          <a
+            href="#contact"
+            className="bg-primary text-center hover:bg-secondary w-full text-white py-3 px-6 rounded-lg font-semibold transition-colors duration-300"
+          >
             Get Started Today!
-          </button>
+          </a>
         </div>
 
         {/* Image */}

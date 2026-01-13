@@ -1,128 +1,114 @@
 import { TextField, Button } from "@mui/material";
-import { Phone, Mail, Globe, MapPin, MessageCircle } from "lucide-react";
+import WhatsApp_Icon from "../../../assets/Icons/whatsappSvg";
+
+import { Phone, Mail, Globe, MapPin, MessageCircle, Send } from "lucide-react";
 
 export default function Contact_Us() {
   return (
-    <section id="contact" className="w-full py-20 px-6 md:px-20 bg-light">
-      <div className="max-w-6xl mx-auto flex flex-col gap-16">
+    <section id="contact" className="w-full py-24 px-6 md:px-20 bg-light">
+      <div className="max-w-5xl mx-auto flex flex-col gap-20">
         {/* Heading */}
         <div className="text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-dark">
             Get in Touch
           </h1>
           <p className="text-gray-500 mt-3 max-w-xl mx-auto">
-            Reach out to us for enquiries, consultations, or professional
-            support.
+            Reach out for enquiries, consultations, or professional support.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 w-full max-w-7xl mx-auto px-2 md:px-0">
+          {/* WhatsApp */}
+          <div className="bg-white rounded-3xl p-10 md:p-12 shadow-lg flex flex-col gap-8 transition hover:shadow-xl">
+            <div>
+              <p className="text-md text-gray-500">WhatsApp</p>
+              <p className="font-semibold text-dark text-lg md:text-xl">
+                Quick responses
+              </p>
+            </div>
+            <a
+              href="https://wa.me/234XXXXXXXXXX?text=Hello%20Ultimate%20Consult%2C%20I%27d%20like%20to%20make%20an%20enquiry."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-auto inline-flex gap-2 justify-center items-center bg-primary text-white py-3 rounded-lg font-medium"
+            >
+              <span>
+                <WhatsApp_Icon />
+              </span>
+              <span> Chat on WhatsApp</span>
+            </a>
+          </div>
+
+          {/* Email */}
+          <div className="bg-white rounded-3xl p-10 md:p-12 shadow-lg flex flex-col gap-8 transition hover:shadow-xl">
+            <div>
+              <p className="text-md text-gray-500">Email</p>
+              <p className="font-semibold text-dark text-lg md:text-xl">
+                Detailed enquiries
+              </p>
+            </div>
+            <a
+              href="mailto:info@ultimateconsult.com?subject=Business%20Enquiry"
+              className="mt-auto gap-2 inline-flex justify-center items-center border border-primary text-primary py-3 rounded-lg font-medium"
+            >
+              <span className="text-primary">
+                <Mail />
+              </span>
+              <span> Send an Email</span>
+            </a>
+          </div>
+        </div>
+        <div className="my-10 max-w-2xl mx-auto bg-white rounded-xl p-5 shadow-sm text-center">
+          <p className="text-md text-gray-500">
+            We currently operate remotely and serve clients across Nigeria.
           </p>
         </div>
 
-        {/* Main Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
-          {/* LEFT — CONTACT INFO */}
-          <div className="flex flex-col gap-8  justify-between">
-            <div className="flex items-start gap-4 border-b pb-4">
-              <Phone size={20} className="text-gray-600 mt-1" />
-              <div>
-                <p className="font-medium text-dark">Call / WhatsApp</p>
-                <a
-                  href="https://wa.me/+2348035689456?text=Hello%20I%27d%20like%20to%20make%20an%20enquiry"
-                  rel="noopener norefferer"
-                  target="_blank"
-                  className="text-gray-500 text-sm hover:text-primary transition"
-                >
-                  +234 803 568 9456
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4 border-b pb-4">
-              <Mail size={20} className="text-gray-600 mt-1" />
-              <div>
-                <p className="font-medium text-dark">Email</p>
-                <a
-                  href="mailto:null"
-                  className="text-gray-500 text-sm hover:underline"
-                >
-                  info@ultimateconsult.com
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <MapPin size={20} className="text-gray-600 mt-1" />
-              <div>
-                <p className="font-medium text-dark">Based In</p>
-                <p className="text-gray-500 text-sm">Lagos</p>
-              </div>
-            </div>
-          </div>
-
-          {/* RIGHT — CONTACT FORM */}
-          <div className="bg-white p-10 rounded-2xl shadow-sm">
-            <form className="flex flex-col gap-8 py-4">
-              <h2 className="font-semibold text-xl text-dark text-center">
-                Send us a message
+        {/* Contact Form */}
+        <div className="bg-white p-8 md:p-10 rounded-3xl shadow-lg max-w-4xl mx-auto w-full flex flex-col gap-6">
+          <form id="work-with-us" className="flex flex-col gap-8">
+            <div className="text-center">
+              <h2 className="text-3xl md:text-4xl font-bold text-dark">
+                Book an Appointment
               </h2>
-              <p className="text-sm text-gray-500 text-center -mt-4">
-                We’ll respond within 24 hours
+              <p className="text-gray-500 text-base md:text-lg mt-1">
+                We usually respond within 24 hours
               </p>
+            </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <TextField
-                  label="Full Name"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                />
-                <TextField
-                  label="Phone Number"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                />
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <TextField label="Full Name" size="medium" fullWidth />
+              <TextField label="Phone Number" size="medium" fullWidth />
+            </div>
 
-              <TextField
-                label="Email Address"
-                variant="outlined"
-                size="small"
-                fullWidth
-              />
+            <TextField label="Email Address" size="medium" fullWidth />
+            <TextField label="Business Name" size="medium" fullWidth />
 
-              <TextField
-                label="Business Name"
-                variant="outlined"
-                size="small"
-                fullWidth
-              />
+            <TextField
+              label="Message / Request"
+              size="medium"
+              multiline
+              rows={4}
+              fullWidth
+            />
 
-              <TextField
-                label="Message / Request"
-                variant="outlined"
-                size="small"
-                fullWidth
-                multiline
-                rows={4}
-              />
-
-              <Button
-                startIcon={<MessageCircle strokeWidth={2} />}
-                variant="contained"
-                size="large"
-                sx={{
-                  backgroundColor: "#0247f5",
-                  "&:hover": {
-                    backgroundColor: "#3B82F6",
-                  },
-                  textTransform: "none",
-                  fontWeight: 500,
-                  paddingY: "12px",
-                }}
-              >
-                Send Message
-              </Button>
-            </form>
-          </div>
+            <Button
+              variant="contained"
+              size="large"
+              endIcon={<Send />}
+              sx={{
+                backgroundColor: "#0247f5",
+                "&:hover": { backgroundColor: "#3B82F6" },
+                fontSize: "20px",
+                fontWeight: 500,
+                paddingY: "10px",
+                borderRadius: "1rem",
+                textTransform: "none",
+                transition: "all 0.3s ease",
+              }}
+            >
+              Send Message
+            </Button>
+          </form>
         </div>
       </div>
     </section>
