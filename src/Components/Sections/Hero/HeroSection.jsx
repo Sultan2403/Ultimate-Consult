@@ -19,7 +19,7 @@ export default function HeroSec() {
       <div className="w-full flex flex-col max-w-screen-2xl md:flex-row justify-between items-center gap-12 mx-auto">
         {/* Text */}
         <div className="flex flex-col gap-6 flex-1 max-w-xl justify-center items-center text-center md:text-left">
-          <h1 className="font-bold text-3xl md:text-4xl text-dark text-wrap">
+          <h1 className="font-bold text-3xl text-secondary md:text-4xl text-wrap">
             Smart Solutions for Businesses That Want to Grow with Confidence
           </h1>
           <p className="text-gray-700 text-md">
@@ -90,32 +90,6 @@ export default function HeroSec() {
                 </h3>
               </div>
               <p className="text-sm text-gray-700">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* WHY CHOOSE US */}
-      <div className="w-full max-w-6xl mx-auto flex flex-col gap-12 mt-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-primary text-center">
-          Why Choose Us?
-        </h2>
-        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-          {[
-            "Accurate and dependable",
-            "Quick turnaround",
-            "Friendly support",
-            "Affordable packages",
-            "Peace of mind for your business",
-          ].map((item, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-3 p-5  border-gray-400 border-[2px] border-solid bg-white rounded-xl shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
-            >
-              <div className="p-3 rounded-full border-gray-400 border-[1px] bg-gray-300 text-primary flex items-center justify-center">
-                <Check size={20} strokeWidth={3} />
-              </div>
-              <p className="text-gray-900 font-medium">{item}</p>
             </div>
           ))}
         </div>

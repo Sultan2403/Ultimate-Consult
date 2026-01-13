@@ -3,7 +3,7 @@ export default function Header() {
     <header className="w-full flex justify-between items-center p-10 px-20 md:px-20 sticky top-0 bg-light shadow-md z-50">
       {/* Logo */}
       <h1 className="font-bold text-2xl text-primary">
-        <a href="#hero">Ultimate Consult</a>
+        <a href="#home">Ultimate Consult</a>
       </h1>
 
       {/* Navigation */}
