@@ -1,4 +1,5 @@
 import "./App.css";
+import Footer from "./Components/Footer/footer";
 import Header from "./Components/Header/header";
 import About_Sec from "./Components/Sections/About/about";
 import Contact_Us from "./Components/Sections/Contact/contact";
@@ -15,6 +16,7 @@ function App() {
       <Services_Sec />
       <Why_Choose_Us />
       <Contact_Us />
+      <Footer />
     </>
   );
 }
