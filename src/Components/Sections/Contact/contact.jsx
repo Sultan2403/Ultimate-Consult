@@ -9,9 +9,10 @@ export default function Contact_Us() {
       <div className="max-w-5xl mx-auto flex flex-col gap-20">
         {/* Heading */}
         <div className="text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-dark">
+          <h1 className="text-3xl md:text-4xl font-bold text-dark">
             Get in Touch
           </h1>
+
           <p className="text-gray-500 mt-3 max-w-xl mx-auto">
             Reach out for enquiries, consultations, or professional support.
           </p>
@@ -57,10 +58,12 @@ export default function Contact_Us() {
             </a>
           </div>
         </div>
-        <div className="my-10 max-w-2xl mx-auto bg-white rounded-xl p-5 shadow-sm text-center">
-          <p className="text-md text-gray-500">
-            We currently operate remotely and serve clients across Nigeria.
-          </p>
+
+        <div className="relative my-16 flex items-center justify-center">
+          <div className="absolute inset-x-0 h-px bg-gray-300" />
+          <span className="relative bg-light px-4 text-lg font-medium text-gray-500">
+            OR
+          </span>
         </div>
 
         {/* Contact Form */}
@@ -110,6 +113,11 @@ export default function Contact_Us() {
             </Button>
           </form>
         </div>
+      </div>
+      <div className="my-10 max-w-2xl mx-auto bg-white rounded-xl p-5 shadow-sm text-center">
+        <p className="text-md text-gray-500">
+          We currently operate remotely and serve clients across Nigeria.
+        </p>
       </div>
     </section>
   );
