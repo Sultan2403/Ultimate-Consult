@@ -27,7 +27,7 @@ export default function Contact_Us() {
               </p>
             </div>
             <a
-              href="https://wa.me/234XXXXXXXXXX?text=Hello%20Ultimate%20Consult%2C%20I%27d%20like%20to%20make%20an%20enquiry."
+              href="https://wa.me/2348188255882?text=Hello%20Ultimate%20Consult%2C%20I%27d%20like%20to%20make%20an%20enquiry."
               target="_blank"
               rel="noopener noreferrer"
               className="mt-auto inline-flex gap-2 justify-center items-center bg-primary text-white py-3 rounded-lg font-medium"
