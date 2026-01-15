@@ -1,7 +1,7 @@
 import { TextField, Button } from "@mui/material";
 import WhatsApp_Icon from "../../../assets/Icons/whatsappSvg";
 
-import { Phone, Mail, Globe, MapPin, MessageCircle, Send } from "lucide-react";
+import { Mail, Send } from "lucide-react";
 
 export default function Contact_Us() {
   return (
