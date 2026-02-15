@@ -1,2 +1,27 @@
-const express = require("express")
-const app = express()
+//  Main
+const express = require("express");
+const app = express();
+
+//  Helpers
+const cors = require("cors");
+const connectDB = require("./DB/Connections/connectDB");
+const { errors } = require("celebrate");
+
+
+connectDB();
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  }),
+);
+
+app.use(express.json());
+
+app.get("/health", (req, res) => {
+  res.send("Server says Heyyyy! :)");
+});
+
+app.use(errors());
+
+module.exports = app;
