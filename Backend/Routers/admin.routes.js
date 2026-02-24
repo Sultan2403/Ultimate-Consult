@@ -1,11 +1,10 @@
 const { celebrate } = require("celebrate");
 const express = require("express");
-
+const { getCustomers } = require("../Controllers/customers.controller");
 
 const router = express.Router();
 
-// router.post("/login", celebrate({ body: adminLoginSchema }), loginAdmin);
+router.get("/", getCustomers);
 
 module.exports = router;
 
-// This guy doesnt really do anything

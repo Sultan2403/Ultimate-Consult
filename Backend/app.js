@@ -5,8 +5,16 @@ const app = express();
 //  Helpers
 const cors = require("cors");
 const connectDB = require("./DB/Connections/connectDB");
-const { errors } = require("celebrate");
 
+// Middlewares
+const { errors } = require("celebrate");
+const authMiddleware = require("./Middlewares/admin.auth");
+
+// Routers
+const customerRouter = require("./Routers/customer.route");
+const authRouter = require("./Routers/auth.route");
+const adminRouter = require("./Routers/admin.route");
+const { authLimiter } = require("./Middlewares/rate-limiter.middleware");
 
 connectDB();
 
@@ -18,8 +26,18 @@ app.use(
 
 app.use(express.json());
 
+//  Routes
+
+app.use("/admin", authMiddleware, adminRouter);
+app.use("/customers", customerRouter);
+app.use("/auth", authLimiter, authRouter);
+
+app.get("/", (req, res) => {
+  res.json({ success: true, message: "Looking for something? 👀" });
+});
+
 app.get("/health", (req, res) => {
-  res.send("Server says Heyyyy! :)");
+  res.json({ success: true, message: "Server says Heyyyy! :)" });
 });
 
 app.use(errors());
