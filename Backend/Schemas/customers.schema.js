@@ -35,7 +35,7 @@ const customerSchema = Joi.object({
   })
   .messages({
     "string.empty": "Phone number cannot be empty",
-    "string.base": "Phone number is required string",
+    "string.base": "Phone number is invalid",
   }),
 }).options({stripUnknown: true});
 
