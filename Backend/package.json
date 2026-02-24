@@ -15,8 +15,10 @@
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "express-rate-limit": "^8.2.1",
+    "libphonenumber-js": "^1.12.37",
     "mongoose": "^9.2.1",
     "nodemailer": "^8.0.1",
-    "nodemon": "^3.1.11"
+    "nodemon": "^3.1.11",
+    "validator": "^13.15.26"
   }
 }
