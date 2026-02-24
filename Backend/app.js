@@ -11,9 +11,9 @@ const { errors } = require("celebrate");
 const authMiddleware = require("./Middlewares/admin.auth");
 
 // Routers
-const customerRouter = require("./Routers/customer.route");
-const authRouter = require("./Routers/auth.route");
-const adminRouter = require("./Routers/admin.route");
+const customerRouter = require("./Routers/customer.routes");
+const authRouter = require("./Routers/auth.routes");
+const adminRouter = require("./Routers/admin.routes");
 const { authLimiter } = require("./Middlewares/rate-limiter.middleware");
 
 connectDB();
