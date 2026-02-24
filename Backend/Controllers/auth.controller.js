@@ -38,4 +38,28 @@ const loginAdmin = async (req, res) => {
   }
 };
 
-module.exports = { loginAdmin };
+
+const refreshTokenController = async (req, res) => {
+  try {
+    const { refreshToken } = req.body;
+
+    const user = await verifyRefreshToken(refreshToken);
+    const tokens = await generateNewTokens(user.toJSON());
+
+    res.status(200).json({ success: true, tokens });
+  } catch (err) {
+    if (
+      err.message.includes("token") ||
+      err.message.includes("User not found") ||
+      err.message.includes("mismatch")
+    ) {
+      return res.status(401).json({ success: false, message: err.message });
+    }
+
+    console.error(err, err?.message);
+    res.status(500).json({ success: false, message: "An error occured" });
+  }
+};
+
+
+module.exports = { loginAdmin, refreshTokenController };
