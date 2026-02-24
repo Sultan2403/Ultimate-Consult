@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const { parsePhoneNumberFromString } = require("libphonenumber-js");
 
+const CUSTOMER_CONSULTATION_STATUSES = ["Pending", "Completed", "Cancelled"];
+
 const customerSchema = new mongoose.Schema(
   {
     firstName: {
@@ -39,6 +41,14 @@ const customerSchema = new mongoose.Schema(
         message: "Invalid phone number",
       },
     },
+
+    consultationStatus: {
+      type: String,
+      enum: CUSTOMER_CONSULTATION_STATUSES,
+      default: "Pending",
+      required: true
+    },
+
   },
   {
     timestamps: true,
