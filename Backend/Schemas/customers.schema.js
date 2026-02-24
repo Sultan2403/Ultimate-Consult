@@ -23,24 +23,20 @@ const customerSchema = Joi.object({
       "string.email": "Email must be a valid email address",
     }),
 
-  phoneNumber: Joi.string()
-    .trim()
-    .optional()
-    .custom((value, helpers) => {
-      if (!value) return value;
-
-      const phone = parsePhoneNumberFromString(value);
-      if (!phone || !phone.isValid()) {
-        return helpers.message(
-          "Phone number must be a valid international phone number",
-        );
-      }
-
-      return value;
-    }, "Phone number validation")
-    .messages({
-      "string.base": "Phone number must be a string",
-    }),
+ phoneNumber: Joi.string()
+  .trim()
+  .optional()
+  .custom((value, helpers) => {
+    const phone = parsePhoneNumberFromString(value);
+    if (!phone || !phone.isValid()) {
+      return helpers.message("Phone number must be a valid international phone number");
+    }
+    return value;
+  })
+  .messages({
+    "string.empty": "Phone number cannot be empty",
+    "string.base": "Phone number is required string",
+  }),
 }).options({stripUnknown: true});
 
 module.exports = customerSchema;
