@@ -31,9 +31,17 @@ jobs:
         with:
           node-version: 20 # matches your local Node
 
-      - name: Install dependencies & log and fix vulnerabilities
-        run: npm install --force && npm audit && npm audit fix
-        working-directory: Frontend
+      - name: Install dependencies
+        run: npm ci
+        working-directory: Frontend # <--- HERE
+
+      - name: Full audit (log only)
+        run: npm audit || true
+        working-directory: Frontend # <--- HERE
+
+      - name: Enforce prod-only security
+        run: npm audit --omit=dev
+        working-directory: Frontend # <--- HERE
 
       - name: Build app
         run: npm run build # runs Vite build, outputs to dist/

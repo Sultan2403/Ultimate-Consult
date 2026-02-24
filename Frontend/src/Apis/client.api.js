@@ -1,0 +1,12 @@
+import axios from "axios";
+
+const url = import.meta.env.VITE_ADMIN_API_URL;
+
+const api = axios.create({
+  baseURL: url,
+  timeout: url.includes("localhost") ? 10000 : 60000,
+});
+
+api.interceptors.response.use((res) => res.data);
+
+export default api;
