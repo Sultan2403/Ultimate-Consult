@@ -41,6 +41,6 @@ const customerSchema = Joi.object({
     .messages({
       "string.base": "Phone number must be a string",
     }),
-});
+}).options({stripUnknown: true});
 
 module.exports = customerSchema;
