@@ -1,7 +1,7 @@
 import { TextField, Button } from "@mui/material";
 import WhatsApp_Icon from "../../../assets/Icons/whatsappSvg";
-
 import { Mail, Send } from "lucide-react";
+import Contact_Form from "./contactForm";
 
 export default function Contact_Us() {
   return (
@@ -67,53 +67,9 @@ export default function Contact_Us() {
         </div>
 
         {/* Contact Form */}
-        <div className="bg-white p-8 md:p-10 rounded-3xl shadow-lg max-w-4xl mx-auto w-full flex flex-col gap-6">
-          <form id="work-with-us" className="flex flex-col gap-8">
-            <div className="text-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-dark">
-                Book an Appointment
-              </h2>
-              <p className="text-gray-500 text-base md:text-lg mt-1">
-                We usually respond within 24 hours
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <TextField label="Full Name" size="medium" fullWidth />
-              <TextField label="Phone Number" size="medium" fullWidth />
-            </div>
-
-            <TextField label="Email Address" size="medium" fullWidth />
-            <TextField label="Business Name" size="medium" fullWidth />
-
-            <TextField
-              label="Message / Request"
-              size="medium"
-              multiline
-              rows={4}
-              fullWidth
-            />
-
-            <Button
-              variant="contained"
-              size="large"
-              endIcon={<Send />}
-              sx={{
-                backgroundColor: "#0247f5",
-                "&:hover": { backgroundColor: "#3B82F6" },
-                fontSize: "20px",
-                fontWeight: 500,
-                paddingY: "10px",
-                borderRadius: "1rem",
-                textTransform: "none",
-                transition: "all 0.3s ease",
-              }}
-            >
-              Send Message
-            </Button>
-          </form>
-        </div>
+        <Contact_Form />
       </div>
+
       <div className="my-10 max-w-2xl mx-auto bg-white rounded-xl p-5 shadow-sm text-center">
         <p className="text-md text-gray-500">
           We currently operate remotely and serve clients across Nigeria.

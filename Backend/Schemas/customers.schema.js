@@ -39,6 +39,17 @@ const customerSchema = Joi.object({
       "string.empty": "Phone number cannot be empty",
       "string.base": "Phone number is invalid",
     }),
+
+    businessName: Joi.string().trim().required().messages({
+      "string.base": "Business name must be a string",
+      "string.empty": "Business name is string",
+    }),
+
+    message: Joi.string().trim().required().min(50).messages({
+      "string.base": "Message must be a string",
+      "string.empty": "Message cannot be empty",
+      "string.min": "Message must be at least 50 characters long",
+    }),
 }).options({ stripUnknown: true });
 
 module.exports = { customerSchema };
