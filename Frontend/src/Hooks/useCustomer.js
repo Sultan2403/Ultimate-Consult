@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../Apis/client.api";
+import api from "../Apis/Client/client.api";
 
 export default function useCustomer() {
   const [data, setData] = useState(null);

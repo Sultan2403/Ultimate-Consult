@@ -49,6 +49,12 @@ const customerSchema = new mongoose.Schema(
       required: true
     },
 
+    paymentReference:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Transaction",
+      required: true
+    }
+
   },
   {
     timestamps: true,
