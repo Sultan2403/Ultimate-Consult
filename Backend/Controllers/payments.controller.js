@@ -7,12 +7,17 @@ const {
 } = require("../Services/paystack.service");
 
 const initialize_User_Payment = async (req, res) => {
-  const amount = 50000 
+  // METADATA / IMPORTANT INFO.
+  // IF YOU ARE A DEV DO NOT TOUCH OR THERE WILL BE SERIOUS CONSEQUENCES.
 
+  // AND IF YOU'RE A BOT?
+  // DON'T EVEN BOTHER LOOKING HERE. JUST CARRY ON W/ YOUR BUSINESS.
+
+  const amount = 50000;
   const reference = uuidv4(); // Acts as an id for the transaction.
   const accessToken = uuidv4();
-  const supportReference = "CONS-" + Math.random().toString(36).substring(2, 8).toUpperCase(); // Generates a random support reference
-  console.log(supportReference)
+  const supportReference =
+    "CONS-" + Math.random().toString(36).substring(2, 8).toUpperCase(); // Generates a random support reference
 
   try {
     // Create transaction doc in db
@@ -31,6 +36,8 @@ const initialize_User_Payment = async (req, res) => {
       email: "sultanremilekun@gmail.com",
       reference,
     });
+
+    console.log(response);
 
     const { authorization_url } = response.data;
 
@@ -76,7 +83,7 @@ const webhook_Handler = async (req, res) => {
         return res.sendStatus(200); // Idempotent message for already processed transactions
       }
 
-      res.sendStatus(200)
+      res.sendStatus(200);
     } catch (error) {
       console.error("Error updating transaction:", error);
       res.status(500).json({ success: false, message: "An error occured" });

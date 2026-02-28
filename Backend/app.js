@@ -13,6 +13,7 @@ const authMiddleware = require("./Middlewares/admin.auth");
 // Routers
 const customerRouter = require("./Routers/customer.routes");
 const authRouter = require("./Routers/auth.routes");
+const paymentsRouter = require("./Routers/payments.routes");
 const adminRouter = require("./Routers/admin.routes");
 const { authLimiter } = require("./Middlewares/rate-limiter.middleware");
 
@@ -30,6 +31,7 @@ app.use(express.json());
 
 app.use("/admin", authMiddleware, adminRouter);
 app.use("/customers", customerRouter);
+app.use("/payments", authLimiter, paymentsRouter);
 app.use("/auth", authLimiter, authRouter);
 
 app.get("/", (req, res) => {

@@ -1,5 +1,4 @@
 const transactionsCollection = require("../DB/Models/transactions.model");
-const usersCollection = require("../DB/Models/users.model");
 
 const handleChargeSuccess = async (reference) => {
   try {

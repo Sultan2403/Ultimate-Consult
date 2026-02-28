@@ -8,6 +8,8 @@ const api = axios.create({
   timeout: 15000,
 });
 
+api.interceptors.response.use((res) => res.data);
+
 api.interceptors.request.use((config) => {
   config.headers.authorization = `Bearer ${PAYSTACK_API_KEY}`;
   return config;
