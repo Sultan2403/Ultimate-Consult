@@ -37,8 +37,6 @@ const initialize_User_Payment = async (req, res) => {
       reference,
     });
 
-    console.log(response);
-
     const { authorization_url } = response.data;
 
     res.status(200).json({ authorization_url, success: true, reference });
