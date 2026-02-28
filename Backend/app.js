@@ -25,9 +25,15 @@ app.use(
   }),
 );
 
+// Webhooks
+app.post("/webhook/paystack", express.raw({ type: "application/json" }), [
+  verifyPaystackWebhook,
+  webhook_Handler,
+]);
+
 app.use(express.json());
 
-//  Routes
+// Routes
 
 app.use("/admin", authMiddleware, adminRouter);
 app.use("/customers", customerRouter);
