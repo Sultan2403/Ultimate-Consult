@@ -9,20 +9,23 @@ const AdminSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
+
     password: {
       type: String,
       required: true,
-      select: false
+      select: false,
     },
+
     username: {
-        type: String,
-        required: true,
-        trim: true
-    }, 
+      type: String,
+      required: true,
+      trim: true,
+    },
+
     refreshTokenHash: {
       type: String,
-      select: false
-    }
+      select: false,
+    },
   },
   {
     timestamps: true,

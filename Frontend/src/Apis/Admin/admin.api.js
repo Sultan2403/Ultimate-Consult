@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAccessToken } from "../Helpers/Auth/tokens";
+import { getAccessToken } from "../../Helpers/Auth/tokens";
 
 const url = import.meta.env.VITE_ADMIN_API_URL;
 
