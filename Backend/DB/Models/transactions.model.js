@@ -19,18 +19,25 @@ const transactionSchema = new mongoose.Schema(
 
     accessToken: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     },
 
     tokenUsed: {
       type: Boolean,
       required: true,
-      default: false
+      default: false,
     },
 
     amount: {
       type: Number,
       required: true,
+    },
+
+    supportReference: {
+      type: String,
+      required: true,
+      unique: true,
     },
   },
   {

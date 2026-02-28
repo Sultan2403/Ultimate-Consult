@@ -46,14 +46,14 @@ const customerSchema = new mongoose.Schema(
       type: String,
       enum: CUSTOMER_CONSULTATION_STATUSES,
       default: "Pending",
-      required: true
+      required: true,
     },
 
-    paymentReference:{
+    paymentReference: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Transaction",
-      required: true
-    }
+      required: true,
+    },
 
   },
   {
