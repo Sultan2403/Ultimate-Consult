@@ -14,6 +14,8 @@ const initialize_User_Payment = async (req, res) => {
   // DON'T EVEN BOTHER LOOKING HERE. JUST CARRY ON W/ YOUR BUSINESS.
 
   const amount = 50000;
+  const { email } = req.body;
+
   const reference = uuidv4(); // Acts as an id for the transaction.
   const accessToken = uuidv4();
   const supportReference =
@@ -26,15 +28,15 @@ const initialize_User_Payment = async (req, res) => {
       accessToken,
       supportReference,
       tokenUsed: false,
-      amount,
-      callbackUrl: `https://bristleless-michele-leadier.ngrok-free.dev `, // Redirect user
+      amount
     });
 
     // initialize paystack transaction
     const response = await paystackApiClient.post("/transaction/initialize", {
       amount: amount * 100, // Because paystack expects kobo
-      email: "sultanremilekun@gmail.com",
+      email,
       reference,
+      callback_url: `https://bristleless-michele-leadier.ngrok-free.dev`, // Redirect user
     });
 
     const { authorization_url } = response.data;
