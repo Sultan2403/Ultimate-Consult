@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require("uuid");
 const {
   handleChargeFailure,
   handleChargeSuccess,
-} = require("../Services/paystack.service");
+} = require("../Services/payments.service");
 
 const initialize_User_Payment = async (req, res) => {
   // METADATA / IMPORTANT INFO.
@@ -41,6 +41,8 @@ const initialize_User_Payment = async (req, res) => {
       reference,
       callback_url: `${callbackBaseUrl}?token=${encodeURIComponent(accessToken)}`, // Redirect user
     });
+
+    console.log(encodeURIComponent(accessToken));
 
     const { authorization_url } = response.data;
 

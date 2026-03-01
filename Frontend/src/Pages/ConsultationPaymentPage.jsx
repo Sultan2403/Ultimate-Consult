@@ -11,7 +11,7 @@ export default function ConsultationPaymentPage() {
           <div className="text-center space-y-2">
             <h1 className="text-3xl md:text-4xl font-bold text-dark">Consultation Payment</h1>
             <p className="text-gray-500 max-w-2xl mx-auto">
-              Complete payment to unlock the consultation intake form. You&apos;ll be redirected automatically after successful payment.
+              Complete payment to unlock the consultation intake form. You'll be redirected automatically after successful payment.
             </p>
           </div>
           <ConsultationPaymentCard />

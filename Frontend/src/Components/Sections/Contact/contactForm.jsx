@@ -44,7 +44,7 @@ export default function Contact_Form({ accessToken = "" }) {
 
     postcustomerData({
       token: accessToken,
-      customerData,
+      formData,
     });
   };
 
@@ -87,18 +87,18 @@ export default function Contact_Form({ accessToken = "" }) {
             label="First Name"
             name="firstName"
             fullWidth
-            value={customerData.firstName}
+            value={formData.firstName}
             onChange={handleChange}
-            error={!!errors.firstName}
+            error={errors.firstName}
             helperText={errors.firstName}
           />
           <TextField
             label="Last Name"
             name="lastName"
             fullWidth
-            value={customerData.lastName}
+            value={formData.lastName}
             onChange={handleChange}
-            error={!!errors.lastName}
+            error={errors.lastName}
             helperText={errors.lastName}
           />
         </div>
@@ -107,27 +107,27 @@ export default function Contact_Form({ accessToken = "" }) {
           label="Phone Number"
           name="phoneNumber"
           fullWidth
-          value={customerData.phoneNumber}
+          value={formData.phoneNumber}
           onChange={handleChange}
-          error={!!errors.phoneNumber}
+          error={errors.phoneNumber}
           helperText={errors.phoneNumber}
         />
         <TextField
           label="Email Address"
           name="email"
           fullWidth
-          value={customerData.email}
+          value={formData.email}
           onChange={handleChange}
-          error={!!errors.email}
+          error={errors.email}
           helperText={errors.email}
         />
         <TextField
           label="Business Name"
           name="businessName"
           fullWidth
-          value={customerData.businessName}
+          value={formData.businessName}
           onChange={handleChange}
-          error={!!errors.businessName}
+          error={errors.businessName}
           helperText={errors.businessName}
         />
         <TextField
@@ -136,9 +136,9 @@ export default function Contact_Form({ accessToken = "" }) {
           multiline
           rows={4}
           fullWidth
-          value={customerData.message}
+          value={formData.message}
           onChange={handleChange}
-          error={!!errors.message}
+          error={errors.message}
           helperText={errors.message}
         />
 
