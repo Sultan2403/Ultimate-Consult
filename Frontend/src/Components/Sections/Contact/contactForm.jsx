@@ -45,14 +45,21 @@ export default function Contact_Form({ accessToken = "" }) {
 
     postcustomerData({
       token: accessToken,
-      formData,
+      customerData: formData,
     });
   };
 
   useEffect(() => {
     if (data?.success) {
       setSuccessMessage("Thank you! We'll be in touch within 24 hours.");
-      setFormData({});
+      setFormData({
+        firstName: "",
+        lastName: "",
+        phoneNumber: "",
+        email: "",
+        businessName: "",
+        message: "",
+      });
       setErrors({});
     }
   }, [data]);

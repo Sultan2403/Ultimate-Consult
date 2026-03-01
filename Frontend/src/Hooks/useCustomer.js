@@ -6,7 +6,7 @@ export default function useCustomer() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const execute = useCallback(async (apiCall) => {
+  const execute = async (apiCall) => {
     setLoading(true);
     setError(null);
     try {
@@ -18,7 +18,7 @@ export default function useCustomer() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }
 
   const methods = {
     initializePayment: (email) =>
