@@ -6,7 +6,7 @@ export default function useCustomer() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const execute = useCallback(async (apiCall) => {
+  const execute = async (apiCall) => {
     setLoading(true);
     setError(null);
     try {
@@ -19,22 +19,16 @@ export default function useCustomer() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
-  const initializePayment = useCallback(
-    (email) => execute(() => api.post("/payments", { email })),
-    [execute],
-  );
+  const methods = {
+    initializePayment: (email) =>
+      execute(() => api.post("/payments", { email })),
+    verifyConsultationToken: (token) =>
+      execute(() => api.get(`/customers/verify/${token}`)),
+    postcustomerData: ({ token, customerData }) =>
+      execute(() => api.post(`/customers/${token}`, customerData)),
+  };
 
-  const verifyConsultationToken = useCallback(
-    (token) => execute(() => api.get(`/customers/verify/${token}`)),
-    [execute],
-  );
-
-  const postcustomerData = useCallback(
-    (token, customerData) => execute(() => api.post(`/customers/${token}`, customerData)),
-    [execute],
-  );
-
-  return { data, loading, error, initializePayment, verifyConsultationToken, postcustomerData };
+  return { data, loading, error, ...methods };
 }
