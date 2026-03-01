@@ -12,8 +12,8 @@ export default function ConsultationVerifyPage() {
   useEffect(() => {
     if (data?.success) {
       setIsVerified(true);
-    }else{
-      verifyConsultationToken(token)
+    } else {
+      verifyConsultationToken(token);
     }
   }, [data]);
 
@@ -44,13 +44,14 @@ export default function ConsultationVerifyPage() {
         {error && (
           <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-center">
             {error?.response?.data?.message || "Unable to verify token."}
+            Support reference: {data?.supportReference}
           </div>
         )}
 
         {isVerified && (
           <>
             <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-700 text-center">
-              Verified. Support reference: {data?.supportReference}
+              Verified.
             </div>
             <Contact_Form accessToken={token} />
           </>
