@@ -29,15 +29,6 @@ export default function useCustomer() {
       execute(() => api.post(`/customers/${token}`, customerData)),
   };
 
-  const verifyConsultationToken = useCallback(
-    (token) => execute(() => api.get(`/customers/verify/${token}`)),
-    [execute],
-  );
-
-  const postcustomerData = useCallback(
-    (token, customerData) => execute(() => api.post(`/customers/${token}`, customerData)),
-    [execute],
-  );
-
-  return { data, loading, error, initializePayment, verifyConsultationToken, postcustomerData };
+ 
+  return { data, loading, error, ...methods };
 }
