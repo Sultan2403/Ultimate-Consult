@@ -1,7 +1,6 @@
-import { TextField, Button } from "@mui/material";
 import WhatsApp_Icon from "../../../assets/Icons/whatsappSvg";
-import { Mail, Send } from "lucide-react";
-import Contact_Form from "./contactForm";
+import { Mail } from "lucide-react";
+import ConsultationPaymentCard from "./consultationPaymentCard";
 
 export default function Contact_Us() {
   return (
@@ -66,8 +65,8 @@ export default function Contact_Us() {
           </span>
         </div>
 
-        {/* Contact Form */}
-        <Contact_Form />
+        {/* Payment before consultation form */}
+        <ConsultationPaymentCard />
       </div>
 
       <div className="my-10 max-w-2xl mx-auto bg-white rounded-xl p-5 shadow-sm text-center">

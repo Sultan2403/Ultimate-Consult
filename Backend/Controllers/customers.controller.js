@@ -1,17 +1,45 @@
 const customersCollection = require("../DB/Models/customers.model");
 const transactionsCollection = require("../DB/Models/transactions.model");
 
+const verifyConsultationAccessToken = async (req, res) => {
+  const accessToken = req.params.token;
+
+  try {
+    const transaction = await transactionsCollection.findOne({
+      accessToken,
+      status: "Successful",
+      tokenUsed: false,
+    });
+
+    if (!transaction) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid or expired consultation access token",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Token is valid",
+      supportReference: transaction.supportReference,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "An error occured while verifying token",
+    });
+  }
+};
+
 const addNewCustomer = async (req, res) => {
   const consultationStatus = "Pending";
   const accessToken = req.params.token;
-  const data = { ...req.body, consultationStatus };
-
 
   try {
     // Try and find and update transaction in db
 
     const updatedTransaction = await transactionsCollection.findOneAndUpdate(
-      { accessToken, status: "Processing" },
+      { accessToken, status: "Successful", tokenUsed: false },
       { tokenUsed: true },
       { new: true },
     );
@@ -22,6 +50,12 @@ const addNewCustomer = async (req, res) => {
         message: "Transaction not found or token already used",
       });
     }
+
+    const data = {
+      ...req.body,
+      consultationStatus,
+      paymentReference: updatedTransaction._id,
+    };
 
     await customersCollection.create(data);
     res
@@ -53,4 +87,5 @@ const getCustomers = async (req, res) => {
 module.exports = {
   addNewCustomer,
   getCustomers,
+  verifyConsultationAccessToken,
 };
