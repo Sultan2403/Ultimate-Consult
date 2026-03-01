@@ -6,7 +6,7 @@ export default function useCustomer() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const execute = async (apiCall) => {
+  const execute = useCallback(async (apiCall) => {
     setLoading(true);
     setError(null);
     try {
@@ -18,7 +18,7 @@ export default function useCustomer() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const methods = {
     initializePayment: (email) =>
@@ -29,5 +29,15 @@ export default function useCustomer() {
       execute(() => api.post(`/customers/${token}`, customerData)),
   };
 
-  return { data, loading, error, ...methods };
+  const verifyConsultationToken = useCallback(
+    (token) => execute(() => api.get(`/customers/verify/${token}`)),
+    [execute],
+  );
+
+  const postcustomerData = useCallback(
+    (token, customerData) => execute(() => api.post(`/customers/${token}`, customerData)),
+    [execute],
+  );
+
+  return { data, loading, error, initializePayment, verifyConsultationToken, postcustomerData };
 }

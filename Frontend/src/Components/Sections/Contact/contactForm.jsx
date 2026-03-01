@@ -6,7 +6,7 @@ import { validateContactForm } from "./contactFormValidation";
 
 export default function Contact_Form({ accessToken = "" }) {
   const { loading, error: apiError, data, postcustomerData } = useCustomer();
-  const [customerData, setFormData] = useState({});
+  const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -28,7 +28,7 @@ export default function Contact_Form({ accessToken = "" }) {
     e.preventDefault();
     setSuccessMessage("");
 
-    const validationErrors = validateContactForm(customerData);
+    const validationErrors = validateContactForm(formData);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
@@ -58,11 +58,7 @@ export default function Contact_Form({ accessToken = "" }) {
 
   return (
     <div className="bg-white p-8 md:p-10 rounded-3xl shadow-lg max-w-4xl mx-auto w-full flex flex-col gap-6">
-      <form
-        id="work-with-us"
-        className="flex flex-col gap-8"
-        onSubmit={handleSubmit}
-      >
+      <form id="work-with-us" className="flex flex-col gap-8" onSubmit={handleSubmit}>
         <div className="text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-dark">
             Consultation Details
