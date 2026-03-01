@@ -6,7 +6,14 @@ import { validateContactForm } from "./contactFormValidation";
 
 export default function Contact_Form({ accessToken = "" }) {
   const { loading, error: apiError, data, postcustomerData } = useCustomer();
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    email: "",
+    businessName: "",
+    message: "",
+  });
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -159,6 +166,7 @@ export default function Contact_Form({ accessToken = "" }) {
           size="large"
           endIcon={<Send />}
           disabled={loading}
+          loading={loading}
           type="submit"
           sx={{
             backgroundColor: "#0247f5",
