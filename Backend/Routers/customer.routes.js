@@ -7,6 +7,5 @@ const authMiddleware = require("../Middlewares/admin.auth");
 const router = express.Router();
 
 router.post("/", celebrate({ body: customerSchema }), addNewCustomer)
-router.get("/", authMiddleware, addNewCustomer)
 
 module.exports = router;
