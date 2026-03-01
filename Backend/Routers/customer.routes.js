@@ -1,11 +1,15 @@
 const { celebrate } = require("celebrate");
 const express = require("express");
-const { addNewCustomer } = require("../Controllers/customers.controller");
+const {
+  addNewCustomer,
+  verifyConsultationAccessToken,
+} = require("../Controllers/customers.controller");
 const { customerSchema } = require("../Schemas/customers.schema");
 const authMiddleware = require("../Middlewares/admin.auth");
 
 const router = express.Router();
 
-router.post("/", celebrate({ body: customerSchema }), addNewCustomer)
+router.get("/verify/:token", verifyConsultationAccessToken);
+router.post("/:token", celebrate({ body: customerSchema }), addNewCustomer);
 
 module.exports = router;
