@@ -72,7 +72,7 @@ const verifyConsultationAccessToken = async ({accessToken}) => {
 
     return {
       success: true,
-      supportReference: transaction.reference
+      supportReference: transaction.supportReference
     };
   } catch (error) {
     console.error("Error verifying consultation access token:", error);
