@@ -34,20 +34,20 @@ const verifyConsultationAccessToken = async (req, res) => {
 const addNewCustomer = async (req, res) => {
   const consultationStatus = "Pending";
   const accessToken = req.params.token;
-  console.log("request body",req.body)
+
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
   try {
-    // Try and find and update transaction in db
-
-    // Introduce rabbitmq here for true acidity
-
-    const updatedTransaction = await transactionsCollection.findOneAndUpdate(
-      { accessToken, status: "Successful", tokenUsed: false },
-      { tokenUsed: true },
-      { new: true },
-    );
+    const updatedTransaction =
+      await transactionsCollection.findOneAndUpdate(
+        { accessToken, status: "Successful", tokenUsed: false },
+        { tokenUsed: true },
+        { new: true, session }
+      );
 
     if (!updatedTransaction) {
+      await session.abortTransaction();
       return res.status(404).json({
         success: false,
         message: "Transaction not found or token already used",
@@ -60,23 +60,24 @@ const addNewCustomer = async (req, res) => {
       paymentReference: updatedTransaction.reference,
     };
 
-    console.log(data)
+    await customersCollection.create([data], { session });
 
-    await customersCollection.create(data);
-    res
-      .status(201)
-      .json({
-        success: true,
-        message:
-          "Your request was successful. We'll get in touch with you within 24 hours",
-      });
+    await session.commitTransaction();
+
+    res.status(201).json({
+      success: true,
+      message:
+        "Your request was successful. We'll get in touch with you within 24 hours",
+    });
   } catch (error) {
-    console.error(error)
+    await session.abortTransaction();
+    console.error(error);
     res.status(500).json({
       success: false,
-      message: "An error occured while processing your request",
-      error: error.message,
+      message: "An error occurred while processing your request",
     });
+  } finally {
+    session.endSession();
   }
 };
 
