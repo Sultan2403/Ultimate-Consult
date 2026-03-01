@@ -54,7 +54,7 @@ const addNewCustomer = async (req, res) => {
     const data = {
       ...req.body,
       consultationStatus,
-      paymentReference: updatedTransaction._id,
+      paymentReference: updatedTransaction.reference,
     };
 
     await customersCollection.create(data);
@@ -66,6 +66,7 @@ const addNewCustomer = async (req, res) => {
           "Your request was successful. We'll get in touch with you within 24 hours",
       });
   } catch (error) {
+    console.error(error)
     res.status(500).json({
       success: false,
       message: "An error occured while processing your request",

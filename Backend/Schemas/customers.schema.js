@@ -1,7 +1,7 @@
 const { Joi } = require("celebrate");
 const { parsePhoneNumberFromString } = require("libphonenumber-js");
 
-const customerSchema = Joi.object({
+const createCustomerSchema = Joi.object({
   firstName: Joi.string().trim().required().messages({
     "any.required": "First name is required",
     "string.empty": "First name cannot be empty",
@@ -52,4 +52,4 @@ const customerSchema = Joi.object({
     }),
 }).options({ stripUnknown: true });
 
-module.exports = { customerSchema };
+module.exports = { createCustomerSchema };

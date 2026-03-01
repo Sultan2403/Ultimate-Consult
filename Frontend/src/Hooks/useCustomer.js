@@ -26,7 +26,7 @@ export default function useCustomer() {
     verifyConsultationToken: (token) =>
       execute(() => api.get(`/customers/verify/${token}`)),
     postcustomerData: ({ token, customerData }) =>
-      execute(() => api.post(`/customers/${token}`, customerData)),
+      execute(() => api.post(`/customers/?token=${token}`, customerData)),
   };
 
  

@@ -50,9 +50,9 @@ const customerSchema = new mongoose.Schema(
     },
 
     paymentReference: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Transaction",
+      type: String,
       required: true,
+      unique: true
     },
 
   },
