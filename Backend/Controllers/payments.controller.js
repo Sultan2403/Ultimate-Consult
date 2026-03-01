@@ -22,7 +22,8 @@ const initialize_User_Payment = async (req, res) => {
     "CONS-" + Math.random().toString(36).substring(2, 8).toUpperCase(); // Generates a random support reference
 
   const callbackBaseUrl =
-    process.env.CLIENT_VERIFY_URL || "http://localhost:5173/consultation/verify";
+    process.env.CLIENT_VERIFY_URL ||
+    "http://localhost:5173/consultation/verify";
 
   try {
     // Create transaction doc in db
@@ -31,7 +32,7 @@ const initialize_User_Payment = async (req, res) => {
       accessToken,
       supportReference,
       tokenUsed: false,
-      amount
+      amount,
     });
 
     // initialize paystack transaction
@@ -42,11 +43,11 @@ const initialize_User_Payment = async (req, res) => {
       callback_url: `${callbackBaseUrl}?token=${encodeURIComponent(accessToken)}`, // Redirect user
     });
 
-    console.log(encodeURIComponent(accessToken));
-
     const { authorization_url } = response.data;
 
-    res.status(200).json({ authorization_url, success: true, reference, accessToken });
+    res
+      .status(200)
+      .json({ authorization_url, success: true, reference, accessToken });
   } catch (error) {
     console.error("Payment init error:", error.message);
     res.status(500).json({

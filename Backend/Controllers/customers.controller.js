@@ -7,9 +7,9 @@ const verifyConsultationAccessToken = async (req, res) => {
   try {
     const transaction = await transactionsCollection.findOne({
       accessToken,
-      status: "Successful",
       tokenUsed: false,
     });
+    console.log(transaction)
 
     if (!transaction) {
       return res.status(400).json({

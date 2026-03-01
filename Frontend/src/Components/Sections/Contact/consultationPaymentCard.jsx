@@ -18,7 +18,7 @@ export default function ConsultationPaymentCard() {
     if (data?.success) {
       window.location.href = data?.authorization_url;
     }
-  }, []);
+  }, [data]);
 
   return (
     <div className="bg-white p-8 md:p-10 rounded-3xl shadow-lg max-w-3xl mx-auto w-full flex flex-col gap-6">

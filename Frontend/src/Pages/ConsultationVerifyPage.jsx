@@ -6,11 +6,13 @@ import useCustomer from "../Hooks/useCustomer";
 export default function ConsultationVerifyPage() {
   const [searchParams] = useSearchParams();
   const token = useMemo(() => searchParams.get("token") || "", [searchParams]);
+  console.log(token)
   const { verifyConsultationToken, loading, error, data } = useCustomer();
   const [isVerified, setIsVerified] = useState(false);
 
 
   useEffect(() => {
+    console.log(data)
     if (data?.success) {
       setIsVerified(true);
 
@@ -18,6 +20,10 @@ export default function ConsultationVerifyPage() {
       verifyConsultationToken(token);
     }
   }, [data]);
+  useEffect(() => {
+    console.error(error, error?.response, error?.response?.data)
+    
+  }, [error]);
 
   return (
     <section className="w-full py-24 px-6 md:px-20 bg-light min-h-screen">

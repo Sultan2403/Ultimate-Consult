@@ -9,6 +9,8 @@ const handleChargeSuccess = async (reference) => {
       { new: true },
     );
 
+    console.log("webhook handler hit",updated_Transaction)
+
     if (!updated_Transacation) {
       return { alreadyProcessed: true }; // Transaction was already processed or not found
     }
