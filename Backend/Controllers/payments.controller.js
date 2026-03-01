@@ -84,12 +84,10 @@ const webhook_Handler = async (req, res) => {
 
   if (message.event === "charge.success") {
     try {
-      const result = await handleChargeSuccess(reference);
-      if (result.alreadyProcessed || result.processed) {
-        return res.sendStatus(200); // Idempotent message for already processed transactions
-      }
+ await handleChargeSuccess(reference);
 
-      res.sendStatus(200);
+
+     return res.sendStatus(200);
     } catch (error) {
       console.error("Error updating transaction:", error);
       res.status(500).json({ success: false, message: "An error occured" });

@@ -3,19 +3,11 @@ const transactionsCollection = require("../DB/Models/transactions.model");
 const handleChargeSuccess = async (reference) => {
   try {
     // Update transaction in db
-    const updated_Transaction = await transactionsCollection.findOneAndUpdate(
+    await transactionsCollection.findOneAndUpdate(
       { reference, status: "Processing" },
       { status: "Successful" },
       { new: true },
     );
-
-    console.log("webhook handler hit", updated_Transaction)
-
-    if (!updated_Transaction) {
-      return { alreadyProcessed: true }; // Transaction was already processed or not found
-    }
-
-    return { processed: true };
   } catch (error) {
     throw new Error("Error processing successful charge: " + error.message);
   }
