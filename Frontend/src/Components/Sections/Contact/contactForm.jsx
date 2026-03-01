@@ -5,15 +5,8 @@ import useCustomer from "../../../Hooks/useCustomer";
 import { validateContactForm } from "./contactFormValidation";
 
 export default function Contact_Form({ accessToken = "" }) {
-  const { loading, error: apiError, postcustomerData } = useCustomer();
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phoneNumber: "",
-    businessName: "",
-    message: "",
-  });
+  const { loading, error: apiError, data, postcustomerData } = useCustomer();
+  const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -49,33 +42,37 @@ export default function Contact_Form({ accessToken = "" }) {
       return;
     }
 
-    const response = await postcustomerData(accessToken, formData);
+    postcustomerData({
+      token: accessToken,
+      customerData,
+    });
+  };
 
-    if (response?.success) {
+  useEffect(() => {
+    if (data?.success) {
       setSuccessMessage("Thank you! We'll be in touch within 24 hours.");
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phoneNumber: "",
-        businessName: "",
-        message: "",
-      });
+      setFormData({});
       setErrors({});
     }
-  };
+  }, [data]);
 
   return (
     <div className="bg-white p-8 md:p-10 rounded-3xl shadow-lg max-w-4xl mx-auto w-full flex flex-col gap-6">
       <form id="work-with-us" className="flex flex-col gap-8" onSubmit={handleSubmit}>
         <div className="text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-dark">Consultation Details</h2>
-          <p className="text-gray-500 text-base md:text-lg mt-1">We usually respond within 24 hours</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-dark">
+            Consultation Details
+          </h2>
+          <p className="text-gray-500 text-base md:text-lg mt-1">
+            We usually respond within 24 hours
+          </p>
         </div>
 
         {(apiError || errors.form) && (
           <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
-            {errors.form || apiError?.response?.data?.message || "Failed to submit form. Please try again."}
+            {errors.form ||
+              apiError?.response?.data?.message ||
+              "Failed to submit form. Please try again."}
           </div>
         )}
 
@@ -86,14 +83,64 @@ export default function Contact_Form({ accessToken = "" }) {
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <TextField label="First Name" name="firstName" fullWidth value={formData.firstName} onChange={handleChange} error={!!errors.firstName} helperText={errors.firstName} />
-          <TextField label="Last Name" name="lastName" fullWidth value={formData.lastName} onChange={handleChange} error={!!errors.lastName} helperText={errors.lastName} />
+          <TextField
+            label="First Name"
+            name="firstName"
+            fullWidth
+            value={customerData.firstName}
+            onChange={handleChange}
+            error={!!errors.firstName}
+            helperText={errors.firstName}
+          />
+          <TextField
+            label="Last Name"
+            name="lastName"
+            fullWidth
+            value={customerData.lastName}
+            onChange={handleChange}
+            error={!!errors.lastName}
+            helperText={errors.lastName}
+          />
         </div>
 
-        <TextField label="Phone Number" name="phoneNumber" fullWidth value={formData.phoneNumber} onChange={handleChange} error={!!errors.phoneNumber} helperText={errors.phoneNumber} />
-        <TextField label="Email Address" name="email" fullWidth value={formData.email} onChange={handleChange} error={!!errors.email} helperText={errors.email} />
-        <TextField label="Business Name" name="businessName" fullWidth value={formData.businessName} onChange={handleChange} error={!!errors.businessName} helperText={errors.businessName} />
-        <TextField label="Message / Request" name="message" multiline rows={4} fullWidth value={formData.message} onChange={handleChange} error={!!errors.message} helperText={errors.message} />
+        <TextField
+          label="Phone Number"
+          name="phoneNumber"
+          fullWidth
+          value={customerData.phoneNumber}
+          onChange={handleChange}
+          error={!!errors.phoneNumber}
+          helperText={errors.phoneNumber}
+        />
+        <TextField
+          label="Email Address"
+          name="email"
+          fullWidth
+          value={customerData.email}
+          onChange={handleChange}
+          error={!!errors.email}
+          helperText={errors.email}
+        />
+        <TextField
+          label="Business Name"
+          name="businessName"
+          fullWidth
+          value={customerData.businessName}
+          onChange={handleChange}
+          error={!!errors.businessName}
+          helperText={errors.businessName}
+        />
+        <TextField
+          label="Message / Request"
+          name="message"
+          multiline
+          rows={4}
+          fullWidth
+          value={customerData.message}
+          onChange={handleChange}
+          error={!!errors.message}
+          helperText={errors.message}
+        />
 
         <Button
           variant="contained"

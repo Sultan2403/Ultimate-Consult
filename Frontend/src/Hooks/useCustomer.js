@@ -10,9 +10,8 @@ export default function useCustomer() {
     setLoading(true);
     setError(null);
     try {
-      const responseData = await apiCall();
-      setData(responseData);
-      return responseData;
+      const response = await apiCall();
+      setData(response);
     } catch (err) {
       setError(err);
       throw err;
@@ -21,10 +20,14 @@ export default function useCustomer() {
     }
   }, []);
 
-  const initializePayment = useCallback(
-    (email) => execute(() => api.post("/payments", { email })),
-    [execute],
-  );
+  const methods = {
+    initializePayment: (email) =>
+      execute(() => api.post("/payments", { email })),
+    verifyConsultationToken: (token) =>
+      execute(() => api.get(`/customers/verify/${token}`)),
+    postcustomerData: ({ token, customerData }) =>
+      execute(() => api.post(`/customers/${token}`, customerData)),
+  };
 
   const verifyConsultationToken = useCallback(
     (token) => execute(() => api.get(`/customers/verify/${token}`)),

@@ -9,27 +9,26 @@ export default function ConsultationVerifyPage() {
   const { verifyConsultationToken, loading, error, data } = useCustomer();
   const [isVerified, setIsVerified] = useState(false);
 
+
   useEffect(() => {
-    if (!token) return;
+    if (data?.success) {
+      setIsVerified(true);
 
-    const verifyToken = async () => {
-      try {
-        const response = await verifyConsultationToken(token);
-        setIsVerified(!!response?.success);
-      } catch {
-        setIsVerified(false);
-      }
-    };
-
-    verifyToken();
-  }, [token, verifyConsultationToken]);
+    } else {
+      verifyConsultationToken(token);
+    }
+  }, [data]);
 
   return (
     <section className="w-full py-24 px-6 md:px-20 bg-light min-h-screen">
       <div className="max-w-5xl mx-auto flex flex-col gap-8">
         <div className="text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-dark">Consultation Access Verification</h1>
-          <p className="text-gray-500 mt-3 max-w-xl mx-auto">We are validating your payment access token.</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-dark">
+            Consultation Access Verification
+          </h1>
+          <p className="text-gray-500 mt-3 max-w-xl mx-auto">
+            We are validating your payment access token.
+          </p>
         </div>
 
         {!token && (
@@ -47,13 +46,14 @@ export default function ConsultationVerifyPage() {
         {error && (
           <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-center">
             {error?.response?.data?.message || "Unable to verify token."}
+            Support reference: {data?.supportReference}
           </div>
         )}
 
         {isVerified && (
           <>
             <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-700 text-center">
-              Verified. Support reference: {data?.supportReference}
+              Verified.
             </div>
             <Contact_Form accessToken={token} />
           </>

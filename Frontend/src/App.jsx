@@ -7,7 +7,6 @@ import HeroSec from "./Components/Sections/Hero/HeroSection";
 import What_We_Offer from "./Components/Sections/Mini Sections/whatWeOffer";
 import Why_Choose_Us from "./Components/Sections/Mini Sections/why choose us";
 import Services_Sec from "./Components/Sections/Services/services";
-import ConsultationPaymentPage from "./Pages/ConsultationPaymentPage";
 import ConsultationVerifyPage from "./Pages/ConsultationVerifyPage";
 import "./App.css";
 
@@ -30,7 +29,6 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/consultation/pay" element={<ConsultationPaymentPage />} />
       <Route path="/consultation/verify" element={<ConsultationVerifyPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

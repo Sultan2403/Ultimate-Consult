@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import WhatsApp_Icon from "../../../assets/Icons/whatsappSvg";
 import { ArrowRight, Mail } from "lucide-react";
+import ConsultationPaymentCard from "./consultationPaymentCard";
 
 export default function Contact_Us() {
   return (
@@ -62,6 +63,9 @@ export default function Contact_Us() {
             Go to Consultation Payment <ArrowRight size={18} />
           </Link>
         </div>
+
+        {/* Payment before consultation form */}
+        <ConsultationPaymentCard />
       </div>
 
       <div className="my-10 max-w-2xl mx-auto bg-white rounded-xl p-5 shadow-sm text-center">

@@ -5,7 +5,6 @@ const {
   verifyConsultationAccessToken,
 } = require("../Controllers/customers.controller");
 const { customerSchema } = require("../Schemas/customers.schema");
-const authMiddleware = require("../Middlewares/admin.auth");
 
 const router = express.Router();
 
