@@ -10,9 +10,8 @@ export default function useCustomer() {
     setLoading(true);
     setError(null);
     try {
-      const responseData = await apiCall();
-      setData(responseData);
-      return responseData;
+      const response = await apiCall();
+      setData(response);
     } catch (err) {
       setError(err);
       throw err;

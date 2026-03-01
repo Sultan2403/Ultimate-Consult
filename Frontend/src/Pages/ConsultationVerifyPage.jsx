@@ -9,9 +9,11 @@ export default function ConsultationVerifyPage() {
   const { verifyConsultationToken, loading, error, data } = useCustomer();
   const [isVerified, setIsVerified] = useState(false);
 
+
   useEffect(() => {
     if (data?.success) {
       setIsVerified(true);
+
     } else {
       verifyConsultationToken(token);
     }
