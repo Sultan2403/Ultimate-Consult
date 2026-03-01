@@ -34,9 +34,12 @@ const verifyConsultationAccessToken = async (req, res) => {
 const addNewCustomer = async (req, res) => {
   const consultationStatus = "Pending";
   const accessToken = req.params.token;
+  console.log("request body",req.body)
 
   try {
     // Try and find and update transaction in db
+
+    // Introduce rabbitmq here for true acidity
 
     const updatedTransaction = await transactionsCollection.findOneAndUpdate(
       { accessToken, status: "Successful", tokenUsed: false },
@@ -56,6 +59,8 @@ const addNewCustomer = async (req, res) => {
       consultationStatus,
       paymentReference: updatedTransaction.reference,
     };
+
+    console.log(data)
 
     await customersCollection.create(data);
     res
