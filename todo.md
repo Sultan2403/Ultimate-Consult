@@ -1,0 +1,1 @@
+# Change paystack key in .env to use proper credentials before pushing to prod
