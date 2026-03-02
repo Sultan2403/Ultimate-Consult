@@ -19,9 +19,7 @@ const { authLimiter } = require("./Middlewares/rate-limiter.middleware");
 const verifyPaystackWebhook = require("./Middlewares/paystack_webhooks.middleware");
 const { webhook_Handler } = require("./Controllers/payments.controller");
 
-
 connectDB();
-
 
 app.use(
   cors({
