@@ -4,7 +4,7 @@ let io;
 
 function initSocket(server) {
   io = new Server(server, {
-    cors: { origin: "https://localhost:5000" },
+    cors: { origin: "http://localhost:5000" },
   });
 
   io.on("connection", (socket) => {
