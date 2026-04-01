@@ -63,9 +63,6 @@ export default function Contact_Us() {
             Go to Consultation Payment <ArrowRight size={18} />
           </Link>
         </div>
-
-        {/* Payment before consultation form */}
-        <ConsultationPaymentCard />
       </div>
 
       <div className="my-10 max-w-2xl mx-auto bg-white rounded-xl p-5 shadow-sm text-center">
