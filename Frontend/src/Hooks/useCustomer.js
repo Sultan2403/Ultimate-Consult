@@ -22,7 +22,7 @@ export default function useCustomer() {
 
   const methods = {
     postCustomerData: (customerData) =>
-      execute(customerApi.postCustomerData(customerData)),
+      execute(() => customerApi.postCustomerData(customerData)),
   };
 
   return { data, loading, error, ...methods };
