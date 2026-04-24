@@ -14,7 +14,6 @@ export default function useCustomer() {
       setData(response);
     } catch (err) {
       setError(err);
-      throw err;
     } finally {
       setLoading(false);
     }
