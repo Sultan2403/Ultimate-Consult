@@ -1,61 +1,69 @@
 import { useState } from "react";
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
+
+const navLinks = [
+  { label: "Home", href: "#home" },
+  { label: "Services", href: "#services" },
+  { label: "About Us", href: "#about" },
+  { label: "Contact", href: "#contact" },
+];
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+
   return (
-    <header className="w-full sticky top-0 z-50 bg-light/95 backdrop-blur border-b border-gray-200">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-20 h-24">
-        {/* Logo */}
-        <a
-          href="#home"
-          className="text-2xl md:text-3xl font-bold text-primary tracking-tight"
-        >
-          Ultimate Consult
+    <header className="fixed top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md shadow-sm">
+      <nav className="mx-auto flex h-[68px] w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-[76px] lg:px-8">
+        <a href="#home" className="text-sm font-semibold tracking-tight text-slate-900 lg:text-base">
+          UltimateConsult
         </a>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-10">
-          {["Home", "About", "Services", "Contact"].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              className="text-dark text-base font-medium hover:text-primary transition-colors"
-            >
-              {item}
+        <div className="hidden items-center gap-8 md:flex">
+          {navLinks.map((link) => (
+            <a key={link.label} href={link.href} className="text-xs font-medium text-slate-600 transition-colors hover:text-slate-900 lg:text-sm">
+              {link.label}
             </a>
           ))}
+        </div>
 
-          <a
-            href="#contact"
-            className="ml-2 bg-primary hover:bg-secondary text-white px-7 py-3 rounded-full font-semibold transition-colors"
-          >
-            Get Consulting
-          </a>
-        </nav>
-
-        {/* Mobile Hamburger */}
-        <button
-          className="md:hidden p-2 rounded-lg hover:bg-gray-100"
-          onClick={() => setOpen(true)}
+        <a
+          href="#contact"
+          className="hidden rounded bg-emerald-600 px-4 py-2 text-xs font-semibold text-white transition hover:bg-emerald-700 md:inline-flex lg:text-sm"
         >
-          <Menu />
+          Get Consultation
+        </a>
+
+        <button
+          type="button"
+          className="rounded p-2 text-slate-700 transition hover:bg-slate-100 md:hidden"
+          onClick={() => setOpen((prev) => !prev)}
+          aria-label="Toggle menu"
+        >
+          {open ? <X size={22} /> : <Menu size={22} />}
         </button>
-      </div>
+      </nav>
+
       {open && (
-        <div className="md:hidden bg-light shadow-md border-t">
-          <nav className="flex flex-col gap-4 p-6">
-            {["home", "about", "services", "contact"].map((item) => (
+        <div className="border-t border-slate-200 bg-white px-6 py-6 shadow-xl md:hidden">
+          <div className="space-y-5">
+            {navLinks.map((link) => (
               <a
-                key={item}
-                href={`#${item}`}
+                key={link.label}
+                href={link.href}
                 onClick={() => setOpen(false)}
-                className="text-dark font-medium"
+                className="block text-base font-medium text-slate-700"
               >
-                {item.charAt(0).toUpperCase() + item.slice(1)}
+                {link.label}
               </a>
             ))}
-          </nav>
+            <a
+              href="#contact"
+              onClick={() => setOpen(false)}
+              className="mt-4 inline-flex w-full justify-center rounded-xl bg-emerald-600 px-5 py-3 font-semibold text-white"
+            >
+              Get Consultation
+            </a>
+          </div>
         </div>
       )}
     </header>

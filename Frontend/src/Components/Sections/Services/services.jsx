@@ -1,71 +1,78 @@
-import { BookOpen, FileText, Users, Briefcase, LineChart } from "lucide-react";
+import {
+  BookOpen,
+  BriefcaseBusiness,
+  CheckCircle2,
+  FileText,
+  Handshake,
+  Users,
+} from "lucide-react";
+
+const services = [
+  {
+    icon: <BookOpen size={20} />,
+    title: "Bookkeeping & Financial Accounting",
+    desc: "Precise tracking of all business transactions ensuring your ledgers are always balanced and up-to-date.",
+  },
+  {
+    icon: <FileText size={20} />,
+    title: "Tax Preparation & Filing",
+    desc: "Stay compliant with local regulations and minimize liabilities through strategic tax planning.",
+  },
+  {
+    icon: <Users size={20} />,
+    title: "Payroll Services",
+    desc: "Automated and accurate payroll processing for your employees, handling all statutory deductions.",
+  },
+  {
+    icon: <BriefcaseBusiness size={20} />,
+    title: "Business Registration Support",
+    desc: "Expert guidance through the legal hurdles of starting and formalizing your business entity.",
+  },
+  {
+    icon: <Handshake size={20} />,
+    title: "Financial Advisory & Budgeting",
+    desc: "Strategic insights and forecasting to help you allocate resources effectively for long-term growth.",
+  },
+];
+
+const benefits = ["Meticulous Accuracy", "Statutory Compliance", "Dedicated Support"];
 
 export default function Services_Sec() {
-  const services = [
-    {
-      icon: <BookOpen size={28} />,
-      title: "Bookkeeping & Financial Accounting",
-      desc: "We keep your financial records clean, organized, and updated so you always know where your business stands.",
-    },
-    {
-      icon: <FileText size={28} />,
-      title: "Tax Preparation & Filing",
-      desc: "Avoid penalties and last-minute stress. We help you stay tax-compliant all year round.",
-    },
-    {
-      icon: <Users size={28} />,
-      title: "Payroll Services",
-      desc: "We manage staff salaries, deductions, and payroll reports—accurately and on time.",
-    },
-    {
-      icon: <Briefcase size={28} />,
-      title: "Business Registration Support",
-      desc: "Start your business the right way with proper documentation and CAC registration assistance.",
-    },
-    {
-      icon: <LineChart size={28} />,
-      title: "Financial Advisory & Budgeting",
-      desc: "Make smarter business decisions with expert financial guidance and planning.",
-    },
-  ];
-
   return (
-    <section id="services" className="w-full py-16 px-6 md:px-20 bg-light">
-      <div className="max-w-6xl mx-auto flex flex-col gap-16">
-        {/* Page Heading */}
-        <div className="text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary">
-            Our Services
-          </h1>
-          <p className="text-gray-700 mt-4 max-w-2xl mx-auto">
-            Comprehensive accounting and business solutions to help your
-            business stay organized, compliant, and ready for growth.
-          </p>
+    <section id="services" className="bg-slate-100 px-4 py-14 sm:px-6 lg:px-8 lg:py-24">
+      <div className="mx-auto w-full max-w-7xl">
+        <div className="mb-10 text-center lg:mb-16">
+          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-emerald-600 md:text-xs">Our Expertise</span>
+          <h2 className="mt-3 text-3xl font-semibold text-black md:text-4xl">Specialized Financial Services</h2>
+          <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-emerald-600" />
         </div>
 
-        {/* Services Grid */}
-        <div className="flex flex-wrap justify-center gap-6">
-          {services.map((service, idx) => (
-            <div
-              key={idx}
-              className="flex flex-col md:flex-row items-center gap-4 p-4 px-6 rounded-2xl bg-white shadow-sm hover:shadow-md transition-all duration-300 w-full sm:w-[48%] min-h-[180px]"
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+          {services.map((service) => (
+            <article
+              key={service.title}
+              className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg lg:p-8"
             >
-              {/* Icon */}
-              <div className="flex-shrink-0 p-3 bg-blue-100 rounded-xl text-blue-700">
-                {service.icon}
-              </div>
-
-              {/* Text */}
-              <div className="flex-1 text-center md:text-left">
-                <h2 className="text-xl font-semibold text-dark mb-1">
-                  {service.title}
-                </h2>
-                <p className="text-gray-500 text-sm leading-relaxed">
-                  {service.desc}
-                </p>
-              </div>
-            </div>
+              <div className="mb-4 inline-flex rounded-lg bg-emerald-50 p-2 text-emerald-700">{service.icon}</div>
+              <h3 className="mb-3 text-xl font-semibold text-slate-900">{service.title}</h3>
+              <p className="text-sm leading-relaxed text-slate-600">{service.desc}</p>
+            </article>
           ))}
+
+          <article className="rounded-2xl bg-slate-950 p-6 text-white shadow-lg lg:p-8">
+            <h3 className="mb-5 text-2xl font-semibold">Why Partner With Us?</h3>
+            <ul className="mb-7 space-y-3">
+              {benefits.map((benefit) => (
+                <li key={benefit} className="flex items-center gap-2 text-sm text-white/90">
+                  <CheckCircle2 size={16} className="text-emerald-400" />
+                  {benefit}
+                </li>
+              ))}
+            </ul>
+            <a href="#contact" className="inline-flex w-full justify-center rounded-lg bg-emerald-600 px-4 py-3 text-sm font-semibold text-white">
+              Request Info
+            </a>
+          </article>
         </div>
       </div>
     </section>
