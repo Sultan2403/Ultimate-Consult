@@ -19,7 +19,10 @@ export const validateContactForm = (formData) => {
   }
 
   // Phone Number validation (optional but if provided, must be valid)
-  if (formData.phoneNumber && formData.phoneNumber.trim() !== "") {
+  if (!formData.phoneNumber) {
+    errors.phoneNumber =
+      "Phone number must be a valid international phone number";
+  } else {
     const phoneRegex = /^\+?[1-9]\d{1,14}$/;
     if (!phoneRegex.test(formData.phoneNumber.trim().replace(/\s|-/g, ""))) {
       errors.phoneNumber =
@@ -27,13 +30,13 @@ export const validateContactForm = (formData) => {
     }
   }
 
-  if(!formData.businessName || formData.businessName.trim() === "") {
+  if (!formData.businessName || formData.businessName.trim() === "") {
     errors.businessName = "Business name is required";
-  } else if(formData.businessName.trim().length < 5) {
+  } else if (formData.businessName.trim().length < 5) {
     errors.businessName = "Business name must be at least 5 characters long";
   }
 
-  if(!formData.message || formData.message.trim() === "") {
+  if (!formData.message || formData.message.trim() === "") {
     errors.message = "Message is required";
   } else if (formData.message.trim().length < 50) {
     errors.message = "Message must be at least 50 characters long";

@@ -6,39 +6,43 @@ const customersCollection = require("../DB/Models/customers.model");
  * Create a customer atomically with transaction.
  * Returns an object with { success, customer?, error? }
  */
-async function createCustomerWithTransaction({ accessToken, customerData }) {
-  const session = await mongoose.startSession();
-  session.startTransaction();
+async function createCustomerWithTransaction({
+  /*accessToken,*/ customerData,
+}) {
+  // const session = await mongoose.startSession();
+  // session.startTransaction();
 
   try {
-    // 1️⃣ Mark the transaction token as used
-    const updatedTransaction = await transactionsCollection.findOneAndUpdate(
-      { accessToken, status: "Successful", tokenUsed: false },
-      { tokenUsed: true },
-      { new: true, session },
-    );
+    // // 1️⃣ Mark the transaction token as used
+    // const updatedTransaction = await transactionsCollection.findOneAndUpdate(
+    //   { accessToken, status: "Successful", tokenUsed: false },
+    //   { tokenUsed: true },
+    //   { new: true, session },
+    // );
 
-    if (!updatedTransaction) {
-      // No transaction found or already used
-      await session.abortTransaction();
-      return {
-        success: false,
-        error: "Transaction not found or token already used",
-      };
-    }
+    // if (!updatedTransaction) {
+    //   // No transaction found or already used
+    //   await session.abortTransaction();
+    //   return {
+    //     success: false,
+    //     error: "Transaction not found or token already used",
+    //   };
+    // }
 
     // 2️⃣ Prepare customer data
     const data = {
       ...customerData,
-      consultationStatus: "Pending",
-      paymentReference: updatedTransaction.reference,
+      // consultationStatus: "Pending",
+      // paymentReference: updatedTransaction.reference,
     };
 
     // 3️⃣ Create the customer in the same transaction
-    await customersCollection.create([data], { session });
+    // await customersCollection.create([data], { session });
 
-    // 4️⃣ Commit transaction
-    await session.commitTransaction();
+    // // 4️⃣ Commit transaction
+    // await session.commitTransaction();
+
+    await customersCollection.create(data);
 
     return {
       success: true,
@@ -47,15 +51,15 @@ async function createCustomerWithTransaction({ accessToken, customerData }) {
     };
   } catch (error) {
     // Roll back transaction on error
-    await session.abortTransaction();
-    return { success: false, error };
-  } finally {
-    // ✅ always close the session
-    session.endSession();
-  }
+    // await session.abortTransaction();
+    return { success: false, error, message: "Something went wrong and we couldn't process your request please try again" };
+  } // finally {
+  //   // ✅ always close the session
+  //   // session.endSession();
+  // }
 }
 
-const verifyConsultationAccessToken = async ({accessToken}) => {
+const verifyConsultationAccessToken = async ({ accessToken }) => {
   try {
     const transaction = await transactionsCollection.findOne({
       accessToken,
@@ -72,7 +76,7 @@ const verifyConsultationAccessToken = async ({accessToken}) => {
 
     return {
       success: true,
-      supportReference: transaction.supportReference
+      supportReference: transaction.supportReference,
     };
   } catch (error) {
     console.error("Error verifying consultation access token:", error);

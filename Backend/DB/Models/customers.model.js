@@ -49,11 +49,11 @@ const customerSchema = new mongoose.Schema(
       required: true,
     },
 
-    paymentReference: {
-      type: String,
-      required: true,
-      unique: true
-    },
+    // paymentReference: {
+    //   type: String,
+    //   required: true,
+    //   unique: true
+    // },
 
   },
   {

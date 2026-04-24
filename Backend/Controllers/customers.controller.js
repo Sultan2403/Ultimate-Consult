@@ -28,22 +28,24 @@ const verifyConsultationAccessTokenController = async (req, res) => {
 };
 
 const addNewCustomer = async (req, res) => {
-  const accessToken = req.params.token;
+  // const accessToken = req.params.token;
 
-  const result = await createCustomerWithTransaction({accessToken, customerData: req.body});
+  const customerData = req.body;
+  const result = await createCustomerWithTransaction({/*accessToken,*/ customerData}); 
 
-  if (!result.success) {
-    return res.status(404).json({
-      success: false,
-      message:
-        typeof result.error === "string" ? result.error : result.error.message,
-    });
-  }
+  // The above line creates a plain customer now. BEWARE
+
+  // if (!result.success) {
+  //   return res.status(404).json({
+  //     success: false,
+  //     message:
+  //       typeof result.error === "string" ? result.error : result.error.message,
+  //   });
+  // }
 
   res.status(201).json({
     success: true,
     message: "Your request was successful. We'll get in touch within 24 hours",
-    customer: result.customer,
   });
 };
 
