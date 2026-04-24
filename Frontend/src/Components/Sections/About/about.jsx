@@ -1,101 +1,61 @@
-import { ShieldCheck, CheckCircle2, Target, Eye } from "lucide-react";
+import { Eye, ShieldCheck, Target } from "lucide-react";
+
+const aboutImage =
+  "https://lh3.googleusercontent.com/aida-public/AB6AXuAHI5-UocDKsn06P1SXnO_Zxnx8T3Ssb0lwvpDbqCr_GdPBRldLCA7bdtMfRUJJ_ShgZqHuGS6LKahA_-mTOZlBNi0Enthp5N7yReW1ZOKnELSEJkMDiiyiEchr6rP7HaCg1IaWeHkOubE70s1-208FVUOCTN2-5Q8MoTdwvUrCxPMOo7Z0nCVjkr8fYC3Y6n_OVVYnR4U7diUTAYX4j5aiU8HwSiKP_EtM23jCq6ToSGOYjBT30g38_xAE89qByxInRZJRTUAF4XE";
+
+const valueCards = [
+  {
+    icon: <Target size={18} />,
+    title: "Our Mission",
+    desc: "To empower businesses through precise financial management and reliable advisory services that drive sustainable growth.",
+  },
+  {
+    icon: <Eye size={18} />,
+    title: "Our Vision",
+    desc: "To be the most trusted financial partner for growing enterprises in the digital economy, recognized for excellence and innovation.",
+  },
+];
+
+const coreValues = ["Integrity", "Accuracy", "Support", "Professionalism"];
 
 export default function About_Sec() {
   return (
-    <section id="about" className="w-full p-6 mt-8">
-      <div className="max-w-6xl mx-auto flex flex-col gap-10">
-        {/* Who We Are */}
-        <div className="flex flex-col gap-4 items-center text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary">
-            Who We Are
-          </h1>
-          <p className="text-gray-800 max-w-3xl leading-relaxed">
-            Ultimate Consult is a professional accounting and business support
-            firm helping small and medium-sized businesses maintain accurate
-            financial records, ensure compliance, and make informed financial
-            decisions. Our approach is built on{" "}
-            <span className="text-blue-700 font-semibold">
-              clarity, structure, and expert guidance
-            </span>
-            .
-          </p>
+    <section id="about" className="bg-white px-4 py-14 sm:px-6 lg:px-8 lg:py-24">
+      <div className="mx-auto w-full max-w-7xl">
+        <div className="mb-14 grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-emerald-600 md:text-xs">About Us</span>
+            <h2 className="mb-4 mt-3 text-3xl font-semibold text-black md:text-4xl">Who We Are</h2>
+            <p className="text-base leading-relaxed text-slate-600 md:text-lg">
+              UltimateConsult is a premium accounting firm dedicated to providing business owners with the fiscal clarity they need to thrive. We bridge the gap between complex financial data and actionable business strategy.
+            </p>
+          </div>
+
+          <div className="h-[250px] overflow-hidden rounded-3xl shadow-xl sm:h-[320px] lg:h-[400px]">
+            <img src={aboutImage} alt="Our Professional Team" className="h-full w-full object-cover" />
+          </div>
         </div>
 
-        {/* Mission / Vision / Values */}
-        <div className="grid gap-6 md:grid-cols-3">
-          {/* Mission */}
-          <div className="group p-6 rounded-2xl bg-white border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-lg bg-blue-100 text-blue-700 group-hover:scale-110 transition">
-                <Target size={20} />
-              </div>
-              <h2 className="text-xl font-semibold text-blue-700">
-                Our Mission
-              </h2>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+          {valueCards.map((card) => (
+            <article key={card.title} className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm lg:p-8">
+              <div className="mb-6 inline-flex rounded-2xl bg-emerald-100 p-3 text-emerald-700">{card.icon}</div>
+              <h3 className="mb-3 text-2xl font-semibold text-slate-900">{card.title}</h3>
+              <p className="text-sm leading-relaxed text-slate-600">{card.desc}</p>
+            </article>
+          ))}
+
+          <article className="rounded-3xl bg-slate-950 p-6 text-white shadow-lg lg:p-8">
+            <h3 className="mb-6 text-2xl font-semibold">Our Core Values</h3>
+            <div className="grid grid-cols-2 gap-3">
+              {coreValues.map((value) => (
+                <div key={value} className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center">
+                  <ShieldCheck size={16} className="mx-auto mb-2 text-emerald-400" />
+                  <p className="text-xs font-semibold">{value}</p>
+                </div>
+              ))}
             </div>
-            <p className="text-gray-700 text-sm leading-relaxed">
-              To empower businesses with reliable financial records and expert
-              guidance that drive smarter decisions and long-term success.
-            </p>
-          </div>
-
-          {/* Vision */}
-          <div className="group p-6 rounded-2xl bg-white border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-lg bg-blue-100 text-blue-700 group-hover:scale-110 transition">
-                <Eye size={20} />
-              </div>
-              <h2 className="text-xl font-semibold text-blue-700">
-                Our Vision
-              </h2>
-            </div>
-            <p className="text-gray-700 text-sm leading-relaxed">
-              To become the most trusted accounting partner for business owners
-              across Nigeria.
-            </p>
-          </div>
-
-          {/* Values */}
-          <div className="group p-6 rounded-2xl bg-white border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="p-2 rounded-lg bg-blue-100 text-blue-700">
-                <ShieldCheck size={20} />
-              </div>
-              <h2 className="text-xl font-semibold text-blue-700">
-                Our Values
-              </h2>
-            </div>
-
-            <ul className="space-y-3 text-sm text-gray-700">
-              <li className="flex items-center gap-3">
-                <CheckCircle2 size={16} className="text-blue-600" />
-                <span>
-                  <strong>Integrity</strong> — Honest and transparent work
-                </span>
-              </li>
-
-              <li className="flex items-center gap-3">
-                <CheckCircle2 size={16} className="text-blue-600" />
-                <span>
-                  <strong>Accuracy</strong> — Every number verified
-                </span>
-              </li>
-
-              <li className="flex items-center gap-3">
-                <CheckCircle2 size={16} className="text-blue-600" />
-                <span>
-                  <strong>Support</strong> — Guidance beyond compliance
-                </span>
-              </li>
-
-              <li className="flex items-center gap-3">
-                <CheckCircle2 size={16} className="text-blue-600" />
-                <span>
-                  <strong>Professionalism</strong> — High standards, always
-                </span>
-              </li>
-            </ul>
-          </div>
+          </article>
         </div>
       </div>
     </section>

@@ -4,8 +4,7 @@ import Header from "./Components/Header/header";
 import About_Sec from "./Components/Sections/About/about";
 import Contact_Us from "./Components/Sections/Contact/contact";
 import HeroSec from "./Components/Sections/Hero/HeroSection";
-import What_We_Offer from "./Components/Sections/Mini Sections/whatWeOffer";
-import Why_Choose_Us from "./Components/Sections/Mini Sections/why choose us";
+import FeatureBanner from "./Components/Sections/Mini Sections/featureBanner";
 import Services_Sec from "./Components/Sections/Services/services";
 import ConsultationVerifyPage from "./Pages/ConsultationVerifyPage";
 import ConsultationPaymentPage from "./Pages/ConsultationPaymentPage";
@@ -16,10 +15,9 @@ function HomePage() {
     <>
       <Header />
       <HeroSec />
-      <About_Sec />
-      <What_We_Offer />
       <Services_Sec />
-      <Why_Choose_Us />
+      <About_Sec />
+      <FeatureBanner />
       <Contact_Us />
       <Footer />
     </>
@@ -31,10 +29,8 @@ function App() {
     <BrowserRouter basename="/Ultimate-Consult">
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route
-          path="/consultation/verify"
-          element={<ConsultationVerifyPage />}
-        />
+        {/* Consultation pages retained, but not linked from homepage for now. */}
+        <Route path="/consultation/verify" element={<ConsultationVerifyPage />} />
         <Route path="/consultation/pay" element={<ConsultationPaymentPage />} />
       </Routes>
     </BrowserRouter>
