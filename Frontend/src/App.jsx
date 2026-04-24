@@ -6,8 +6,8 @@ import Contact_Us from "./Components/Sections/Contact/contact";
 import HeroSec from "./Components/Sections/Hero/HeroSection";
 import FeatureBanner from "./Components/Sections/Mini Sections/featureBanner";
 import Services_Sec from "./Components/Sections/Services/services";
-import ConsultationVerifyPage from "./Pages/ConsultationVerifyPage";
-import ConsultationPaymentPage from "./Pages/ConsultationPaymentPage";
+// import ConsultationVerifyPage from "./Pages/ConsultationVerifyPage";
+// import ConsultationPaymentPage from "./Pages/ConsultationPaymentPage";
 import "./App.css";
 
 function HomePage() {
@@ -30,8 +30,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         {/* Consultation pages retained, but not linked from homepage for now. */}
-        <Route path="/consultation/verify" element={<ConsultationVerifyPage />} />
-        <Route path="/consultation/pay" element={<ConsultationPaymentPage />} />
+        {/* <Route path="/consultation/verify" element={<ConsultationVerifyPage />} />
+        <Route path="/consultation/pay" element={<ConsultationPaymentPage />} /> */}
       </Routes>
     </BrowserRouter>
   );
