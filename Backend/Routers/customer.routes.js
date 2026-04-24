@@ -9,6 +9,6 @@ const { createCustomerSchema } = require("../Schemas/customers.schema");
 const router = express.Router();
 
 router.get("/verify/:token", verifyConsultationAccessTokenController);
-router.post("/:token", celebrate({ body: createCustomerSchema }), addNewCustomer);
+router.post("/", celebrate({ body: createCustomerSchema }), addNewCustomer);
 
 module.exports = router;

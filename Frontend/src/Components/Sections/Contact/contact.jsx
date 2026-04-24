@@ -1,6 +1,9 @@
 import { Mail, Phone } from "lucide-react";
 
 export default function Contact_Us() {
+
+  
+
   return (
     <section id="contact" className="bg-slate-100 px-4 py-14 sm:px-6 lg:px-8 lg:py-24">
       <div className="mx-auto w-full max-w-7xl overflow-hidden rounded-[28px] border border-slate-100 bg-white shadow-2xl lg:flex lg:rounded-[40px]">

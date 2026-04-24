@@ -1,5 +1,5 @@
-import { useCallback, useState } from "react";
-import api from "../Apis/Client/client.api";
+import { useState } from "react";
+import customerApi from "../Apis/Client/customer.api";
 
 export default function useCustomer() {
   const [data, setData] = useState(null);
@@ -18,17 +18,12 @@ export default function useCustomer() {
     } finally {
       setLoading(false);
     }
-  }
-
-  const methods = {
-    initializePayment: (email) =>
-      execute(() => api.post("/payments", { email })),
-    verifyConsultationToken: (token) =>
-      execute(() => api.get(`/customers/verify/${token}`)),
-    postcustomerData: ({ token, customerData }) =>
-      execute(() => api.post(`/customers/${encodeURIComponent(token)}`, customerData)),
   };
 
- 
+  const methods = {
+    postCustomerData: (customerData) =>
+      execute(customerApi.postCustomerData(customerData)),
+  };
+
   return { data, loading, error, ...methods };
 }
