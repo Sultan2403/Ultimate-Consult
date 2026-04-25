@@ -3,4 +3,8 @@ const REDIS_CONFIG = {
     PORT: process.env.REDIS_PORT || 6379
 }
 
-module.exports = { REDIS_CONFIG }
+const QUEUE_NAMES = {
+    ADMIN_NOTIFICATION: "admin_notification"
+}
+
+module.exports = { REDIS_CONFIG, QUEUE_NAMES }

@@ -1,5 +1,5 @@
 const Redis = require("ioredis");
-const { REDIS_CONFIG } = require("../../constants");
+const { REDIS_CONFIG } = require("../../Config/constants");
 
 // Create the live instance
 const redis = new Redis({
