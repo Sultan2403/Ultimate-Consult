@@ -4,7 +4,7 @@ const app = express();
 
 //  Helpers
 const cors = require("cors");
-const connectDB = require("./DB/Connections/connectDB");
+const connectDB = require("./DB/Connections/mongo");
 
 // Middlewares
 const { errors } = require("celebrate");
