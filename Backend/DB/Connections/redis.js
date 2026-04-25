@@ -5,7 +5,7 @@ const { REDIS_CONFIG } = require("../../Config/constants");
 const redis = new Redis({
   host: REDIS_CONFIG.HOST,
   port: REDIS_CONFIG.PORT,
-  maxRetriesPerRequest: 10,
+  maxRetriesPerRequest: null,
 });
 
 redis.on("connect", () => console.log("✅ Redis Connected"));

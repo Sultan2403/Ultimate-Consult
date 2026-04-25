@@ -1,5 +1,5 @@
 const transactionsCollection = require("../DB/Models/transactions.model");
-const { getIO } = require("../Utils/sockets.js");
+const { getIO } = require("../Utils/Connections/sockets.js");
 
 const handleChargeSuccess = async (reference) => {
   try {

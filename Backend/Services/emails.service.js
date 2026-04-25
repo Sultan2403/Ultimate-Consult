@@ -1,4 +1,4 @@
-const emailClient = require("../Utils/emails.client");
+const emailClient = require("../Utils/Emails/email.client");
 
 const sendNotificationEmail = async (consultationDetails) => {
   const adminEmail = process.env.ADMIN_EMAIL;
@@ -10,7 +10,7 @@ const sendNotificationEmail = async (consultationDetails) => {
   const dashboardLink = `https://localhost:5173/admin/consultations`; // use env vars later.
 
   return emailClient.sendMail({
-    from: `"Ultimate Consult" <${process.env.SMTP_USER}>`,
+    from: `"Ultimate Consult"`,
     to: adminEmail,
     subject: "[Ultimate Consult] New Consultation Request Received!",
     text: `You have a new consultation request from ${clientName} (${email}) on.

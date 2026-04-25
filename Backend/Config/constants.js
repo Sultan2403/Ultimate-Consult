@@ -3,8 +3,15 @@ const REDIS_CONFIG = {
     PORT: process.env.REDIS_PORT || 6379
 }
 
-const QUEUE_NAMES = {
-    ADMIN_NOTIFICATION: "admin_notification"
-}
+const QUEUES = {
+  NOTIFICATIONS: 'notifications_queue',
+};
 
-module.exports = { REDIS_CONFIG, QUEUE_NAMES }
+const JOBS = {
+  NOTIFICATIONS: {
+    // Admin specific
+    ADMIN_NEW_CONSULT: 'job_admin_new_consultation',
+  }
+};
+
+module.exports = { REDIS_CONFIG, QUEUES, JOBS }

@@ -1,6 +1,11 @@
+// DB Stuff
 const mongoose = require("mongoose");
 const transactionsCollection = require("../DB/Models/transactions.model");
 const customersCollection = require("../DB/Models/customers.model");
+
+// Worker stuff
+const { adminNotificationQueue } = require("../Queues/bullmq");
+const { JOBS } = require("../Config/constants");
 
 /**
  * Create a customer atomically with transaction.
@@ -44,6 +49,11 @@ async function createCustomerWithTransaction({
 
     await customersCollection.create(data);
 
+    // Create a job to ping admin.
+    await adminNotificationQueue.add(JOBS.NOTIFICATIONS.ADMIN_NEW_CONSULT, {
+      customerData: data,
+    });
+
     return {
       success: true,
       message:
@@ -52,7 +62,12 @@ async function createCustomerWithTransaction({
   } catch (error) {
     // Roll back transaction on error
     // await session.abortTransaction();
-    return { success: false, error, message: "Something went wrong and we couldn't process your request please try again" };
+    return {
+      success: false,
+      error,
+      message:
+        "Something went wrong and we couldn't process your request please try again",
+    };
   } // finally {
   //   // ✅ always close the session
   //   // session.endSession();
