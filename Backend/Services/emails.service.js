@@ -7,7 +7,7 @@ const sendNotificationEmail = async (consultationDetails) => {
 
   const clientName = `${firstName} ${lastName}`;
 
-  const dashboardLink = `https://localhost:5173/admin/consultations`;
+  const dashboardLink = `https://localhost:5173/admin/consultations`; // use env vars later.
 
   return emailClient.sendMail({
     from: `"Ultimate Consult" <${process.env.SMTP_USER}>`,
