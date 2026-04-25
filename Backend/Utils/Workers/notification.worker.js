@@ -20,10 +20,16 @@ const notificationsWorker = new Worker(
   { connection: redisInstance, concurrency: 5 },
 );
 
-notificationsWorker.on("ready", () => {
-  console.log("✅ Notifications worker is connected and listening to Redis");
-});
+// notificationsWorker.on("ready", () => {
+//   console.log("✅ Notifications worker is connected and listening to Redis");
+// });
 
 notificationsWorker.on("failed", (job, err) => {
   console.error(`❌ Notification job ${job.id} failed:`, err.message);
+});
+
+notificationsWorker.on("completed", (job) => {
+  console.log(
+    `🎉 Job ${job.id} COMPLETED: Email sent to ${job.data.customerData.email}`,
+  );
 });

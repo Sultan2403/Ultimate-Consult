@@ -1,13 +1,14 @@
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST || "smtp.gmail.com",
-  port: process.env.EMAIL_PORT || 465, // 465 for Secure, 587 for TLS
-  secure: true, // true for 465, false for 587
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT), // Force it to be a number
+  secure: false, // false for 587, true for 465
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
   },
+
   pool: true,
   maxConnections: 5,
   maxMessages: 100,
@@ -21,4 +22,4 @@ transporter.verify((err) => {
   }
 });
 
-module.exports = transporter
+module.exports = transporter;

@@ -1,17 +1,20 @@
 const customersCollection = require("../DB/Models/customers.model");
-const { createCustomerWithTransaction, verifyConsultationAccessToken } = require("../Services/customers.service");
+const {
+  createCustomerWithTransaction,
+  verifyConsultationAccessToken,
+} = require("../Services/customers.service");
 
 const verifyConsultationAccessTokenController = async (req, res) => {
   const accessToken = req.params.token;
 
   try {
-    const result = await verifyConsultationAccessToken({accessToken});
+    const result = await verifyConsultationAccessToken({ accessToken });
 
     if (!result.success) {
       return res.status(404).json({
         success: false,
         message: result.message,
-      })
+      });
     }
 
     return res.status(200).json({
@@ -31,17 +34,32 @@ const addNewCustomer = async (req, res) => {
   // const accessToken = req.params.token;
 
   const customerData = req.body;
-  const result = await createCustomerWithTransaction({/*accessToken,*/ customerData}); 
+  const result = await createCustomerWithTransaction({
+    /*accessToken,*/ customerData,
+  });
 
   // The above line creates a plain customer now. BEWARE
 
-  // if (!result.success) {
-  //   return res.status(404).json({
-  //     success: false,
-  //     message:
-  //       typeof result.error === "string" ? result.error : result.error.message,
-  //   });
-  // }
+  // I DON'T WANNA CHANGE THE FUNC NAME YET...
+
+  // BUT IT DOESN'T CONSIDER ANY TRANSACTION RELATED STUFF ANYMORE
+
+  // IT JUST CREATES A PLAIN CUSTOMER.
+
+  // LISTEN TO ME BRO. IT'S FOR YOUR OWN GOOD!!! :)
+
+  if (!result.success) {
+    //   return res.status(404).json({
+    //     success: false,
+    //     message:
+    //       typeof result.error === "string" ? result.error : result.error.message,
+    //   });
+    console.log(result?.error);
+    return res.status(500).json({
+      success: false,
+      message: result?.error,
+    });
+  }
 
   res.status(201).json({
     success: true,
