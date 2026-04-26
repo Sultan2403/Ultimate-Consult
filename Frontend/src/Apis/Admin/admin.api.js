@@ -1,23 +1,8 @@
-import axios from "axios";
-import { getAccessToken } from "../../Helpers/Auth/tokens";
+import api from "../Base/api.config";
 
-const url = import.meta.env.VITE_ADMIN_API_URL;
+const adminApi = {
+  getConsultations: () => api.get("customers"),
+  login: (payload) => api.post("auth/login", payload)
+};
 
-const api = axios.create({
-  baseURL: url,
-  timeout: url.includes("localhost") ? 10000 : 60000,
-});
-
-api.interceptors.request.use((config) => {
-  const token = getAccessToken();
-  if (token) {
-    config.headers.authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
-api.interceptors.response.use(
-  (res) => res.data,
-);
-
-export default api;
+export default adminApi

@@ -25,7 +25,7 @@ const createCustomerSchema = Joi.object({
 
   phoneNumber: Joi.string()
     .trim()
-    .optional()
+    .required()
     .custom((value, helpers) => {
       const phone = parsePhoneNumberFromString(value);
       if (!phone || !phone.isValid()) {

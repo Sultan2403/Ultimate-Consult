@@ -49,12 +49,22 @@ const customerSchema = new mongoose.Schema(
       required: true,
     },
 
+    businessName: {
+      type: String,
+      required: true,
+    },
+
+    message: {
+      type: String,
+      required: true,
+      minLength: 50
+    },
+
     // paymentReference: {
     //   type: String,
     //   required: true,
     //   unique: true
     // },
-
   },
   {
     timestamps: true,

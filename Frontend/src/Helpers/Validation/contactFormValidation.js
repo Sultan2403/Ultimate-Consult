@@ -1,3 +1,5 @@
+import { parsePhoneNumberFromString } from "libphonenumber-js";
+
 export const validateContactForm = (formData) => {
   const errors = {};
 
@@ -18,16 +20,15 @@ export const validateContactForm = (formData) => {
     errors.email = "Email must be a valid email address";
   }
 
-  // Phone Number validation (optional but if provided, must be valid)
+  // Phone Number validation
   if (!formData.phoneNumber) {
     errors.phoneNumber =
       "Phone number must be a valid international phone number";
   } else {
-    const phoneRegex = /^\+?[1-9]\d{1,14}$/;
-    if (!phoneRegex.test(formData.phoneNumber.trim().replace(/\s|-/g, ""))) {
-      errors.phoneNumber =
-        "Phone number must be a valid international phone number";
-    }
+    const phone = parsePhoneNumberFromString(formData.phoneNumber);
+    !phone.isValid()
+      ? (errors.phoneNumber = "Please enter a valid phone number")
+      : null;
   }
 
   if (!formData.businessName || formData.businessName.trim() === "") {
