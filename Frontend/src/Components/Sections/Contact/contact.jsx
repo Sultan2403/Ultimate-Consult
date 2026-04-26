@@ -1,6 +1,9 @@
 import { Mail, Phone } from "lucide-react";
 
 export default function Contact_Us() {
+
+  //  Prob use a form builder like react forms for the sake of learning. 
+
   return (
     <section
       id="contact"
