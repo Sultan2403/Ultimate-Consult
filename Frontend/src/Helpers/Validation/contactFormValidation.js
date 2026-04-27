@@ -4,10 +4,16 @@ import { isValidPhoneNumber } from "libphonenumber-js";
 export const validateContactForm = (formData) => {
   const errors = {};
 
-  if (!formData.fullName || formData.fullName.trim() === "") {
-    errors.fullName = "Full name is required";
-  } else if (formData.fullName.trim().length < 6) {
-    errors.fullName = "Full name must be at least 6 characters long";
+  if (!formData.firstName || formData.firstName.trim() === "") {
+    errors.firstName = "First name is required";
+  } else if (formData.firstName.trim().length < 3) {
+    errors.firstName = "First name must be at least 3 characters long";
+  }
+
+  if (!formData.lastName || formData.lastName.trim() === "") {
+    errors.lastName = "Last name is required";
+  } else if (formData.lastName.trim().length < 3) {
+    errors.lastName = "Last name must be at least 3 characters long";
   }
 
   if (!formData.phoneNumber || formData.phoneNumber.trim() === "") {

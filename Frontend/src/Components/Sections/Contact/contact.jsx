@@ -1,19 +1,12 @@
 import { useEffect, useState } from "react";
 import { Mail, Phone } from "lucide-react";
-import {
-  Button,
-  TextField,
-  FormControl,
-  FormHelperText,
-  InputLabel,
-} from "@mui/material";
-import PhoneInput from "react-phone-number-input";
-import "react-phone-number-input/style.css";
+import { Button, TextField } from "@mui/material";
 import { validateContactForm } from "../../../Helpers/Validation/contactFormValidation";
 import useCustomer from "../../../Hooks/useCustomer";
 
 const initialFormState = {
-  fullName: "",
+  firstName: "",
+  lastName: "",
   phoneNumber: "",
   email: "",
   businessName: "",
@@ -42,20 +35,6 @@ export default function Contact_Us() {
     }
   };
 
-  const handlePhoneChange = (value) => {
-    setFormData((prev) => ({
-      ...prev,
-      phoneNumber: value || "",
-    }));
-
-    if (formErrors.phoneNumber) {
-      setFormErrors((prev) => ({
-        ...prev,
-        phoneNumber: "",
-      }));
-    }
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -79,7 +58,7 @@ export default function Contact_Us() {
     // });
     // 4) Handle API/client formErrors using your interceptor and map them to field/general messages.
 
-    postCustomerData(formData)
+    postCustomerData(formData);
   };
 
   const textFieldSx = {
@@ -101,13 +80,9 @@ export default function Contact_Us() {
     },
   };
 
-useEffect(() => {
-    if (data) {
-      setFormData(initialFormState);
-    }
-}, [data, error]);
-
-  // Display error and success message at the top of the form.
+  useEffect(() => {
+    if (data) setFormData(initialFormState);
+  }, [data]);
 
   return (
     <section
@@ -115,45 +90,47 @@ useEffect(() => {
       className="bg-slate-100 px-4 py-14 sm:px-6 lg:px-8 lg:py-24"
     >
       <div className="mx-auto w-full max-w-7xl overflow-hidden rounded-[28px] border border-slate-100 bg-white shadow-2xl lg:flex lg:rounded-[40px]">
-        <div className="bg-slate-950 p-8 text-white lg:w-[34%] lg:p-12">
-          <h2 className="mb-4 text-4xl font-bold leading-tight">
-            Ready to transform your finances?
-          </h2>
-          <p className="mb-10 text-sm text-white/70">
-            Our team of certified experts is standing by to help you scale with
-            confidence.
-          </p>
+        <div className="bg-slate-950 p-8 text-white lg:w-[34%] lg:p-12 flex flex-col justify-center">
+          <div className="max-w-sm mx-auto lg:mx-0">
+            <h2 className="mb-4 text-4xl font-bold leading-tight">
+              Ready to transform your finances?
+            </h2>
+            <p className="mb-10 text-sm text-white/70">
+              Our team of certified experts is standing by to help you scale
+              with confidence.
+            </p>
 
-          <div className="space-y-6">
-            <div className="flex items-start gap-3">
-              <div className="rounded bg-emerald-600/20 p-2 text-emerald-300">
-                <Phone size={16} />
+            <div className="space-y-6">
+              <div className="flex items-start gap-3">
+                <div className="rounded bg-emerald-600/20 p-2 text-emerald-300">
+                  <Phone size={16} />
+                </div>
+                <div>
+                  <p className="underline text-[10px] font-bold uppercase tracking-[0.15em] text-white/50">
+                    Call / WhatsApp
+                  </p>
+                  <p className="font-semibold">+234 818 8255 882</p>
+                </div>
               </div>
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/50">
-                  Call / WhatsApp
-                </p>
-                <p className="font-semibold">08188255882</p>
-              </div>
-            </div>
 
-            <div className="flex items-start gap-3">
-              <div className="rounded bg-emerald-600/20 p-2 text-emerald-300">
-                <Mail size={16} />
-              </div>
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/50">
-                  Email
-                </p>
-                <p className="break-all font-semibold">
-                  hello@ultimateconsult.com.ng
-                </p>
+              <div className="flex items-start gap-3">
+                <div className="rounded bg-emerald-600/20 p-2 text-emerald-300">
+                  <Mail size={16} />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/50">
+                    Email
+                  </p>
+                  <p className="break-all font-semibold">
+                    hello@ultimateconsult.com.ng
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="p-6 lg:w-[66%] lg:p-12">
+        <div className="p-6 lg:w-[66%] lg:p-12 flex flex-col justify-center">
           <form className="space-y-6" onSubmit={handleSubmit} noValidate>
             {/* Show API error at the top */}
             {error && (
@@ -169,35 +146,45 @@ useEffect(() => {
             )}
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
               <TextField
-                label="Full Name"
-                name="fullName"
-                value={formData.fullName}
+                label="First Name"
+                name="firstName"
+                value={formData.firstName}
                 onChange={handleInputChange}
-                placeholder="Enter your name"
+                placeholder="Enter your first name"
                 fullWidth
-                error={Boolean(formErrors.fullName)}
-                helperText={formErrors.fullName || ""}
+                error={Boolean(formErrors.firstName)}
+                helperText={formErrors.firstName || ""}
                 sx={textFieldSx}
               />
 
-              <FormControl fullWidth error={Boolean(formErrors.phoneNumber)}>
-                <InputLabel shrink htmlFor="contact-phone-input">
-                  Phone Number
-                </InputLabel>
-                <PhoneInput
-                  international
-                  defaultCountry="NG"
-                  value={formData.phoneNumber}
-                  onChange={handlePhoneChange}
-                  id="contact-phone-input"
-                  placeholder="080 0000 0000"
-                  className="react-phone-number-input"
-                />
-                <FormHelperText>
-                  {formErrors.phoneNumber ||
-                    "Choose country and enter your phone number."}
-                </FormHelperText>
-              </FormControl>
+              <TextField
+                label="Last Name"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleInputChange}
+                placeholder="Enter your last name"
+                fullWidth
+                error={Boolean(formErrors.lastName)}
+                helperText={formErrors.lastName || ""}
+                sx={textFieldSx}
+              />
+
+              <TextField
+                label="Phone Number"
+                name="phoneNumber"
+                type="tel"
+                value={formData.phoneNumber}
+                onChange={handleInputChange}
+                placeholder="+234 800 000 0000"
+                inputProps={{ inputMode: "tel" }}
+                fullWidth
+                error={Boolean(formErrors.phoneNumber)}
+                helperText={
+                  formErrors.phoneNumber ||
+                  "Enter phone number with country code"
+                }
+                sx={textFieldSx}
+              />
 
               <TextField
                 label="Email Address"
@@ -211,19 +198,19 @@ useEffect(() => {
                 helperText={formErrors.email || ""}
                 sx={textFieldSx}
               />
-
-              <TextField
-                label="Business Name"
-                name="businessName"
-                value={formData.businessName}
-                onChange={handleInputChange}
-                placeholder="Company Ltd"
-                fullWidth
-                error={Boolean(formErrors.businessName)}
-                helperText={formErrors.businessName || ""}
-                sx={textFieldSx}
-              />
             </div>
+
+            <TextField
+              label="Business Name"
+              name="businessName"
+              value={formData.businessName}
+              onChange={handleInputChange}
+              placeholder="Company Ltd"
+              fullWidth
+              error={Boolean(formErrors.businessName)}
+              helperText={formErrors.businessName || ""}
+              sx={textFieldSx}
+            />
 
             <TextField
               label="Message/Request"

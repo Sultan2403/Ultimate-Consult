@@ -24,7 +24,7 @@ export default function About_Sec() {
       <div className="mx-auto w-full max-w-7xl">
         <div className="mb-14 grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-emerald-600 md:text-xs">About Us</span>
+            <span className="text-xs font-bold uppercase tracking-[0.25em] text-emerald-600 md:text-sm">About Us</span>
             <h2 className="mb-4 mt-3 text-3xl font-semibold text-black md:text-4xl">Who We Are</h2>
             <p className="text-base leading-relaxed text-slate-600 md:text-lg">
               Ultimate Consult is a premium accounting firm dedicated to providing business owners with the fiscal clarity they need to thrive. We bridge the gap between complex financial data and actionable business strategy.

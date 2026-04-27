@@ -42,7 +42,7 @@ export default function Services_Sec() {
     <section id="services" className="bg-slate-100 px-4 py-14 sm:px-6 lg:px-8 lg:py-24">
       <div className="mx-auto w-full max-w-7xl">
         <div className="mb-10 text-center lg:mb-16">
-          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-emerald-600 md:text-xs">Our Expertise</span>
+          <span className="text-xs font-bold uppercase tracking-[0.25em] text-emerald-600 md:text-sm">Our Expertise</span>
           <h2 className="mt-3 text-3xl font-semibold text-black md:text-4xl">Specialized Financial Services</h2>
           <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-emerald-600" />
         </div>

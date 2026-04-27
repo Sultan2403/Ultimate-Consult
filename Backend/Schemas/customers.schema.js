@@ -2,12 +2,12 @@ const { Joi } = require("celebrate");
 const { parsePhoneNumberFromString } = require("libphonenumber-js");
 
 const createCustomerSchema = Joi.object({
-  firstName: Joi.string().trim().required().messages({
+  firstName: Joi.string().trim().min(3).required().messages({
     "any.required": "First name is required",
     "string.empty": "First name cannot be empty",
   }),
 
-  lastName: Joi.string().trim().required().messages({
+  lastName: Joi.string().trim().min(3).required().messages({
     "any.required": "Last name is required",
     "string.empty": "Last name cannot be empty",
   }),

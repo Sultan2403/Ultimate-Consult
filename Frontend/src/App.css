@@ -1,3 +1,99 @@
 section {
   scroll-margin-top: 6rem;
 }
+
+/* Custom Phone Input Styling */
+.react-phone-number-input {
+  width: 100%;
+}
+
+.react-phone-number-input__row {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.react-phone-number-input__country {
+  position: relative;
+  z-index: 1;
+}
+
+.react-phone-number-input__country-select {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: rgb(248 250 252);
+  border: 1px solid rgb(226 232 240);
+  border-right: none;
+  border-radius: 0.75rem 0 0 0.75rem;
+  padding: 10px 14px;
+  font-size: 0.875rem;
+  color: rgb(51 65 85);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 100px;
+}
+
+.react-phone-number-input__country-select:hover {
+  border-color: rgb(148 163 184);
+}
+
+.react-phone-number-input__country-select:focus {
+  outline: none;
+  border-color: rgb(5 150 105);
+  box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.1);
+}
+
+.react-phone-number-input__country-select-arrow {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid rgb(100 116 139);
+  margin-left: auto;
+}
+
+.react-phone-number-input__input {
+  flex: 1;
+  background-color: rgb(248 250 252);
+  border: 1px solid rgb(226 232 240);
+  border-radius: 0 0.75rem 0.75rem 0;
+  padding: 16.5px 14px;
+  font-size: 0.875rem;
+  color: rgb(51 65 85);
+  outline: none;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.react-phone-number-input__input:first-of-type {
+  border-radius: 0 0.75rem 0.75rem 0;
+}
+
+.react-phone-number-input__input:hover {
+  border-color: rgb(148 163 184);
+}
+
+.react-phone-number-input__input:focus {
+  border-color: rgb(5 150 105);
+  box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.1);
+}
+
+.react-phone-number-input__input::placeholder {
+  color: rgb(100 116 139);
+}
+
+/* Remove default library styles */
+.react-phone-number-input__country-select--hidden {
+  display: none;
+}
+
+/* Phone input error state */
+.phone-input-error .react-phone-number-input__country-select,
+.phone-input-error .react-phone-number-input__input {
+  border-color: rgb(220 38 38) !important;
+}
+
+.phone-input-error .react-phone-number-input__input:focus {
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
+}
