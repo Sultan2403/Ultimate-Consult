@@ -67,7 +67,8 @@ export default function Contact_Us() {
       setErrors({});
       setSubmitState({
         loading: false,
-        successMessage: "Thanks! Your inquiry has been validated and is ready to be submitted.",
+        successMessage:
+          "Thanks! Your inquiry has been validated and is ready to be submitted.",
       });
     } catch {
       setSubmitState({
@@ -120,7 +121,7 @@ export default function Contact_Us() {
                 <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/50">
                   Call / WhatsApp
                 </p>
-                <p className="font-semibold">08035689456</p>
+                <p className="font-semibold">08188255882</p>
               </div>
             </div>
 
@@ -138,11 +139,6 @@ export default function Contact_Us() {
               </div>
             </div>
           </div>
-
-          <p className="mt-12 border-t border-white/10 pt-8 text-xs italic text-white/45">
-            "The clarity they provided saved us thousands in potential tax
-            errors." — TechStart CEO
-          </p>
         </div>
 
         <div className="p-6 lg:w-[66%] lg:p-12">
@@ -156,19 +152,20 @@ export default function Contact_Us() {
                 placeholder="Enter your name"
                 fullWidth
                 error={Boolean(errors.fullName)}
-                helperText={errors.fullName || " "}
+                helperText={errors.fullName || ""}
                 sx={textFieldSx}
               />
 
               <TextField
                 label="Phone Number"
                 name="phoneNumber"
+                type="number"
                 value={formData.phoneNumber}
                 onChange={handleInputChange}
                 placeholder="080 0000 0000"
                 fullWidth
                 error={Boolean(errors.phoneNumber)}
-                helperText={errors.phoneNumber || " "}
+                helperText={errors.phoneNumber || ""}
                 sx={textFieldSx}
               />
 
@@ -181,7 +178,7 @@ export default function Contact_Us() {
                 placeholder="email@business.com"
                 fullWidth
                 error={Boolean(errors.email)}
-                helperText={errors.email || " "}
+                helperText={errors.email || ""}
                 sx={textFieldSx}
               />
 
@@ -193,7 +190,7 @@ export default function Contact_Us() {
                 placeholder="Company Ltd"
                 fullWidth
                 error={Boolean(errors.businessName)}
-                helperText={errors.businessName || " "}
+                helperText={errors.businessName || ""}
                 sx={textFieldSx}
               />
             </div>
@@ -208,7 +205,7 @@ export default function Contact_Us() {
               multiline
               rows={5}
               error={Boolean(errors.message)}
-              helperText={errors.message || " "}
+              helperText={errors.message || ""}
               sx={textFieldSx}
             />
 
