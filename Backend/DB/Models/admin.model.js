@@ -18,6 +18,7 @@ const AdminSchema = new mongoose.Schema(
 
     refreshTokenHash: {
       type: String,
+      index: true,
       select: false,
     },
   },
