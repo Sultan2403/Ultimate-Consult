@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Mail, Phone } from "lucide-react";
 import { Button, TextField } from "@mui/material";
 import { validateContactForm } from "../../../Helpers/Validation/contactFormValidation";
+import useCustomer from "../../../Hooks/useCustomer";
 
 const initialFormState = {
   fullName: "",
@@ -13,11 +14,9 @@ const initialFormState = {
 
 export default function Contact_Us() {
   const [formData, setFormData] = useState(initialFormState);
-  const [errors, setErrors] = useState({});
-  const [submitState, setSubmitState] = useState({
-    loading: false,
-    successMessage: "",
-  });
+  const [formErrors, setFormErrors] = useState({});
+
+  const { data, error, loading, postCustomerData } = useCustomer();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -27,8 +26,8 @@ export default function Contact_Us() {
       [name]: value,
     }));
 
-    if (errors[name]) {
-      setErrors((prev) => ({
+    if (formErrors[name]) {
+      setFormErrors((prev) => ({
         ...prev,
         [name]: "",
       }));
@@ -39,43 +38,29 @@ export default function Contact_Us() {
     event.preventDefault();
 
     const validationErrors = validateContactForm(formData);
-    setErrors(validationErrors);
+    setFormErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
       return;
     }
 
-    setSubmitState({ loading: true, successMessage: "" });
+    // API integration approach (example):
+    // 1) Create `contactApi.postContactInquiry(payload)` in Frontend/src/Apis/Client/contact.api.js
+    // 2) Import it here: `import contactApi from "../../../Apis/Client/contact.api";`
+    // 3) Call it with validated data:
+    // await contactApi.postContactInquiry({
+    //   fullName: formData.fullName.trim(),
+    //   phoneNumber: formData.phoneNumber.trim(),
+    //   email: formData.email.trim(),
+    //   businessName: formData.businessName.trim(),
+    //   message: formData.message.trim(),
+    // });
+    // 4) Handle API/client formErrors using your interceptor and map them to field/general messages.
 
-    try {
-      // API integration approach (example):
-      // 1) Create `contactApi.postContactInquiry(payload)` in Frontend/src/Apis/Client/contact.api.js
-      // 2) Import it here: `import contactApi from "../../../Apis/Client/contact.api";`
-      // 3) Call it with validated data:
-      // await contactApi.postContactInquiry({
-      //   fullName: formData.fullName.trim(),
-      //   phoneNumber: formData.phoneNumber.trim(),
-      //   email: formData.email.trim(),
-      //   businessName: formData.businessName.trim(),
-      //   message: formData.message.trim(),
-      // });
-      // 4) Handle API/client errors using your interceptor and map them to field/general messages.
+    postCustomerData(formData)
 
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      setFormData(initialFormState);
-      setErrors({});
-      setSubmitState({
-        loading: false,
-        successMessage:
-          "Thanks! Your inquiry has been validated and is ready to be submitted.",
-      });
-    } catch {
-      setSubmitState({
-        loading: false,
-        successMessage: "",
-      });
-    }
+    setFormData(initialFormState);
+    setFormErrors({});
   };
 
   const textFieldSx = {
@@ -96,6 +81,10 @@ export default function Contact_Us() {
       marginLeft: "0.2rem",
     },
   };
+
+
+
+  // Display error and success message at the top of the form.
 
   return (
     <section
@@ -143,6 +132,18 @@ export default function Contact_Us() {
 
         <div className="p-6 lg:w-[66%] lg:p-12">
           <form className="space-y-6" onSubmit={handleSubmit} noValidate>
+            {/* Show API error at the top */}
+            {error && (
+              <div className="mb-4 rounded-lg bg-red-100 px-4 py-3 text-red-700 border border-red-200 text-sm font-medium">
+                {error}
+              </div>
+            )}
+            {/* Show API success message at the top */}
+            {data?.message && (
+              <div className="mb-4 rounded-lg bg-emerald-100 px-4 py-3 text-emerald-700 border border-emerald-200 text-sm font-medium">
+                {data?.message}
+              </div>
+            )}
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
               <TextField
                 label="Full Name"
@@ -151,8 +152,8 @@ export default function Contact_Us() {
                 onChange={handleInputChange}
                 placeholder="Enter your name"
                 fullWidth
-                error={Boolean(errors.fullName)}
-                helperText={errors.fullName || ""}
+                error={Boolean(formErrors.fullName)}
+                helperText={formErrors.fullName || ""}
                 sx={textFieldSx}
               />
 
@@ -164,8 +165,8 @@ export default function Contact_Us() {
                 onChange={handleInputChange}
                 placeholder="080 0000 0000"
                 fullWidth
-                error={Boolean(errors.phoneNumber)}
-                helperText={errors.phoneNumber || ""}
+                error={Boolean(formErrors.phoneNumber)}
+                helperText={formErrors.phoneNumber || ""}
                 sx={textFieldSx}
               />
 
@@ -177,8 +178,8 @@ export default function Contact_Us() {
                 onChange={handleInputChange}
                 placeholder="email@business.com"
                 fullWidth
-                error={Boolean(errors.email)}
-                helperText={errors.email || ""}
+                error={Boolean(formErrors.email)}
+                helperText={formErrors.email || ""}
                 sx={textFieldSx}
               />
 
@@ -189,8 +190,8 @@ export default function Contact_Us() {
                 onChange={handleInputChange}
                 placeholder="Company Ltd"
                 fullWidth
-                error={Boolean(errors.businessName)}
-                helperText={errors.businessName || ""}
+                error={Boolean(formErrors.businessName)}
+                helperText={formErrors.businessName || ""}
                 sx={textFieldSx}
               />
             </div>
@@ -204,22 +205,16 @@ export default function Contact_Us() {
               fullWidth
               multiline
               rows={5}
-              error={Boolean(errors.message)}
-              helperText={errors.message || ""}
+              error={Boolean(formErrors.message)}
+              helperText={formErrors.message || ""}
               sx={textFieldSx}
             />
-
-            {submitState.successMessage ? (
-              <p className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-                {submitState.successMessage}
-              </p>
-            ) : null}
 
             <Button
               type="submit"
               variant="contained"
               fullWidth
-              disabled={submitState.loading}
+              disabled={loading}
               sx={{
                 textTransform: "none",
                 borderRadius: "0.75rem",
@@ -233,7 +228,7 @@ export default function Contact_Us() {
                 },
               }}
             >
-              {submitState.loading ? "Submitting..." : "Send Inquiry"}
+              {loading ? "Submitting..." : "Send Inquiry"}
             </Button>
           </form>
 

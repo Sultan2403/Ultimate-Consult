@@ -70,6 +70,6 @@ export default async function handleErrors({ error, apiInstance }) {
       window.location.href = "/admin/login";
     }
 
-    return Promise.reject(err);
+    return Promise.reject(error?.response?.data?.message || err.message || "An error occurred");
   }
 }
