@@ -31,8 +31,8 @@ export const validateContactForm = (formData) => {
 
   if (!formData.message || formData.message.trim() === "") {
     errors.message = "Message is required";
-  } else if (formData.message.trim().length < 20) {
-    errors.message = "Message must be at least 20 characters long";
+  } else if (formData.message.trim().length < 50) {
+    errors.message = "Message must be at least 50 characters long";
   }
 
   return errors;
