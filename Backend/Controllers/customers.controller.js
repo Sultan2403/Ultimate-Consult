@@ -57,7 +57,7 @@ const addNewCustomer = async (req, res) => {
     console.log(result?.error);
     return res.status(500).json({
       success: false,
-      message: result?.error,
+      message: result?.message || "An error occurred while processing your request",
     });
   }
 
