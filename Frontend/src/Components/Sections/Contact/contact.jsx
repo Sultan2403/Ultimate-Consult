@@ -101,31 +101,47 @@ export default function Contact_Us() {
             </p>
 
             <div className="space-y-6">
-              <div className="flex items-start gap-3">
-                <div className="rounded bg-emerald-600/20 p-2 text-emerald-300">
+              <a
+                href="https://wa.me/2348188255882"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-3 hover:bg-white/5 p-3 -m-3 rounded-lg transition-colors group"
+              >
+                <div className="rounded bg-emerald-600/20 p-2 text-emerald-300 group-hover:text-emerald-200">
                   <Phone size={16} />
                 </div>
                 <div>
-                  <p className="underline text-[10px] font-bold uppercase tracking-[0.15em] text-white/50">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/50">
                     Call / WhatsApp
                   </p>
-                  <p className="font-semibold">+234 818 8255 882</p>
+                  <p className="font-semibold text-emerald-300 group-hover:text-white">
+                    +234 818 8255 882
+                  </p>
+                  <p className="text-xs text-white/40 mt-1">
+                    Click to chat on WhatsApp
+                  </p>
                 </div>
-              </div>
+              </a>
 
-              <div className="flex items-start gap-3">
-                <div className="rounded bg-emerald-600/20 p-2 text-emerald-300">
+              <a
+                href="mailto:hello@ultimateconsult.com.ng"
+                className="flex items-start gap-3 hover:bg-white/5 p-3 -m-3 rounded-lg transition-colors group"
+              >
+                <div className="rounded bg-emerald-600/20 p-2 text-emerald-300 group-hover:text-emerald-200">
                   <Mail size={16} />
                 </div>
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/50">
                     Email
                   </p>
-                  <p className="break-all font-semibold">
+                  <p className="break-all font-semibold text-emerald-300 group-hover:text-white">
                     hello@ultimateconsult.com.ng
                   </p>
+                  <p className="text-xs text-white/40 mt-1">
+                    Click to send us an email
+                  </p>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
         </div>
