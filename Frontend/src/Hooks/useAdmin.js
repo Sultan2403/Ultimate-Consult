@@ -13,7 +13,10 @@ export default function useAdmin() {
       const response = await apiCall();
       setData(response);
     } catch (err) {
-      setError(err);
+        setError(
+          err?.response?.data?.message ||
+            err?.response?.data?.validation?.body?.message,
+        );
     } finally {
       setLoading(false);
     }
