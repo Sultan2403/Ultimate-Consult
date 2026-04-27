@@ -13,7 +13,7 @@ export default function HeroSec() {
             Accurate bookkeeping, reliable accounting, and tax compliance—so you can run your business without stress or guesswork.
           </p>
           <p className="text-sm text-slate-500 md:text-base">
-            At UltimateConsult, we help business owners stay organized, tax-ready, and financially smart.
+            At Ultimate Consult, we help business owners stay organized, tax-ready, and financially smart.
           </p>
 
           <div className="flex flex-col gap-3 pt-2 sm:flex-row">

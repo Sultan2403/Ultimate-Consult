@@ -58,7 +58,7 @@ export default function Header() {
           href="#home"
           className="text-sm font-semibold tracking-tight text-slate-900 lg:text-base"
         >
-          UltimateConsult
+          Ultimate Consult
         </a>
 
         <div className="hidden items-center gap-8 md:flex">

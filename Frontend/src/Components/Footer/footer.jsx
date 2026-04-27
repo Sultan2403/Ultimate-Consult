@@ -5,8 +5,8 @@ export default function Footer() {
     <footer className="w-full border-t border-slate-200 bg-white">
       <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-6 px-4 py-10 sm:px-6 md:flex-row lg:px-8">
         <div className="text-center md:text-left">
-          <p className="text-sm font-semibold text-slate-900">UltimateConsult</p>
-          <p className="text-xs text-slate-500">© {currYear} UltimateConsult. All rights reserved.</p>
+          <p className="text-sm font-semibold text-slate-900">Ultimate Consult</p>
+          <p className="text-xs text-slate-500">© {currYear} Ultimate Consult. All rights reserved.</p>
         </div>
 
         <div className="flex items-center gap-5 text-xs text-slate-500">
