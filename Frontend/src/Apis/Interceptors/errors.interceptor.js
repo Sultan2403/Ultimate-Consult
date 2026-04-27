@@ -43,7 +43,7 @@ export default async function handleErrors({ error, apiInstance }) {
 
   if (!refreshToken) {
     retrySet.delete(requestId);
-    window.location.href = "/login";
+    window.location.href = "/admin/login";
     return Promise.reject(error);
   }
 
@@ -67,7 +67,7 @@ export default async function handleErrors({ error, apiInstance }) {
   } catch (err) {
     // Refresh failed → force login
     if (err?.response?.status === 401) {
-      window.location.href = "/login";
+      window.location.href = "/admin/login";
     }
 
     return Promise.reject(err);
