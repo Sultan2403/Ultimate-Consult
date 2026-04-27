@@ -1,4 +1,7 @@
 import { useState } from "react";
+import TextField from "@mui/material/TextField";
+import useAdmin from "../Hooks/useAdmin";
+import { validateAdminLogin } from "../Helpers/Validation/adminLoginValidation";
 
 const iconClassName = "h-5 w-5 text-[#76777d]";
 
@@ -69,6 +72,40 @@ function EyeIcon({ open }) {
 
 export default function AdminLoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formErrors, setFormErrors] = useState({});
+
+  const { loading, error, data, login } = useAdmin();
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    setFormErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const validationErrors = validateAdminLogin(formData);
+    setFormErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) {
+      return;
+    }
+
+    await login({
+      email: formData.email.trim(),
+      password: formData.password.trim(),
+    });
+  };
 
   return (
     <main className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-[#f7f9fb] px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
@@ -89,28 +126,59 @@ export default function AdminLoginPage() {
         </header>
 
         <div className="rounded-xl border border-[#c6c6cd] bg-white p-5 shadow-[0_4px_20px_rgba(15,23,42,0.05)] sm:p-8">
-          <form className="flex flex-col gap-6" noValidate>
-            <div className="space-y-2">
-              <label
-                className="text-sm font-medium text-[#45464d]"
-                htmlFor="email"
-              >
-                Email Address
-              </label>
-              <div className="relative">
-                <span
-                  className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"
-                  aria-hidden="true"
-                >
-                  <MailIcon />
-                </span>
-                <input
-                  id="email"
-                  type="email"
-                  placeholder="name@accountingfirm.com"
-                  className="h-12 w-full rounded-lg border border-[#c6c6cd] bg-[#f7f9fb] pl-10 pr-3 text-base text-[#191c1e] placeholder:text-[#76777d]/60 outline-none transition focus:border-[#006c49] focus:ring-2 focus:ring-[#6cf8bb]/25"
-                />
+          <form className="flex flex-col gap-6" noValidate onSubmit={handleSubmit}>
+            {/* Show API error at the top */}
+            {error && (
+              <div className="rounded-lg bg-red-100 px-4 py-3 text-red-700 border border-red-200 text-sm font-medium">
+                {error}
               </div>
+            )}
+            {/* Show API success message at the top */}
+            {data?.success && (
+              <div className="rounded-lg bg-emerald-100 px-4 py-3 text-emerald-700 border border-emerald-200 text-sm font-medium">
+                Login successful!
+              </div>
+            )}
+            <div className="space-y-2">
+              <TextField
+                id="email"
+                name="email"
+                type="email"
+                label="Email Address"
+                placeholder="name@accountingfirm.com"
+                value={formData.email}
+                onChange={handleInputChange}
+                error={!!formErrors.email}
+                helperText={formErrors.email}
+                fullWidth
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "0.5rem",
+                    backgroundColor: "#f7f9fb",
+                    "& fieldset": {
+                      borderColor: "#c6c6cd",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "#76777d",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#006c49",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#45464d",
+                    fontWeight: 500,
+                    fontSize: "0.875rem",
+                  },
+                }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <MailIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
             </div>
 
             <div className="space-y-2">
@@ -128,45 +196,103 @@ export default function AdminLoginPage() {
                   Forgot password?
                 </a>
               </div>
-              <div className="relative">
-                <span
-                  className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"
-                  aria-hidden="true"
-                >
-                  <LockIcon />
-                </span>
-                <input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
-                  className="h-12 w-full rounded-lg border border-[#c6c6cd] bg-[#f7f9fb] pl-10 pr-10 text-base text-[#191c1e] placeholder:text-[#76777d]/60 outline-none transition focus:border-[#006c49] focus:ring-2 focus:ring-[#6cf8bb]/25"
-                />
-                <button
-                  type="button"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 transition hover:opacity-80"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                  onClick={() => setShowPassword((prevState) => !prevState)}
-                >
-                  <EyeIcon open={showPassword} />
-                </button>
-              </div>
+              <TextField
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••"
+                value={formData.password}
+                onChange={handleInputChange}
+                error={!!formErrors.password}
+                helperText={formErrors.password}
+                fullWidth
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "0.5rem",
+                    backgroundColor: "#f7f9fb",
+                    "& fieldset": {
+                      borderColor: "#c6c6cd",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "#76777d",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#006c49",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#45464d",
+                    fontWeight: 500,
+                    fontSize: "0.875rem",
+                  },
+                }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LockIcon />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <button
+                        type="button"
+                        className="transition hover:opacity-80"
+                        aria-label={showPassword ? "Hide password" : "Show password"}
+                        onClick={() => setShowPassword((prevState) => !prevState)}
+                      >
+                        <EyeIcon open={showPassword} />
+                      </button>
+                    </InputAdornment>
+                  ),
+                }}
+              />
             </div>
 
-            <label className="flex items-center gap-2 text-sm text-[#45464d]">
-              <input
-                type="checkbox"
-                className="h-4 w-4 rounded border-[#c6c6cd] text-[#006c49] focus:ring-[#6cf8bb]/40"
-              />
-              Remember this device
-            </label>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  defaultChecked
+                  sx={{
+                    color: "#006c49",
+                    "&.Mui-checked": {
+                      color: "#006c49",
+                    },
+                  }}
+                />
+              }
+              label={
+                <span className="text-sm text-[#45464d]">Remember this device</span>
+              }
+            />
 
-            <button
+            <Button
               type="submit"
-              className="mt-1 inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#006c49] px-4 text-base font-medium text-white shadow-sm transition hover:brightness-95 active:scale-[0.99]"
+              disabled={loading}
+              variant="contained"
+              fullWidth
+              sx={{
+                mt: 1,
+                height: 48,
+                backgroundColor: "#006c49",
+                color: "white",
+                fontWeight: 500,
+                fontSize: "1rem",
+                textTransform: "none",
+                borderRadius: "0.5rem",
+                boxShadow: "none",
+                "&:hover": {
+                  backgroundColor: "#005c40",
+                  boxShadow: "none",
+                },
+                "&:disabled": {
+                  backgroundColor: "#006c49",
+                  opacity: 0.7,
+                },
+              }}
+              endIcon={!loading && <span aria-hidden="true">→</span>}
             >
-              Sign In to Portal
-              <span aria-hidden="true">→</span>
-            </button>
+              {loading ? "Signing in..." : "Sign In to Portal"}
+            </Button>
           </form>
         </div>
 

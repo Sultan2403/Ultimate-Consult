@@ -15,7 +15,7 @@ export default function useAdmin() {
     } catch (err) {
         setError(
           err?.response?.data?.message ||
-            err?.response?.data?.validation?.body?.message,
+            err?.response?.data?.validation?.body?.message || "An unexpected error occured",
         );
     } finally {
       setLoading(false);
@@ -23,7 +23,7 @@ export default function useAdmin() {
   };
 
   const methods = {
-    login: (payload) => execute(() => adminApi.login({ payload })),
+    login: (payload) => execute(() => adminApi.login(payload)),
     getConsultations: () => execute(() => adminApi.getConsultations()),
   };
 
