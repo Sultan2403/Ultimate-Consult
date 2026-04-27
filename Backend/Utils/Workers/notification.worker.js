@@ -30,6 +30,6 @@ notificationsWorker.on("failed", (job, err) => {
 
 notificationsWorker.on("completed", (job) => {
   console.log(
-    `🎉 Job ${job.id} COMPLETED: Email sent to ${job.data.customerData.email}`,
+    `🎉 Job ${job.id} COMPLETED: Notification email sent to admin`,
   );
 });
