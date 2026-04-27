@@ -16,12 +16,6 @@ const AdminSchema = new mongoose.Schema(
       select: false,
     },
 
-    username: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-
     refreshTokenHash: {
       type: String,
       select: false,
