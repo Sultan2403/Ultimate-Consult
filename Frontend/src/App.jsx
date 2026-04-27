@@ -8,6 +8,7 @@ import FeatureBanner from "./Components/Sections/Mini Sections/featureBanner";
 import Services_Sec from "./Components/Sections/Services/services";
 // import ConsultationVerifyPage from "./Pages/ConsultationVerifyPage";
 // import ConsultationPaymentPage from "./Pages/ConsultationPaymentPage";
+import AdminLoginPage from "./Pages/AdminLoginPage";
 import "./App.css";
 
 function HomePage() {
@@ -29,6 +30,7 @@ function App() {
     <BrowserRouter basename="/Ultimate-Consult">
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/admin/login" element={<AdminLoginPage />} />
         {/* Consultation pages retained, but not linked from homepage for now. */}
         {/* <Route path="/consultation/verify" element={<ConsultationVerifyPage />} />
         <Route path="/consultation/pay" element={<ConsultationPaymentPage />} /> */}
