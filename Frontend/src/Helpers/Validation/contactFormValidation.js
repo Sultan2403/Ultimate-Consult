@@ -1,5 +1,5 @@
 import validator from "validator";
-import { parsePhoneNumberFromString } from "libphonenumber-js";
+import { isValidPhoneNumber } from "libphonenumber-js";
 
 export const validateContactForm = (formData) => {
   const errors = {};
@@ -12,9 +12,8 @@ export const validateContactForm = (formData) => {
 
   if (!formData.phoneNumber || formData.phoneNumber.trim() === "") {
     errors.phoneNumber = "Phone number is required";
-  } else {
-    const phone = parsePhoneNumberFromString(formData.phoneNumber);
-    !phone.isValid() ? (errors.phoneNumber = "Please enter a valid phone number") : null;
+  } else if (!isValidPhoneNumber(formData.phoneNumber, "NG")) {
+    errors.phoneNumber = "Please enter a valid phone number";
   }
 
   if (!formData.email || formData.email.trim() === "") {

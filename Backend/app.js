@@ -8,13 +8,12 @@ const connectDB = require("./DB/Connections/mongo");
 
 // Middlewares
 const { errors } = require("celebrate");
-const authMiddleware = require("./Middlewares/admin.auth");
+const authMiddleware = require("./Middlewares/auth");
 
 // Routers
 const customerRouter = require("./Routers/customer.routes");
 const authRouter = require("./Routers/auth.routes");
 const paymentsRouter = require("./Routers/payments.routes");
-const adminRouter = require("./Routers/admin.routes");
 const { authLimiter } = require("./Middlewares/rate-limiter.middleware");
 const verifyPaystackWebhook = require("./Middlewares/paystack_webhooks.middleware");
 const { webhook_Handler } = require("./Controllers/payments.controller");
@@ -37,7 +36,6 @@ app.use(express.json());
 
 // Routes
 
-app.use("/admin", authMiddleware, adminRouter);
 app.use("/customers", customerRouter);
 app.use("/payments", authLimiter, paymentsRouter);
 app.use("/auth", authLimiter, authRouter);

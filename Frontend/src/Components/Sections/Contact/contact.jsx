@@ -1,6 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Mail, Phone } from "lucide-react";
-import { Button, TextField } from "@mui/material";
+import {
+  Button,
+  TextField,
+  FormControl,
+  FormHelperText,
+  InputLabel,
+} from "@mui/material";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import { validateContactForm } from "../../../Helpers/Validation/contactFormValidation";
 import useCustomer from "../../../Hooks/useCustomer";
 
@@ -34,6 +42,20 @@ export default function Contact_Us() {
     }
   };
 
+  const handlePhoneChange = (value) => {
+    setFormData((prev) => ({
+      ...prev,
+      phoneNumber: value || "",
+    }));
+
+    if (formErrors.phoneNumber) {
+      setFormErrors((prev) => ({
+        ...prev,
+        phoneNumber: "",
+      }));
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -58,9 +80,6 @@ export default function Contact_Us() {
     // 4) Handle API/client formErrors using your interceptor and map them to field/general messages.
 
     postCustomerData(formData)
-
-    setFormData(initialFormState);
-    setFormErrors({});
   };
 
   const textFieldSx = {
@@ -82,7 +101,11 @@ export default function Contact_Us() {
     },
   };
 
-
+useEffect(() => {
+    if (data) {
+      setFormData(initialFormState);
+    }
+}, [data, error]);
 
   // Display error and success message at the top of the form.
 
@@ -157,18 +180,24 @@ export default function Contact_Us() {
                 sx={textFieldSx}
               />
 
-              <TextField
-                label="Phone Number"
-                name="phoneNumber"
-                type="number"
-                value={formData.phoneNumber}
-                onChange={handleInputChange}
-                placeholder="080 0000 0000"
-                fullWidth
-                error={Boolean(formErrors.phoneNumber)}
-                helperText={formErrors.phoneNumber || ""}
-                sx={textFieldSx}
-              />
+              <FormControl fullWidth error={Boolean(formErrors.phoneNumber)}>
+                <InputLabel shrink htmlFor="contact-phone-input">
+                  Phone Number
+                </InputLabel>
+                <PhoneInput
+                  international
+                  defaultCountry="NG"
+                  value={formData.phoneNumber}
+                  onChange={handlePhoneChange}
+                  id="contact-phone-input"
+                  placeholder="080 0000 0000"
+                  className="react-phone-number-input"
+                />
+                <FormHelperText>
+                  {formErrors.phoneNumber ||
+                    "Choose country and enter your phone number."}
+                </FormHelperText>
+              </FormControl>
 
               <TextField
                 label="Email Address"
