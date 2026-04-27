@@ -10,7 +10,7 @@ export default function HeroSec() {
             Smart Solutions for Businesses That Want to Grow with Confidence
           </h1>
           <p className="text-base leading-relaxed text-slate-600 md:text-lg">
-            Accurate bookkeeping, reliable accounting, and tax compliance—so you can run your business without stress or guesswork.
+            Accurate bookkeeping, reliable accounting, and tax compliance - so you can run your business without stress or guesswork.
           </p>
           <p className="text-sm text-slate-500 md:text-base">
             At Ultimate Consult, we help business owners stay organized, tax-ready, and financially smart.
