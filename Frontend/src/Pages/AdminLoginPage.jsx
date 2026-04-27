@@ -81,10 +81,10 @@ export default function AdminLoginPage() {
             <InstitutionIcon />
           </div>
           <h1 className="text-[1.65rem] font-semibold tracking-[-0.01em] text-[#191c1e] sm:text-[1.85rem]">
-            UltimateConsult
+            Ultimate Consult
           </h1>
           <p className="max-w-xs text-base text-[#45464d] sm:max-w-none">
-            Secure access to ConsultantAdmin portal
+            Secure access to Admin portal
           </p>
         </header>
 
@@ -172,7 +172,7 @@ export default function AdminLoginPage() {
 
         <footer className="space-y-2 text-center">
           <p className="text-xs text-[#76777d]/75 sm:text-sm">
-            © {new Date().getFullYear()} UltimateConsult. All rights reserved.
+            © {new Date().getFullYear()} Ultimate Consult. All rights reserved.
           </p>
         </footer>
       </section>
