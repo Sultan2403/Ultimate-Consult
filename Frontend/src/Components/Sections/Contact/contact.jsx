@@ -1,8 +1,101 @@
+import { useState } from "react";
 import { Mail, Phone } from "lucide-react";
+import { Button, TextField } from "@mui/material";
+import { validateContactForm } from "../../../Helpers/Validation/contactFormValidation";
+
+const initialFormState = {
+  fullName: "",
+  phoneNumber: "",
+  email: "",
+  businessName: "",
+  message: "",
+};
 
 export default function Contact_Us() {
+  const [formData, setFormData] = useState(initialFormState);
+  const [errors, setErrors] = useState({});
+  const [submitState, setSubmitState] = useState({
+    loading: false,
+    successMessage: "",
+  });
 
-  //  Prob use a form builder like react forms for the sake of learning. 
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    if (errors[name]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const validationErrors = validateContactForm(formData);
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) {
+      return;
+    }
+
+    setSubmitState({ loading: true, successMessage: "" });
+
+    try {
+      // API integration approach (example):
+      // 1) Create `contactApi.postContactInquiry(payload)` in Frontend/src/Apis/Client/contact.api.js
+      // 2) Import it here: `import contactApi from "../../../Apis/Client/contact.api";`
+      // 3) Call it with validated data:
+      // await contactApi.postContactInquiry({
+      //   fullName: formData.fullName.trim(),
+      //   phoneNumber: formData.phoneNumber.trim(),
+      //   email: formData.email.trim(),
+      //   businessName: formData.businessName.trim(),
+      //   message: formData.message.trim(),
+      // });
+      // 4) Handle API/client errors using your interceptor and map them to field/general messages.
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      setFormData(initialFormState);
+      setErrors({});
+      setSubmitState({
+        loading: false,
+        successMessage:
+          "Thanks! Your inquiry has been validated and is ready to be submitted.",
+      });
+    } catch {
+      setSubmitState({
+        loading: false,
+        successMessage: "",
+      });
+    }
+  };
+
+  const textFieldSx = {
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "0.75rem",
+      backgroundColor: "rgb(248 250 252)",
+      "& fieldset": {
+        borderColor: "rgb(226 232 240)",
+      },
+      "&:hover fieldset": {
+        borderColor: "rgb(148 163 184)",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "rgb(5 150 105)",
+      },
+    },
+    "& .MuiFormHelperText-root": {
+      marginLeft: "0.2rem",
+    },
+  };
 
   return (
     <section
@@ -28,7 +121,7 @@ export default function Contact_Us() {
                 <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/50">
                   Call / WhatsApp
                 </p>
-                <p className="font-semibold">08035689456</p>
+                <p className="font-semibold">08188255882</p>
               </div>
             </div>
 
@@ -46,75 +139,102 @@ export default function Contact_Us() {
               </div>
             </div>
           </div>
-
-          <p className="mt-12 border-t border-white/10 pt-8 text-xs italic text-white/45">
-            "The clarity they provided saved us thousands in potential tax
-            errors." — TechStart CEO
-          </p>
         </div>
 
         <div className="p-6 lg:w-[66%] lg:p-12">
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit} noValidate>
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-              <div className="space-y-2">
-                <label className="text-xs font-semibold text-slate-700">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter your name"
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3.5 text-sm"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs font-semibold text-slate-700">
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  placeholder="080 0000 0000"
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3.5 text-sm"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs font-semibold text-slate-700">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  placeholder="email@business.com"
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3.5 text-sm"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs font-semibold text-slate-700">
-                  Business Name
-                </label>
-                <input
-                  type="text"
-                  placeholder="Company Ltd"
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3.5 text-sm"
-                />
-              </div>
-            </div>
+              <TextField
+                label="Full Name"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleInputChange}
+                placeholder="Enter your name"
+                fullWidth
+                error={Boolean(errors.fullName)}
+                helperText={errors.fullName || ""}
+                sx={textFieldSx}
+              />
 
-            <div className="space-y-2">
-              <label className="text-xs font-semibold text-slate-700">
-                Message/Request
-              </label>
-              <textarea
-                rows="5"
-                placeholder="Tell us about your business needs..."
-                className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3.5 text-sm"
+              <TextField
+                label="Phone Number"
+                name="phoneNumber"
+                type="number"
+                value={formData.phoneNumber}
+                onChange={handleInputChange}
+                placeholder="080 0000 0000"
+                fullWidth
+                error={Boolean(errors.phoneNumber)}
+                helperText={errors.phoneNumber || ""}
+                sx={textFieldSx}
+              />
+
+              <TextField
+                label="Email Address"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="email@business.com"
+                fullWidth
+                error={Boolean(errors.email)}
+                helperText={errors.email || ""}
+                sx={textFieldSx}
+              />
+
+              <TextField
+                label="Business Name"
+                name="businessName"
+                value={formData.businessName}
+                onChange={handleInputChange}
+                placeholder="Company Ltd"
+                fullWidth
+                error={Boolean(errors.businessName)}
+                helperText={errors.businessName || ""}
+                sx={textFieldSx}
               />
             </div>
 
-            <button
+            <TextField
+              label="Message/Request"
+              name="message"
+              value={formData.message}
+              onChange={handleInputChange}
+              placeholder="Tell us about your business needs..."
+              fullWidth
+              multiline
+              rows={5}
+              error={Boolean(errors.message)}
+              helperText={errors.message || ""}
+              sx={textFieldSx}
+            />
+
+            {submitState.successMessage ? (
+              <p className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                {submitState.successMessage}
+              </p>
+            ) : null}
+
+            <Button
               type="submit"
-              className="w-full rounded-xl bg-emerald-600 py-4 text-sm font-semibold text-white shadow-lg transition hover:bg-emerald-700"
+              variant="contained"
+              fullWidth
+              disabled={submitState.loading}
+              sx={{
+                textTransform: "none",
+                borderRadius: "0.75rem",
+                py: "0.95rem",
+                fontSize: "0.9rem",
+                fontWeight: 600,
+                bgcolor: "rgb(5 150 105)",
+                boxShadow: "0 10px 25px -3px rgba(5, 150, 105, 0.35)",
+                "&:hover": {
+                  bgcolor: "rgb(4 120 87)",
+                },
+              }}
             >
-              Send Inquiry
-            </button>
+              {submitState.loading ? "Submitting..." : "Send Inquiry"}
+            </Button>
           </form>
 
           {/* Consultation payment flow intentionally hidden for this screen iteration.
