@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
 import CircularProgress from "@mui/material/CircularProgress";
 import {
   LogOut,
@@ -9,59 +8,36 @@ import {
   UserRound,
   Mail,
   BriefcaseBusiness,
+  Phone,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import useAdmin from "../Hooks/useAdmin";
 import { clearAuthTokens } from "../Helpers/Auth/tokens";
 
-const consultationStatuses = ["Pending", "Completed", "Cancelled"];
-
 export default function AdminConsultationsPage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusOverrides, setStatusOverrides] = useState({});
 
-  const {
-    data: consultationsData,
-    loading: loadingConsultations,
-    error: consultationsError,
-    getConsultations,
-  } = useAdmin();
-
-  const {
-    loading: updatingStatus,
-    error: updateStatusError,
-    updateConsultationStatus,
-  } = useAdmin();
+  const { data, loading, error, getConsultations } = useAdmin();
 
   useEffect(() => {
     getConsultations();
   }, []);
 
-  const consultations = useMemo(
-    () => consultationsData?.customers || [],
-    [consultationsData],
-  );
+  const consultations = useMemo(() => data?.customers || [], [data]);
 
-  const filteredConsultations = useMemo(() => {
-    if (!searchTerm) {
-      return consultations;
-    }
+  const filtered = useMemo(() => {
+    if (!searchTerm) return consultations;
 
-    const searchValue = searchTerm.toLowerCase();
+    const q = searchTerm.toLowerCase();
 
-    return consultations.filter((consultation) => {
-      const fullName = `${consultation.firstName || ""} ${consultation.lastName || ""}`;
-
-      return [
-        fullName,
-        consultation.businessName,
-        consultation.email,
-        consultation.message,
-      ].some((fieldValue) =>
-        String(fieldValue || "")
-          .toLowerCase()
-          .includes(searchValue),
+    return consultations.filter((c) => {
+      const name = `${c.firstName || ""} ${c.lastName || ""}`;
+      return (
+        name.toLowerCase().includes(q) ||
+        c.email?.toLowerCase().includes(q) ||
+        c.businessName?.toLowerCase().includes(q) ||
+        c.message?.toLowerCase().includes(q)
       );
     });
   }, [consultations, searchTerm]);
@@ -71,33 +47,17 @@ export default function AdminConsultationsPage() {
     navigate("/admin/login");
   };
 
-  const handleStatusUpdate = async ({ consultationId, consultationStatus }) => {
-    try {
-      await updateConsultationStatus({ consultationId, consultationStatus });
-
-      setStatusOverrides((prevState) => ({
-        ...prevState,
-        [consultationId]: consultationStatus,
-      }));
-    } catch (error) {
-      return error;
-    }
-  };
-
   return (
     <main className="min-h-screen bg-[#eef2f6] px-4 py-6 sm:px-6 lg:px-8">
       <section className="mx-auto flex w-full max-w-6xl flex-col gap-5">
-        <header className="flex flex-col gap-4 rounded-2xl bg-[#191c1e] p-5 text-white shadow-[0_14px_34px_rgba(15,23,42,0.18)] sm:flex-row sm:items-center sm:justify-between sm:p-6">
+        {/* HEADER */}
+        <header className="flex flex-col gap-4 rounded-2xl bg-[#191c1e] p-5 text-white sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-white/60">
-              Ultimate Consult
+              Admin Dashboard
             </p>
-            <h1 className="mt-1 text-2xl font-semibold sm:text-[1.8rem]">
-              Consultation Requests
-            </h1>
-            <p className="mt-1 text-sm text-white/75">
-              View and manage consultation statuses.
-            </p>
+            <h1 className="text-2xl font-semibold">Consultations</h1>
+            <p className="text-sm text-white/70">View all incoming requests</p>
           </div>
 
           <Button
@@ -108,27 +68,23 @@ export default function AdminConsultationsPage() {
               textTransform: "none",
               fontWeight: 600,
               borderRadius: "0.65rem",
-              px: 2,
-              py: 1,
+              backgroundColor: "#fff",
               color: "#191c1e",
-              backgroundColor: "#ffffff",
               boxShadow: "none",
-              "&:hover": {
-                backgroundColor: "#f2f4f8",
-                boxShadow: "none",
-              },
+              "&:hover": { backgroundColor: "#f2f4f8" },
             }}
           >
             Logout
           </Button>
         </header>
 
-        <div className="rounded-2xl border border-[#d3dbe5] bg-white p-4 shadow-[0_6px_18px_rgba(15,23,42,0.04)] sm:p-5">
+        {/* SEARCH */}
+        <div className="rounded-2xl border bg-white p-4">
           <TextField
             fullWidth
             value={searchTerm}
-            onChange={(event) => setSearchTerm(event.target.value)}
-            placeholder="Search consultations"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search by name, email, business..."
             InputProps={{
               startAdornment: (
                 <Search className="mr-2 h-4 w-4 text-[#76777d]" />
@@ -143,133 +99,134 @@ export default function AdminConsultationsPage() {
           />
         </div>
 
-        {consultationsError && (
+        {/* ERROR */}
+        {error && (
           <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {consultationsError}
+            {error}
           </div>
         )}
 
-        {updateStatusError && (
-          <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {updateStatusError}
-          </div>
-        )}
-
-        {loadingConsultations ? (
-          <div className="flex min-h-44 items-center justify-center rounded-2xl border border-[#d3dbe5] bg-white">
+        {/* LOADING */}
+        {loading ? (
+          <div className="flex min-h-48 items-center justify-center rounded-2xl border bg-white">
             <CircularProgress size={26} />
           </div>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {filteredConsultations.map((consultation) => {
-              const fullName =
-                `${consultation.firstName || ""} ${consultation.lastName || ""}`.trim();
-              const currentStatus =
-                statusOverrides[consultation.id] ||
-                consultation.consultationStatus ||
-                "Pending";
-
+            {filtered.map((c) => {
               return (
                 <article
-                  className="flex h-full flex-col justify-between rounded-2xl border border-[#d3dbe5] bg-white p-5 shadow-[0_8px_24px_rgba(15,23,42,0.05)] transition hover:-translate-y-0.5"
-                  key={consultation.id}
+                  key={c.id}
+                  className="rounded-2xl border bg-white p-5 shadow-sm transition hover:-translate-y-0.5"
                 >
-                  <div className="space-y-4">
-                    <div className="inline-flex rounded-full bg-[#ecfdf5] px-3 py-1 text-xs font-semibold text-[#006c49]">
-                      {currentStatus}
-                    </div>
+                  {/* STATUS + ID */}
+                  <div className="mb-4 flex items-center justify-between">
+                    <span
+                      className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold
+        ${
+          c.consultationStatus === "Completed"
+            ? "bg-green-100 text-green-700"
+            : c.consultationStatus === "Cancelled"
+              ? "bg-red-100 text-red-700"
+              : "bg-yellow-100 text-yellow-700"
+        }`}
+                    >
+                      {c.consultationStatus || "Pending"}
+                    </span>
 
-                    <div className="space-y-2 rounded-xl bg-[#f8fafc] p-3">
-                      <p className="flex items-start gap-2 text-sm text-[#28313d]">
-                        <UserRound className="mt-0.5 h-4 w-4 text-[#607084]" />
-                        <span>
-                          <span className="font-semibold">Name:</span>{" "}
-                          {fullName || "N/A"}
-                        </span>
-                      </p>
-                      <p className="flex items-start gap-2 text-sm text-[#28313d]">
-                        <Mail className="mt-0.5 h-4 w-4 text-[#607084]" />
-                        <span>
-                          <span className="font-semibold">Email:</span>{" "}
-                          {consultation.email || "N/A"}
-                        </span>
-                      </p>
-                      <p className="flex items-start gap-2 text-sm text-[#28313d]">
-                        <BriefcaseBusiness className="mt-0.5 h-4 w-4 text-[#607084]" />
-                        <span>
-                          <span className="font-semibold">Business:</span>{" "}
-                          {consultation.businessName || "N/A"}
-                        </span>
-                      </p>
-                    </div>
-
-                    <div>
-                      <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-[#697586]">
-                        Message preview
-                      </p>
-                      <p className="line-clamp-3 text-sm leading-6 text-[#364152]">
-                        {consultation.message}
-                      </p>
-                    </div>
+                    <span className="text-xs text-[#9ca3af]">
+                      ID: {c.id?.slice(-6)}
+                    </span>
                   </div>
 
-                  <div className="mt-5 space-y-3">
-                    <TextField
-                      select
-                      fullWidth
-                      size="small"
-                      disabled={updatingStatus}
-                      value={currentStatus}
-                      onChange={(event) =>
-                        handleStatusUpdate({
-                          consultationId: consultation.id,
-                          consultationStatus: event.target.value,
-                        })
-                      }
-                      label="Consultation Status"
-                    >
-                      {consultationStatuses.map((statusOption) => (
-                        <MenuItem key={statusOption} value={statusOption}>
-                          {statusOption}
-                        </MenuItem>
-                      ))}
-                    </TextField>
+                  {/* NAME + BUSINESS */}
+                  <div className="mb-4">
+                    <h2 className="text-xl font-semibold text-[#191c1e] leading-tight flex items-center gap-2">
+                      <UserRound className="h-5 w-5 text-[#607084]" />
+                      {c.firstName || c.lastName
+                        ? `${c.firstName || ""} ${c.lastName || ""}`.trim()
+                        : "Unknown User"}
+                    </h2>
 
-                    <Link
-                      className="block"
-                      to={`/admin/consultations/${consultation.id}`}
-                    >
-                      <Button
-                        fullWidth
-                        variant="contained"
-                        sx={{
-                          textTransform: "none",
-                          borderRadius: "0.65rem",
-                          py: 1.1,
-                          fontWeight: 600,
-                          backgroundColor: "#006c49",
-                          boxShadow: "none",
-                          "&:hover": {
-                            backgroundColor: "#00553a",
-                            boxShadow: "none",
-                          },
-                        }}
+                    <p className="mt-1 text-sm text-[#6b7280] flex items-center gap-2">
+                      <BriefcaseBusiness className="h-4 w-4 text-[#607084]" />
+                      {c.businessName || "No business provided"}
+                    </p>
+                  </div>
+
+                  {/* CONTACT BLOCK */}
+                  <div className="mb-4 space-y-2 rounded-xl bg-[#f8fafc] p-3 text-sm">
+                    {/* EMAIL */}
+                    <p className="flex items-center gap-2 text-[#28313d]">
+                      <Mail className="h-4 w-4 text-[#607084]" />
+                      <span className="font-medium text-[#6b7280]">Email:</span>
+                      <a
+                        href={`mailto:${c.email}`}
+                        className="text-[#006c49] font-medium hover:underline"
                       >
-                        View More Details
-                      </Button>
-                    </Link>
+                        {c.email || "N/A"}
+                      </a>
+                    </p>
+
+                    {/* PHONE */}
+                    <p className="flex items-center gap-2 text-[#28313d]">
+                      <Phone className="h-4 w-4 text-[#607084]" />
+                      <span className="font-medium text-[#6b7280]">Phone:</span>
+
+                      {c.phoneNumber ? (
+                        <a
+                          href={`http://wa.me/${c.phoneNumber}`}
+                          className="text-[#006c49] font-medium hover:underline"
+                        >
+                          {c.phoneNumber}
+                        </a>
+                      ) : (
+                        <span className="text-[#9ca3af]">N/A</span>
+                      )}
+                    </p>
                   </div>
+
+                  {/* MESSAGE */}
+                  <div className="mb-5">
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-[#9ca3af]">
+                      Message preview
+                    </p>
+
+                    <p className="text-sm text-[#364152] line-clamp-4 leading-relaxed border-l-2 border-[#e5e7eb] pl-3">
+                      {c.message || "No message provided"}
+                    </p>
+                  </div>
+
+                  {/* ACTION */}
+                  <Link to={`/admin/consultations/${c.id}`}>
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      sx={{
+                        textTransform: "none",
+                        borderRadius: "0.65rem",
+                        fontWeight: 600,
+                        backgroundColor: "#006c49",
+                        boxShadow: "none",
+                        "&:hover": {
+                          backgroundColor: "#00553a",
+                          boxShadow: "none",
+                        },
+                      }}
+                    >
+                      View Full Details
+                    </Button>
+                  </Link>
                 </article>
               );
             })}
           </div>
         )}
 
-        {!loadingConsultations && filteredConsultations.length === 0 && (
-          <div className="rounded-2xl border border-dashed border-[#c4ceda] bg-white px-5 py-10 text-center">
-            <p className="text-sm text-[#607084]">
-              No consultations match your search.
-            </p>
+        {/* EMPTY STATE */}
+        {!loading && filtered.length === 0 && (
+          <div className="rounded-2xl border border-dashed bg-white py-10 text-center text-sm text-[#607084]">
+            No consultations found
           </div>
         )}
       </section>
