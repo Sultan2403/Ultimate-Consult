@@ -5,7 +5,7 @@ const adminApi = {
   getOneConsultation: (consultationId) => api.get(`/customers/${consultationId}`),
   login: (payload) => api.post("/auth/login", payload),
   updateConsultationStatus: ({ consultationId, consultationStatus }) =>
-    api.patch(`/customers/${consultationId}/status`, { consultationStatus }),
+    api.patch(`/customers/${consultationId}`, { consultationStatus }),
 };
 
 export default adminApi;

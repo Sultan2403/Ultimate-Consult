@@ -102,7 +102,36 @@ const verifyConsultationAccessToken = async ({ accessToken }) => {
   }
 };
 
+const updateConsultationStatus= async ({ consultationId, consultationStatus }) => {
+  try {
+    const updatedCustomer = await customersCollection.findByIdAndUpdate(
+      consultationId,
+      { consultationStatus },
+      { new: true }
+    );
+
+    if (!updatedCustomer) {
+      return {
+        success: false,
+        message: "Consultation not found",
+      };
+    }
+
+    return {
+      success: true,
+      customer: updatedCustomer,
+    };
+  } catch (error) {
+    console.error("Error updating consultation status:", error);
+    return {
+      success: false,
+      message: "An error occurred while updating the consultation status",
+    };
+  }
+};
+
 module.exports = {
   createCustomerWithTransaction,
   verifyConsultationAccessToken,
+  updateConsultationStatus,
 };

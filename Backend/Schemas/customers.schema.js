@@ -53,4 +53,12 @@ const createCustomerSchema = Joi.object({
     }),
 }).options({ stripUnknown: true });
 
-module.exports = { createCustomerSchema };
+const updateConsultationStatusBodySchema = Joi.object({
+  consultationStatus: Joi.string().valid("Pending", "Completed", "Cancelled").required().messages({
+    "any.required": "Consultation status is required",
+    "string.empty": "Consultation status cannot be empty",
+    "any.only": "Consultation status must be one of 'Pending', 'Completed', or 'Cancelled'",
+  }),
+})
+
+module.exports = { createCustomerSchema, updateConsultationStatusBodySchema };
