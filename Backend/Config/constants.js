@@ -3,7 +3,7 @@ const REDIS_CONFIG = {
   PORT: process.env.REDIS_PORT || 6379,
 };
 
-console.log(REDIS_CONFIG.HOST);
+console.log("redis url:",REDIS_CONFIG.HOST);
 
 const QUEUES = {
   NOTIFICATIONS: "notifications_queue",
