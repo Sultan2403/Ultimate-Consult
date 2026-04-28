@@ -16,3 +16,8 @@ export function setAccessToken(data) {
 export function setRefreshToken(data) {
   localStorage.setItem(REFRESH_TOKEN_KEY, data);
 }
+
+export function clearAuthTokens() {
+  localStorage.removeItem(ACCESS_TOKEN_KEY);
+  localStorage.removeItem(REFRESH_TOKEN_KEY);
+}

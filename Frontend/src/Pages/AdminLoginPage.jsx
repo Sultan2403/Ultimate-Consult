@@ -8,6 +8,7 @@ import { Building2, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import useAdmin from "../Hooks/useAdmin";
 import { validateAdminLogin } from "../Helpers/Validation/adminLoginValidation";
 import { setAccessToken, setRefreshToken } from "../Helpers/Auth/tokens";
+import { useNavigate } from "react-router-dom";
 
 const iconClassName = "h-5 w-5 text-[#76777d]";
 
@@ -16,6 +17,7 @@ export default function AdminLoginPage() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [formErrors, setFormErrors] = useState({});
 
+  const navigate = useNavigate();
   const { loading, error, data, login } = useAdmin();
 
   const handleInputChange = (event) => {
@@ -53,8 +55,9 @@ export default function AdminLoginPage() {
       const { accessToken, refreshToken } = data?.tokens || {};
       setAccessToken(accessToken);
       setRefreshToken(refreshToken);
+      navigate("/admin/consultations");
     }
-  }, [data]);
+  }, [data, navigate]);
 
   return (
     <main className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-[#f7f9fb] px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
@@ -70,7 +73,7 @@ export default function AdminLoginPage() {
             Ultimate Consult
           </h1>
           <p className="max-w-xs text-base text-[#45464d] sm:max-w-none">
-            Secure access to Admin portal
+            Secure admin access
           </p>
         </header>
 
@@ -98,7 +101,7 @@ export default function AdminLoginPage() {
                 name="email"
                 type="email"
                 label="Email Address"
-                placeholder="name@accountingfirm.com"
+                placeholder="name@ultimateconsult.com"
                 value={formData.email}
                 onChange={handleInputChange}
                 error={!!formErrors.email}
