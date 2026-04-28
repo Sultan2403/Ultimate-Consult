@@ -102,7 +102,7 @@ export default function Contact_Us() {
 
             <div className="space-y-6">
               <a
-                href="https://wa.me/2348188255882"
+                href="https://wa.me/2348188255882?text=Hi%20Ultimate%20Consult%2C%20I%20checked%20out%20your%20website%20and%20I%27m%20interested%20in%20your%20consultation%20services.%20Could%20you%20please%20share%20more%20details%3F"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-start gap-3 hover:bg-white/5 p-3 -m-3 rounded-lg transition-colors group"
@@ -124,7 +124,7 @@ export default function Contact_Us() {
               </a>
 
               <a
-                href="mailto:hello@ultimateconsult.com.ng"
+                href="mailto:hello@ultimateconsult.com.ng?subject=Inquiry%20from%20Website&body=Hi%20Ultimate%20Consult%2C%0A%0AI%20checked%20out%20your%20website%20and%20I%27m%20interested%20in%20your%20consultation%20services.%20Could%20you%20please%20share%20more%20details%3F%0A%0ABest%20regards"
                 className="flex items-start gap-3 hover:bg-white/5 p-3 -m-3 rounded-lg transition-colors group"
               >
                 <div className="rounded bg-emerald-600/20 p-2 text-emerald-300 group-hover:text-emerald-200">
