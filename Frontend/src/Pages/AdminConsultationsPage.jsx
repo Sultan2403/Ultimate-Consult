@@ -3,7 +3,13 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import CircularProgress from "@mui/material/CircularProgress";
-import { LogOut, Search, UserRound, Mail, BriefcaseBusiness } from "lucide-react";
+import {
+  LogOut,
+  Search,
+  UserRound,
+  Mail,
+  BriefcaseBusiness,
+} from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import useAdmin from "../Hooks/useAdmin";
 import { clearAuthTokens } from "../Helpers/Auth/tokens";
@@ -53,7 +59,9 @@ export default function AdminConsultationsPage() {
         consultation.email,
         consultation.message,
       ].some((fieldValue) =>
-        String(fieldValue || "").toLowerCase().includes(searchValue),
+        String(fieldValue || "")
+          .toLowerCase()
+          .includes(searchValue),
       );
     });
   }, [consultations, searchTerm]);
@@ -63,7 +71,7 @@ export default function AdminConsultationsPage() {
     navigate("/admin/login");
   };
 
-  const handleStatusUpdate = async (consultationId, consultationStatus) => {
+  const handleStatusUpdate = async ({ consultationId, consultationStatus }) => {
     try {
       await updateConsultationStatus({ consultationId, consultationStatus });
 
@@ -81,9 +89,15 @@ export default function AdminConsultationsPage() {
       <section className="mx-auto flex w-full max-w-6xl flex-col gap-5">
         <header className="flex flex-col gap-4 rounded-2xl bg-[#191c1e] p-5 text-white shadow-[0_14px_34px_rgba(15,23,42,0.18)] sm:flex-row sm:items-center sm:justify-between sm:p-6">
           <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-white/60">Ultimate Consult</p>
-            <h1 className="mt-1 text-2xl font-semibold sm:text-[1.8rem]">Consultation Requests</h1>
-            <p className="mt-1 text-sm text-white/75">View and manage consultation statuses.</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-white/60">
+              Ultimate Consult
+            </p>
+            <h1 className="mt-1 text-2xl font-semibold sm:text-[1.8rem]">
+              Consultation Requests
+            </h1>
+            <p className="mt-1 text-sm text-white/75">
+              View and manage consultation statuses.
+            </p>
           </div>
 
           <Button
@@ -116,7 +130,9 @@ export default function AdminConsultationsPage() {
             onChange={(event) => setSearchTerm(event.target.value)}
             placeholder="Search consultations"
             InputProps={{
-              startAdornment: <Search className="mr-2 h-4 w-4 text-[#76777d]" />,
+              startAdornment: (
+                <Search className="mr-2 h-4 w-4 text-[#76777d]" />
+              ),
             }}
             sx={{
               "& .MuiOutlinedInput-root": {
@@ -146,16 +162,17 @@ export default function AdminConsultationsPage() {
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {filteredConsultations.map((consultation) => {
-              const fullName = `${consultation.firstName || ""} ${consultation.lastName || ""}`.trim();
+              const fullName =
+                `${consultation.firstName || ""} ${consultation.lastName || ""}`.trim();
               const currentStatus =
-                statusOverrides[consultation._id] ||
+                statusOverrides[consultation.id] ||
                 consultation.consultationStatus ||
                 "Pending";
 
               return (
                 <article
                   className="flex h-full flex-col justify-between rounded-2xl border border-[#d3dbe5] bg-white p-5 shadow-[0_8px_24px_rgba(15,23,42,0.05)] transition hover:-translate-y-0.5"
-                  key={consultation._id}
+                  key={consultation.id}
                 >
                   <div className="space-y-4">
                     <div className="inline-flex rounded-full bg-[#ecfdf5] px-3 py-1 text-xs font-semibold text-[#006c49]">
@@ -166,19 +183,22 @@ export default function AdminConsultationsPage() {
                       <p className="flex items-start gap-2 text-sm text-[#28313d]">
                         <UserRound className="mt-0.5 h-4 w-4 text-[#607084]" />
                         <span>
-                          <span className="font-semibold">Name:</span> {fullName || "N/A"}
+                          <span className="font-semibold">Name:</span>{" "}
+                          {fullName || "N/A"}
                         </span>
                       </p>
                       <p className="flex items-start gap-2 text-sm text-[#28313d]">
                         <Mail className="mt-0.5 h-4 w-4 text-[#607084]" />
                         <span>
-                          <span className="font-semibold">Email:</span> {consultation.email || "N/A"}
+                          <span className="font-semibold">Email:</span>{" "}
+                          {consultation.email || "N/A"}
                         </span>
                       </p>
                       <p className="flex items-start gap-2 text-sm text-[#28313d]">
                         <BriefcaseBusiness className="mt-0.5 h-4 w-4 text-[#607084]" />
                         <span>
-                          <span className="font-semibold">Business:</span> {consultation.businessName || "N/A"}
+                          <span className="font-semibold">Business:</span>{" "}
+                          {consultation.businessName || "N/A"}
                         </span>
                       </p>
                     </div>
@@ -201,7 +221,10 @@ export default function AdminConsultationsPage() {
                       disabled={updatingStatus}
                       value={currentStatus}
                       onChange={(event) =>
-                        handleStatusUpdate(consultation._id, event.target.value)
+                        handleStatusUpdate({
+                          consultationId: consultation.id,
+                          consultationStatus: event.target.value,
+                        })
                       }
                       label="Consultation Status"
                     >
@@ -212,7 +235,10 @@ export default function AdminConsultationsPage() {
                       ))}
                     </TextField>
 
-                    <Link className="block" to={`/admin/consultations/${consultation._id}`}>
+                    <Link
+                      className="block"
+                      to={`/admin/consultations/${consultation.id}`}
+                    >
                       <Button
                         fullWidth
                         variant="contained"
@@ -241,7 +267,9 @@ export default function AdminConsultationsPage() {
 
         {!loadingConsultations && filteredConsultations.length === 0 && (
           <div className="rounded-2xl border border-dashed border-[#c4ceda] bg-white px-5 py-10 text-center">
-            <p className="text-sm text-[#607084]">No consultations match your search.</p>
+            <p className="text-sm text-[#607084]">
+              No consultations match your search.
+            </p>
           </div>
         )}
       </section>

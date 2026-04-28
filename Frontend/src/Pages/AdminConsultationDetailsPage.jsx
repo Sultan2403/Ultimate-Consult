@@ -18,7 +18,7 @@ export default function AdminConsultationDetailsPage() {
       return null;
     }
 
-    return data.customers.find((item) => item._id === consultationId) || null;
+    return data.customers.find((item) => item.id === consultationId) || null;
   }, [consultationId, data]);
 
   return (

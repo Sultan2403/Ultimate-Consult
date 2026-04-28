@@ -27,30 +27,24 @@ export default function useAdmin() {
     }
   }, []);
 
-  const login = useCallback(
-    (payload) => execute(() => adminApi.login(payload)),
-    [execute],
-  );
+  const methods = {
+    login: (payload) => execute(() => adminApi.login(payload)),
 
-  const getConsultations = useCallback(
-    () => execute(() => adminApi.getConsultations()),
-    [execute],
-  );
+    getConsultations: () => execute(() => adminApi.getConsultations()),
 
-  const updateConsultationStatus = useCallback(
-    ({ consultationId, consultationStatus }) =>
+    updateConsultationStatus: ({ consultationId, consultationStatus }) =>
       execute(() =>
-        adminApi.updateConsultationStatus({ consultationId, consultationStatus }),
+        adminApi.updateConsultationStatus({
+          consultationId,
+          consultationStatus,
+        }),
       ),
-    [execute],
-  );
+  };
 
   return {
     data,
     loading,
     error,
-    login,
-    getConsultations,
-    updateConsultationStatus,
+    ...methods,
   };
 }
