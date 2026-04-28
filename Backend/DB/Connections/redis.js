@@ -8,13 +8,7 @@ const redis = new Redis({
   maxRetriesPerRequest: null,
 });
 
-let error = false;
-
 redis.on("connect", () => console.log("✅ Redis Connected"));
-redis.on("error", (err) => {
-  error = true;
-  console.error("❌ Redis Connection Error:", err);
-  if (error) process.exit(1);
-});
+redis.on("error", (err) => console.error("❌ Redis Connection Error:", err, err?.message));
 
 module.exports = redis;
