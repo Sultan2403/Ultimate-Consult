@@ -1,5 +1,5 @@
 const REDIS_CONFIG = {
-  HOST: process.env.REDIS_HOST || process.env.REDIS_URL || "localhost",
+  HOST:process.env.REDIS_URL|| process.env.REDIS_HOST   || "localhost",
   PORT: process.env.REDIS_PORT || 6379,
 };
 
