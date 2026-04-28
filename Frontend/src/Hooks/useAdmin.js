@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import adminApi from "../Apis/Admin/admin.api";
 
 export default function useAdmin() {
@@ -6,7 +6,7 @@ export default function useAdmin() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const execute = useCallback(async (apiCall) => {
+  const execute = async (apiCall) => {
     setLoading(true);
     setError(null);
 
@@ -25,7 +25,7 @@ export default function useAdmin() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
   const methods = {
     login: (payload) => execute(() => adminApi.login(payload)),

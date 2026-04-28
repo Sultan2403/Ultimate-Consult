@@ -40,9 +40,10 @@ const createCustomerSchema = Joi.object({
       "string.base": "Phone number is invalid",
     }),
 
-    businessName: Joi.string().trim().required().messages({
+    businessName: Joi.string().trim().min(7).required().messages({
       "string.base": "Business name must be a string",
-      "string.empty": "Business name is string",
+      "string.empty": "Business name cannot be empty",
+      "string.min": "Business name must be at least 7 characters long",
     }),
 
     message: Joi.string().trim().required().min(50).messages({

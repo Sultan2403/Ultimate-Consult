@@ -52,6 +52,7 @@ const customerSchema = new mongoose.Schema(
     businessName: {
       type: String,
       required: true,
+      minLength: 7
     },
 
     message: {
