@@ -3,10 +3,10 @@ const featureImage =
 
 export default function FeatureBanner() {
   return (
-    <section className="bg-slate-100 px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
-      <div className="mx-auto h-[220px] w-full max-w-7xl overflow-hidden rounded-[24px] shadow-xl sm:h-[280px] lg:h-[360px]">
+    <section className="reveal-on-scroll bg-slate-100 px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
+      <div className="mx-auto h-[220px] w-full max-w-7xl overflow-hidden rounded-[24px] border border-slate-200/80 shadow-2xl sm:h-[280px] lg:h-[360px]">
         <div className="relative h-full">
-          <img src={featureImage} alt="Financial Planning" className="h-full w-full object-cover" />
+          <img src={featureImage} alt="Financial Planning" className="h-full w-full object-cover transition duration-700 hover:scale-105" />
           <div className="absolute inset-0 flex items-center justify-center bg-slate-900/55 px-8 text-center">
             <div className="max-w-2xl text-white">
               <h2 className="mb-3 text-3xl font-bold md:text-4xl">Expertise You Can Bank On</h2>

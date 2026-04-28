@@ -45,7 +45,7 @@ export default function Services_Sec() {
   return (
     <section
       id="services"
-      className="bg-slate-100 px-4 py-14 sm:px-6 lg:px-8 lg:py-24"
+      className="reveal-on-scroll bg-slate-100/80 px-4 py-14 sm:px-6 lg:px-8 lg:py-24"
     >
       <div className="mx-auto w-full max-w-7xl">
         <div className="mb-10 text-center lg:mb-16">
@@ -62,7 +62,7 @@ export default function Services_Sec() {
           {services.map((service) => (
             <article
               key={service.title}
-              className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg lg:p-8"
+              className="rounded-2xl border border-slate-100/90 bg-white/95 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-100 lg:p-8"
             >
               <div className="mb-4 inline-flex rounded-lg bg-emerald-50 p-2 text-emerald-700">
                 {service.icon}
@@ -76,7 +76,7 @@ export default function Services_Sec() {
             </article>
           ))}
 
-          <article className="rounded-2xl bg-slate-950 p-6 text-white shadow-lg lg:p-8">
+          <article className="rounded-2xl bg-slate-950 p-6 text-white shadow-lg ring-1 ring-white/10 lg:p-8">
             <h3 className="mb-5 text-2xl font-semibold">
               Why Partner With Us?
             </h3>
@@ -93,7 +93,7 @@ export default function Services_Sec() {
             </ul>
             <a
               href="#contact"
-              className="inline-flex w-full justify-center rounded-lg bg-emerald-600 px-4 py-3 text-sm font-semibold text-white"
+              className="premium-sheen inline-flex w-full justify-center rounded-lg bg-emerald-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-emerald-500"
             >
               Get Started!
             </a>
