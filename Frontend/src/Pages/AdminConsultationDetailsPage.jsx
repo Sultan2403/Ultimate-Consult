@@ -11,7 +11,7 @@ export default function AdminConsultationDetailsPage() {
 
   useEffect(() => {
     getConsultations();
-  }, [getConsultations]);
+  }, []);
 
   const consultation = useMemo(() => {
     if (!data?.customers?.length) {

@@ -32,6 +32,9 @@ export default function useAdmin() {
 
     getConsultations: () => execute(() => adminApi.getConsultations()),
 
+    getOneConsultation: (consultationId) =>
+      execute(() => adminApi.getOneConsultation(consultationId)),
+
     updateConsultationStatus: ({ consultationId, consultationStatus }) =>
       execute(() =>
         adminApi.updateConsultationStatus({
