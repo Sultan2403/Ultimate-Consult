@@ -38,8 +38,10 @@ export default function About_Sec() {
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {valueCards.map((card) => (
-            <article key={card.title} className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl lg:p-8">
-              <div className="mb-6 inline-flex rounded-2xl bg-emerald-100 p-3 text-emerald-700">{card.icon}</div>
+            <article key={card.title} className="group rounded-3xl border border-slate-100 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl lg:p-8">
+              <div className="mb-6 inline-flex rounded-2xl bg-emerald-100 p-3 text-emerald-700 transition duration-300 group-hover:scale-110 group-hover:bg-emerald-200 group-hover:text-emerald-800 group-hover:shadow-[0_0_24px_rgba(16,185,129,0.45)]">
+                {card.icon}
+              </div>
               <h3 className="mb-3 text-2xl font-semibold text-slate-900">{card.title}</h3>
               <p className="text-sm leading-relaxed text-slate-600">{card.desc}</p>
             </article>
@@ -49,8 +51,14 @@ export default function About_Sec() {
             <h3 className="mb-6 text-2xl font-semibold">Our Core Values</h3>
             <div className="grid grid-cols-2 gap-3">
               {coreValues.map((value) => (
-                <div key={value} className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center">
-                  <ShieldCheck size={16} className="mx-auto mb-2 text-emerald-400" />
+                <div
+                  key={value}
+                  className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center transition duration-300 hover:-translate-y-0.5 hover:border-emerald-300/40 hover:bg-emerald-400/10 hover:shadow-[0_0_22px_rgba(52,211,153,0.25)]"
+                >
+                  <ShieldCheck
+                    size={16}
+                    className="mx-auto mb-2 text-emerald-400 transition duration-300 hover:drop-shadow-[0_0_10px_rgba(16,185,129,0.95)]"
+                  />
                   <p className="text-xs font-semibold">{value}</p>
                 </div>
               ))}
