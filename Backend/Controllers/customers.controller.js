@@ -3,6 +3,7 @@ const {
   createCustomerWithTransaction,
   verifyConsultationAccessToken,
   updateConsultationStatus,
+  getOneConsultation
 } = require("../Services/customers.service");
 
 const verifyConsultationAccessTokenController = async (req, res) => {
@@ -108,9 +109,35 @@ const updateConsultationStatusController = async (req, res) => {
   }
 };
 
+const getOneConsultationController = async (req, res) => {
+  try {
+    const consultationId = req.params.id;
+    const result = await getOneConsultation(consultationId);
+
+    if (!result.success) {
+      return res.status(404).json({
+        success: false,
+        message: result.message,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      customer: result.customer,
+    });
+  } catch (error) {
+    console.error("Error fetching consultation:", error);
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while fetching the consultation",
+    });
+  }
+};
+
 module.exports = {
   addNewCustomer,
   getCustomers,
   verifyConsultationAccessTokenController,
   updateConsultationStatusController,
+  getOneConsultationController,
 };

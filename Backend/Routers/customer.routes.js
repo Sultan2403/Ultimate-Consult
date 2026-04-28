@@ -5,6 +5,7 @@ const {
   verifyConsultationAccessTokenController,
   getCustomers,
   updateConsultationStatusController,
+  getOneConsultationController,
 } = require("../Controllers/customers.controller");
 const {
   createCustomerSchema,
@@ -17,6 +18,7 @@ const router = express.Router();
 router.get("/verify/:token", verifyConsultationAccessTokenController);
 router.post("/", celebrate({ body: createCustomerSchema }), addNewCustomer);
 router.get("/", authMiddleware, getCustomers);
+router.get("/:id", authMiddleware, getOneConsultationController);
 router.patch(
   "/:id",
   authMiddleware,
