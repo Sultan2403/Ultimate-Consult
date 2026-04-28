@@ -49,8 +49,8 @@ export default function Header() {
     <header
       className={`fixed top-0 z-50 w-full backdrop-blur-md transition-all duration-300 ${
         scrolled
-          ? "border-b border-slate-200 bg-white/95 shadow-md"
-          : "bg-white/80"
+          ? "border-b border-slate-200/80 bg-white/90 shadow-lg shadow-slate-300/40"
+          : "bg-white/70"
       }`}
     >
       <nav className="mx-auto flex h-[68px] w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-[76px] lg:px-8">
@@ -86,7 +86,7 @@ export default function Header() {
 
         <a
           href="#contact"
-          className="hidden rounded bg-emerald-600 px-4 py-2 text-xs font-semibold text-white transition hover:bg-emerald-700 md:inline-flex lg:text-sm"
+          className="premium-sheen hidden rounded bg-emerald-600 px-4 py-2 text-xs font-semibold text-white transition hover:-translate-y-0.5 hover:bg-emerald-700 md:inline-flex lg:text-sm"
         >
           Get Consultation
         </a>

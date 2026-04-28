@@ -87,9 +87,9 @@ export default function Contact_Us() {
   return (
     <section
       id="contact"
-      className="bg-slate-100 px-4 py-14 sm:px-6 lg:px-8 lg:py-24"
+      className="reveal-on-scroll bg-slate-100 px-4 py-14 sm:px-6 lg:px-8 lg:py-24"
     >
-      <div className="mx-auto w-full max-w-7xl overflow-hidden rounded-[28px] border border-slate-100 bg-white shadow-2xl lg:flex lg:rounded-[40px]">
+      <div className="mx-auto w-full max-w-7xl overflow-hidden rounded-[28px] border border-white/70 bg-white/95 shadow-2xl shadow-slate-300/30 backdrop-blur-sm lg:flex lg:rounded-[40px]">
         <div className="bg-slate-950 p-8 text-white lg:w-[34%] lg:p-12 flex flex-col justify-center">
           <div className="max-w-sm mx-auto lg:mx-0">
             <h2 className="mb-4 text-4xl font-bold leading-tight">
@@ -246,6 +246,7 @@ export default function Contact_Us() {
               type="submit"
               variant="contained"
               fullWidth
+              className="premium-sheen"
               disabled={loading}
               sx={{
                 textTransform: "none",
