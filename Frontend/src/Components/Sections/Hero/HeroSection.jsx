@@ -3,7 +3,9 @@ const heroImage =
 
 export default function HeroSec() {
   return (
-    <section id="home" className="bg-white px-4 pb-14 pt-28 sm:px-6 lg:px-8 lg:pb-24 lg:pt-40">
+    <section id="home" className="reveal-on-scroll relative overflow-hidden bg-white px-4 pb-14 pt-28 sm:px-6 lg:px-8 lg:pb-24 lg:pt-40">
+      <div className="pointer-events-none absolute -left-24 top-24 h-72 w-72 rounded-full bg-emerald-200/30 blur-3xl" />
+      <div className="pointer-events-none absolute -right-24 bottom-12 h-64 w-64 rounded-full bg-sky-200/30 blur-3xl" />
       <div className="mx-auto grid w-full max-w-7xl items-center gap-10 lg:grid-cols-2 lg:gap-20">
         <div className="space-y-5 lg:space-y-7">
           <h1 className="text-4xl font-bold leading-tight text-black md:text-5xl">
@@ -19,7 +21,7 @@ export default function HeroSec() {
           <div className="flex flex-col gap-3 pt-2 sm:flex-row">
             <a
               href="#contact"
-              className="inline-flex items-center justify-center rounded-lg bg-emerald-600 px-7 py-3 text-sm font-semibold text-white shadow transition hover:bg-emerald-700"
+              className="premium-sheen inline-flex items-center justify-center rounded-lg bg-emerald-600 px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-800/20 transition hover:-translate-y-0.5 hover:bg-emerald-700"
             >
               Get Started Today
             </a>
@@ -32,8 +34,8 @@ export default function HeroSec() {
           </div>
         </div>
 
-        <div className="relative h-[300px] overflow-hidden rounded-2xl shadow-xl sm:h-[360px] lg:h-[540px]">
-          <img src={heroImage} alt="Professional Team Meeting" className="h-full w-full object-cover" />
+        <div className="relative h-[300px] overflow-hidden rounded-2xl border border-white/40 shadow-2xl shadow-slate-300/50 sm:h-[360px] lg:h-[540px]">
+          <img src={heroImage} alt="Professional Team Meeting" className="h-full w-full object-cover transition duration-700 hover:scale-105" />
           <div className="absolute inset-0 bg-gradient-to-tr from-slate-900/30 to-transparent" />
         </div>
       </div>
