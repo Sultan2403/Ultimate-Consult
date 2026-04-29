@@ -2,6 +2,8 @@ const customersCollection = require("../DB/Models/customers.model");
 const {
   createCustomerWithTransaction,
   verifyConsultationAccessToken,
+  updateConsultationStatus,
+  getOneConsultation
 } = require("../Services/customers.service");
 
 const verifyConsultationAccessTokenController = async (req, res) => {
@@ -57,7 +59,8 @@ const addNewCustomer = async (req, res) => {
     console.log(result?.error);
     return res.status(500).json({
       success: false,
-      message: result?.message || "An error occurred while processing your request",
+      message:
+        result?.message || "An error occurred while processing your request",
     });
   }
 
@@ -77,8 +80,64 @@ const getCustomers = async (req, res) => {
   }
 };
 
+const updateConsultationStatusController = async (req, res) => {
+  try {
+    const consultationId = req.params.id;
+    const { consultationStatus } = req.body;
+    const result = await updateConsultationStatus({
+      consultationId,
+      consultationStatus,
+    });
+
+    if (!result.success) {
+      return res.status(404).json({
+        success: false,
+        message: result.message,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      customer: result.customer,
+    });
+  } catch (error) {
+    console.error("Error updating consultation status:", error);
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while updating the consultation status",
+    });
+  }
+};
+
+const getOneConsultationController = async (req, res) => {
+  try {
+    const consultationId = req.params.id;
+    const result = await getOneConsultation(consultationId);
+
+    if (!result.success) {
+      return res.status(404).json({
+        success: false,
+        message: result.message,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      customer: result.customer,
+    });
+  } catch (error) {
+    console.error("Error fetching consultation:", error);
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while fetching the consultation",
+    });
+  }
+};
+
 module.exports = {
   addNewCustomer,
   getCustomers,
   verifyConsultationAccessTokenController,
+  updateConsultationStatusController,
+  getOneConsultationController,
 };

@@ -14,13 +14,11 @@ export default function useCustomer() {
       setData(response);
     } catch (err) {
       console.log(err);
-      setError(() => {
-        console.log(err?.response);
-        return (
-          err?.response?.data?.validation?.body?.message ||
-          err?.response?.data?.message || "An error occured."
-        );
-      });
+      setError(
+        err?.response?.data?.validation?.body?.message ||
+          err?.response?.data?.message ||
+          "An error occured.",
+      );
     } finally {
       setLoading(false);
     }

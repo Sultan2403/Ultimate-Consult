@@ -9,14 +9,19 @@ export default function useAdmin() {
   const execute = async (apiCall) => {
     setLoading(true);
     setError(null);
+
     try {
       const response = await apiCall();
       setData(response);
+      return response;
     } catch (err) {
-        setError(
-          err?.response?.data?.message ||
-            err?.response?.data?.validation?.body?.message || "An unexpected error occured",
-        );
+      const apiErrorMessage =
+        err?.response?.data?.message ||
+        err?.response?.data?.validation?.body?.message ||
+        "An unexpected error occured";
+
+      setError(apiErrorMessage);
+      throw err;
     } finally {
       setLoading(false);
     }
@@ -24,8 +29,25 @@ export default function useAdmin() {
 
   const methods = {
     login: (payload) => execute(() => adminApi.login(payload)),
+
     getConsultations: () => execute(() => adminApi.getConsultations()),
+
+    getOneConsultation: (consultationId) =>
+      execute(() => adminApi.getOneConsultation(consultationId)),
+
+    updateConsultationStatus: ({ consultationId, consultationStatus }) =>
+      execute(() =>
+        adminApi.updateConsultationStatus({
+          consultationId,
+          consultationStatus,
+        }),
+      ),
   };
 
-  return { data, loading, error, ...methods };
+  return {
+    data,
+    loading,
+    error,
+    ...methods,
+  };
 }

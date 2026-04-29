@@ -52,6 +52,7 @@ const customerSchema = new mongoose.Schema(
     businessName: {
       type: String,
       required: true,
+      minLength: 7
     },
 
     message: {
@@ -71,6 +72,15 @@ const customerSchema = new mongoose.Schema(
     strict: true,
   },
 );
+
+customerSchema.set("toJSON", {
+  transform: (doc, obj) => {
+    obj.id = obj._id.toString(); // convert ObjectId to string
+    delete obj._id; // remove internal _id
+    delete obj.__v; // remove version key
+    return obj;
+  },
+});
 
 const Customer = mongoose.model("Customer", customerSchema, "customers");
 

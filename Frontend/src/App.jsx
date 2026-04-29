@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ProtectedRoute from "./Components/ProtectedRoute";
 import Footer from "./Components/Footer/footer";
 import Header from "./Components/Header/header";
 import About_Sec from "./Components/Sections/About/about";
@@ -7,8 +8,8 @@ import Contact_Us from "./Components/Sections/Contact/contact";
 import HeroSec from "./Components/Sections/Hero/HeroSection";
 import FeatureBanner from "./Components/Sections/Mini Sections/featureBanner";
 import Services_Sec from "./Components/Sections/Services/services";
-// import ConsultationVerifyPage from "./Pages/ConsultationVerifyPage";
-// import ConsultationPaymentPage from "./Pages/ConsultationPaymentPage";
+import AdminConsultationDetailsPage from "./Pages/AdminConsultationDetailsPage";
+import AdminConsultationsPage from "./Pages/AdminConsultationsPage";
 import AdminLoginPage from "./Pages/AdminLoginPage";
 import "./App.css";
 
@@ -55,9 +56,22 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/admin/login" element={<AdminLoginPage />} />
-        {/* Consultation pages retained, but not linked from homepage for now. */}
-        {/* <Route path="/consultation/verify" element={<ConsultationVerifyPage />} />
-        <Route path="/consultation/pay" element={<ConsultationPaymentPage />} /> */}
+        <Route
+          path="/admin/consultations"
+          element={
+            <ProtectedRoute>
+              <AdminConsultationsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/consultations/:consultationId"
+          element={
+            <ProtectedRoute>
+              <AdminConsultationDetailsPage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

@@ -102,7 +102,56 @@ const verifyConsultationAccessToken = async ({ accessToken }) => {
   }
 };
 
+const updateConsultationStatus = async ({
+  consultationId,
+  consultationStatus,
+}) => {
+  try {
+    const updatedCustomer = await customersCollection.findByIdAndUpdate(
+      consultationId,
+      { consultationStatus },
+      { new: true },
+    );
+
+    if (!updatedCustomer) {
+      return {
+        success: false,
+        message: "Consultation not found",
+      };
+    }
+
+    return {
+      success: true,
+      customer: updatedCustomer,
+    };
+  } catch (error) {
+    console.error("Error updating consultation status:", error);
+    return {
+      success: false,
+      message: "An error occurred while updating the consultation status",
+    };
+  }
+};
+
+const getOneConsultation = async (consultationId) => {
+  try {
+    const customer = await customersCollection.findById(consultationId);
+    return {
+      success: true,
+      customer,
+    };
+  } catch (error) {
+    console.error("Error fetching consultation:", error);
+    return {
+      success: false,
+      message: "An error occurred while fetching the consultation",
+    };
+  }
+};
+
 module.exports = {
   createCustomerWithTransaction,
   verifyConsultationAccessToken,
+  updateConsultationStatus,
+  getOneConsultation,
 };
