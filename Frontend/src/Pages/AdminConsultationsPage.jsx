@@ -123,13 +123,13 @@ export default function AdminConsultationsPage() {
                   <div className="mb-4 flex items-center justify-between">
                     <span
                       className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold
-        ${
-          c.consultationStatus === "Completed"
-            ? "bg-green-100 text-green-700"
-            : c.consultationStatus === "Cancelled"
-              ? "bg-red-100 text-red-700"
-              : "bg-yellow-100 text-yellow-700"
-        }`}
+          ${
+            c.consultationStatus === "Completed"
+              ? "bg-green-100 text-green-700"
+              : c.consultationStatus === "Cancelled"
+                ? "bg-red-100 text-red-700"
+                : "bg-yellow-100 text-yellow-700"
+          }`}
                     >
                       {c.consultationStatus || "Pending"}
                     </span>
@@ -205,7 +205,7 @@ export default function AdminConsultationsPage() {
                       sx={{
                         textTransform: "none",
                         borderRadius: "0.65rem",
-                        fontWeight: 600,
+                        fontWeight: 500,
                         backgroundColor: "#006c49",
                         boxShadow: "none",
                         "&:hover": {

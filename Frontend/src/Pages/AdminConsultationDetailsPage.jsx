@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import {
@@ -25,17 +25,20 @@ function formatDate(date) {
 
 export default function AdminConsultationDetailsPage() {
   const { consultationId } = useParams();
-  const { data: consultation, loading, error, updateConsultationStatus, getOneConsultation } = useAdmin();
+  const { data, loading, error, updateConsultationStatus, getOneConsultation } =
+    useAdmin();
+
+  const consultation = useMemo(() => data?.customer || null, [data]);
 
   useEffect(() => {
     getOneConsultation(consultationId);
   }, [consultationId]);
 
-  const handleStatusChange = (status)=>{
-    if(status === consultation.consultationStatus) return; // no change
+  const handleStatusChange = (status) => {
+    if (status === consultation.consultationStatus) return; // no change
 
-    updateConsultationStatus({ consultationId, consultationStatus: status })
-  }
+    updateConsultationStatus({ consultationId, consultationStatus: status });
+  };
 
   return (
     <main className="min-h-screen relative bg-[#f6f8fc] overflow-hidden">
@@ -58,7 +61,7 @@ export default function AdminConsultationDetailsPage() {
               sx={{
                 textTransform: "none",
                 color: "#006c49",
-                fontWeight: 600,
+                fontWeight: 500,
                 paddingLeft: 0,
               }}
             >
@@ -89,17 +92,17 @@ export default function AdminConsultationDetailsPage() {
           {consultation && (
             <article className="rounded-2xl bg-white shadow-[0_10px_30px_rgba(15,23,42,0.08)] border border-[#e6e8ee] overflow-hidden">
               {/* HEADER */}
-              <header className="p-6 border-b bg-gradient-to-r from-white to-[#f7f9fb]">
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                  {/* IDENTITY BLOCK */}
-                  <div className="space-y-3">
+              <header className="bg-gradient-to-r from-white to-[#f7f9fb]">
+                {/* TOP INFO */}
+                <div className="p-6">
+                  <div className="grid gap-6 sm:grid-cols-2 items-start">
                     {/* NAME */}
                     <div>
                       <p className="text-xs uppercase tracking-widest text-[#9ca3af]">
                         Full Name
                       </p>
 
-                      <h1 className="text-2xl sm:text-3xl font-semibold text-[#111827] flex items-center gap-2">
+                      <h1 className="mt-2 text-2xl sm:text-3xl font-semibold text-[#111827] flex items-center gap-2">
                         <UserRound className="h-5 w-5 text-[#607084]" />
                         {`${consultation.firstName || ""} ${consultation.lastName || ""}`.trim() ||
                           "Unknown User"}
@@ -107,47 +110,77 @@ export default function AdminConsultationDetailsPage() {
                     </div>
 
                     {/* BUSINESS */}
-                    <div>
+                    {/* BUSINESS */}
+                    <div className="flex flex-col">
                       <p className="text-xs uppercase tracking-widest text-[#9ca3af]">
                         Business
                       </p>
 
-                      <p className="text-sm sm:text-base font-medium text-[#374151] flex items-center gap-2">
-                        <Building2 className="h-4 w-4 text-[#607084]" />
-                        {consultation.businessName || "No business provided"}
-                      </p>
+                      <div className="mt-2 flex items-center gap-2 min-h-[40px]">
+                        <Building2 className="h-4 w-4 text-[#607084] shrink-0" />
+
+                        <p className="text-base font-medium text-[#374151] leading-tight">
+                          {consultation.businessName || "No business provided"}
+                        </p>
+                      </div>
                     </div>
                   </div>
+                </div>
 
-                  {/* STATUS */}
-                  <div className="flex flex-col sm:items-end gap-2">
-                    <p className="text-xs uppercase tracking-widest text-[#9ca3af]">
-                      Status
-                    </p>
+                {/* DIVIDER */}
+                <div className="border-t border-[#edf0f4]" />
 
-                    <div className="flex gap-2 flex-wrap sm:justify-end">
-                      {["Pending", "Completed", "Cancelled"].map((status) => {
-                        const isActive =
-                          consultation.consultationStatus === status;
+                {/* STATUS */}
+                <div className="p-6">
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-xs uppercase tracking-widest text-[#9ca3af]">
+                          Consultation Status
+                        </p>
 
-                        const color =
-                          status === "Completed"
-                            ? "border-emerald-200 bg-emerald-100 text-emerald-700"
-                            : status === "Cancelled"
-                              ? "border-red-200 bg-red-100 text-red-700"
-                              : "border-amber-200 bg-amber-100 text-amber-800";
+                        <p className="mt-1 text-[11px] text-[#9ca3af]">
+                          Click a status to update
+                        </p>
+                      </div>
 
-                        return (
-                          <button
-                            key={status}
-                            onClick={() => handleStatusChange(status)}
-                            className={`px-3 py-1 rounded-full text-xs font-semibold border transition
-            ${isActive ? color : "bg-white text-[#6b7280] border-[#e5e7eb] hover:bg-[#f9fafb]"}`}
-                          >
-                            {status}
-                          </button>
-                        );
-                      })}
+                      <span className="text-sm font-medium text-[#374151]">
+                        {consultation.consultationStatus || "Pending"}
+                      </span>
+                    </div>
+
+                    <div className="rounded-2xl border border-[#e5e7eb] bg-[#f8fafc] p-1.5">
+                      <div className="flex flex-wrap gap-1.5">
+                        {["Pending", "Completed", "Cancelled"].map((status) => {
+                          const isActive =
+                            consultation.consultationStatus === status;
+
+                          const activeStyles =
+                            status === "Completed"
+                              ? "bg-emerald-600 text-white shadow-sm"
+                              : status === "Cancelled"
+                                ? "bg-red-600 text-white shadow-sm"
+                                : "bg-amber-500 text-white shadow-sm";
+
+                          return (
+                            <button
+                              key={status}
+                              onClick={() => handleStatusChange(status)}
+                              className={`
+                  flex-1 min-w-[100px]
+                  rounded-xl px-4 py-2 text-xs font-semibold transition-all duration-200
+                  ${
+                    isActive
+                      ? activeStyles
+                      : "text-[#6b7280] hover:bg-white hover:text-[#111827]"
+                  }
+                `}
+                            >
+                              {status}
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -160,18 +193,18 @@ export default function AdminConsultationDetailsPage() {
                     Email
                   </p>
 
+                  {/* RAW DATA FIRST */}
+                  <p className="mt-2 text-sm font-medium text-[#111827] break-all">
+                    {consultation.email || "No email provided"}
+                  </p>
+
+                  {/* ACTIONS BELOW */}
                   <a
                     href={`mailto:${consultation.email}`}
-                    className="mt-2 flex items-center justify-between rounded-lg bg-white border px-3 py-2 text-sm font-medium text-[#111827] hover:border-[#006c49] hover:text-[#006c49] transition"
+                    className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-[#006c49] hover:underline"
                   >
-                    <span className="flex items-center gap-2">
-                      <Mail className="h-4 w-4 text-[#607084]" />
-                      {consultation.email || "N/A"}
-                    </span>
-
-                    <span className="text-xs text-[#9ca3af]">
-                      Send an Email
-                    </span>
+                    <Mail className="h-4 w-4" />
+                    Send Email
                   </a>
                 </div>
 
@@ -181,18 +214,22 @@ export default function AdminConsultationDetailsPage() {
                     Phone
                   </p>
 
+                  {/* RAW DATA FIRST */}
                   {consultation.phoneNumber ? (
-                    <a
-                      href={`tel:${consultation.phoneNumber}`}
-                      className="mt-2 flex items-center justify-between rounded-lg bg-white border px-3 py-2 text-sm font-medium text-[#111827] hover:border-[#006c49] hover:text-[#006c49] transition"
-                    >
-                      <span className="flex items-center gap-2">
-                        <Phone className="h-4 w-4 text-[#607084]" />
+                    <>
+                      <p className="mt-2 text-sm font-medium text-[#111827]">
                         {consultation.phoneNumber}
-                      </span>
+                      </p>
 
-                      <span className="text-xs text-[#9ca3af]">Call</span>
-                    </a>
+                      {/* ACTION BELOW */}
+                      <a
+                        href={`tel:${consultation.phoneNumber}`}
+                        className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-[#006c49] hover:underline"
+                      >
+                        <Phone className="h-4 w-4" />
+                        Call User
+                      </a>
+                    </>
                   ) : (
                     <p className="mt-2 text-sm text-[#9ca3af]">Not provided</p>
                   )}
