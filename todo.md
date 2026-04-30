@@ -12,6 +12,7 @@
 
 ## Existing Tasks
 
+- Add dashboard url to env when site is in prod
 - Change paystack key in .env to use proper credentials before pushing to prod
 - Integrate sockets w/ frontend, confirm that backend socket logic is intact, and make sure it works ofc (IF proceeding with payments) <!-- I don't think we'll process payments after all... -->
 
