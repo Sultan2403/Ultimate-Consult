@@ -122,4 +122,4 @@ VITE_API_URL=http://localhost:5000
 
 ## 📌 Context
 
-This repository is optimized as a **project showcase with practical implementation depth**, not as a public contribution template. It is intentionally concise while still giving enough technical detail to understand and run the system.
+This repository is optimized as a **project showcase with practical implementation depth**, not as a public contribution template. It is intentionally concise while still giving enough technical detail to understand and run the system. It is also being maintained.
