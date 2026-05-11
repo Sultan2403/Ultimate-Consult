@@ -1,66 +1,125 @@
-# Ultimate Consult 📊
+# Ultimate Consult
 
-A premium full-stack consultation management platform designed for accounting firms. Streamline customer consultations, manage payments, and provide professional financial advisory services with an intuitive admin dashboard.
-
-**Live Demo:** [https://sultan2403.github.io/Ultimate-Consult/](https://sultan2403.github.io/Ultimate-Consult/)
+A full-stack consultation platform for accounting and advisory businesses — built to convert inbound interest into structured client consultations with admin-side workflow control.
 
 ---
 
-## ✨ Features
+## 🚀 Project Snapshot
 
-### 🎯 Customer-Facing Features
-- **Responsive Landing Page** - Beautiful, modern UI with smooth scrolling navigation
-- **Consultation Booking** - Integrated contact form with phone number validation
-- **Payment Integration** - Secure Paystack payment processing
-- **Service Information** - Clear presentation of advisory services and value propositions
-- **Admin Contact** - Direct communication channels (WhatsApp, Facebook)
+Ultimate Consult combines a polished client-facing site with a production-style backend stack:
 
-### 👨‍💼 Admin Features
-- **Admin Dashboard** - Comprehensive consultation management interface
-- **Consultation Management** - View and manage all customer consultations
-- **Status Updates** - Track consultation status (Pending → Completed/Cancelled)
-- **Authentication** - Secure admin login with JWT tokens
-- **Real-time Updates** - WebSocket support for live data synchronization
-
-### 🔐 Backend Capabilities
-- **RESTful API** - Well-structured Express.js backend
-- **Database** - MongoDB integration for persistent data storage
-- **Authentication** - JWT-based auth with refresh token support
-- **Email Notifications** - Nodemailer integration for customer communication
-- **Job Queue** - BullMQ for background job processing
-- **WebSocket** - Real-time client-server communication
-- **Rate Limiting** - Built-in protection against abuse
-- **Data Validation** - Celebrate.js for robust input validation
+- Marketing + contact experience for potential clients.
+- Admin dashboard for reviewing and managing consultation requests.
+- Payment-ready architecture (Paystack init + webhook verification).
+- Real backend infrastructure (MongoDB, Redis/BullMQ worker, SMTP, JWT auth, Socket.IO).
 
 ---
 
-## 🛠️ Tech Stack
+## 🧠 What makes this project strong
+
+- **End-to-end flow:** inquiry to internal admin management.
+- **Separation of concerns:** Controllers, Services, Schemas, Routes.
+- **Scalable patterns:** background jobs, token-based auth, webhooks, validation middleware.
+- **Deployable frontend pattern:** GitHub Pages-friendly router basename.
+
+---
+
+## 🛠 Tech Stack
 
 ### Frontend
-- **Framework:** React 19.2
-- **Build Tool:** Vite
-- **Styling:** Tailwind CSS + PostCSS
-- **HTTP Client:** Axios
-- **UI Components:** Material-UI (MUI)
-- **Routing:** React Router v7
-- **Real-time:** Socket.io Client
-- **Icons:** Lucide React
-- **Utilities:** JWT Decode, Phone Number Validation, Validator.js
-
-**Language Composition:** JavaScript (96.5%), CSS (2.8%), HTML (0.7%)
+- React 19
+- Vite 7
+- React Router 7
+- Tailwind CSS + MUI
+- Axios
 
 ### Backend
-- **Runtime:** Node.js
-- **Framework:** Express.js 5
-- **Database:** MongoDB (with Mongoose ODM)
-- **Authentication:** JWT, Bcrypt
-- **Email:** Nodemailer
-- **Real-time:** Socket.io
-- **Job Queue:** BullMQ + Redis (IORedis)
-- **Validation:** Celebrate.js
-- **Rate Limiting:** Express Rate Limit
-- **Development:** Nodemon
+- Node.js + Express 5
+- MongoDB + Mongoose
+- JWT + bcryptjs
+- BullMQ + Redis (ioredis)
+- Nodemailer
+- Socket.IO
+- Celebrate/Joi validation
 
 ---
 
-## 📁 Project Structure
+## ⚡ Quick Run (Minimal)
+
+```bash
+# Terminal 1
+cd Backend
+npm install
+npm run dev
+
+# Terminal 2
+cd Frontend
+npm install
+npm run dev
+```
+
+Also ensure these services are running:
+- MongoDB
+- Redis
+
+Local URLs:
+- Frontend: `http://localhost:5173`
+- Backend: `http://localhost:5000`
+
+---
+
+## 🔐 Environment Variables
+
+### `Backend/.env`
+
+```bash
+PORT=5000
+MONGO_DB_URI=mongodb://127.0.0.1:27017/ultimate_consult
+
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6379
+
+JWT_ACCESS_SECRET=replace_me
+JWT_REFRESH_SECRET=replace_me
+
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USER=replace_me
+SMTP_PASS=replace_me
+
+PAYSTACK_API_KEY=replace_me
+CLIENT_VERIFY_URL=http://localhost:5173/consultation/verify
+```
+
+### `Frontend/.env`
+
+```bash
+VITE_API_URL=http://localhost:5000
+```
+
+---
+
+## 🧭 Main Routes
+
+### Frontend
+- `/`
+- `/admin/login`
+- `/admin/consultations`
+- `/admin/consultations/:consultationId`
+
+### Backend
+- `GET /health`
+- `POST /auth/login`
+- `POST /auth/refresh`
+- `POST /customers`
+- `GET /customers` *(protected)*
+- `GET /customers/:id` *(protected)*
+- `PATCH /customers/:id` *(protected)*
+- `POST /payments`
+- `POST /webhook/paystack`
+
+---
+
+## 📌 Context
+
+This repository is optimized as a **project showcase with practical implementation depth**, not as a public contribution template. It is intentionally concise while still giving enough technical detail to understand and run the system. It is also being maintained.
