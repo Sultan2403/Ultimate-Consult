@@ -29,7 +29,7 @@ jobs:
       - name: Log Workflow Execution Parameters
         run: |
           echo "===================================================="
-          echo "🏁 Starting Manual Force Upgrade Workflow"
+          echo "🏁 Starting Manual Audit Fix Workflow"
           echo "🎯 Target Workspace: ${{ inputs.target }}"
           echo "🛡️ Force Audit Fix Enabled: ${{ inputs.force_audit_fix }}"
           echo "===================================================="
@@ -51,20 +51,14 @@ jobs:
           echo "ℹ️ NPM Version:  $(npm -v)"
 
       # ----------------------------------------------------
-      # Frontend Upgrade Step
+      # Frontend Audit Fix Step
       # ----------------------------------------------------
-      - name: Force Upgrade Frontend Dependencies
+      - name: Force Audit Fix Frontend Dependencies
         if: ${{ inputs.target == 'all' || inputs.target == 'frontend' }}
         run: |
           echo "===================================================="
-          echo "🚀 [Frontend] Starting dependency update process..."
+          echo "🚀 [Frontend] Starting audit fix process..."
           echo "===================================================="
-          
-          echo "📦 [Frontend] Running npm-check-updates (excluding tailwindcss & postcss)..."
-          npx --yes npm-check-updates -u -x tailwindcss,postcss
-          
-          echo "📥 [Frontend] Installing upgraded dependencies..."
-          npm install
           
           if [ "${{ inputs.force_audit_fix }}" = "true" ]; then
             echo "🩹 [Frontend] Running npm audit fix --force..."
@@ -80,20 +74,14 @@ jobs:
         working-directory: Frontend
 
       # ----------------------------------------------------
-      # Backend Upgrade Step
+      # Backend Audit Fix Step
       # ----------------------------------------------------
-      - name: Force Upgrade Backend Dependencies
+      - name: Force Audit Fix Backend Dependencies
         if: ${{ inputs.target == 'all' || inputs.target == 'backend' }}
         run: |
           echo "===================================================="
-          echo "🚀 [Backend] Starting dependency update process..."
+          echo "🚀 [Backend] Starting audit fix process..."
           echo "===================================================="
-          
-          echo "📦 [Backend] Running npm-check-updates to bump package.json dependencies..."
-          npx --yes npm-check-updates -u
-          
-          echo "📥 [Backend] Installing upgraded dependencies..."
-          npm install
           
           if [ "${{ inputs.force_audit_fix }}" = "true" ]; then
             echo "🩹 [Backend] Running npm audit fix --force..."
@@ -127,7 +115,7 @@ jobs:
           echo "🔍 [Git] Checking for staged changes..."
           if ! git diff --cached --quiet; then
             echo "✏️ [Git] Changes detected! Creating commit..."
-            git commit -m "chore(deps): manual force upgrade dependencies"
+            git commit -m "chore(deps): manual force audit fix dependencies"
             
             echo "🔄 [Git] Pulling latest changes from main with rebase..."
             git pull --rebase origin main
@@ -147,5 +135,5 @@ jobs:
               gh workflow run backend-ci.yml --ref main || echo "⚠️ [Dispatch] Failed to trigger Backend CI workflow."
             fi
           else
-            echo "ℹ️ [Git] No package changes detected after force update."
+            echo "ℹ️ [Git] No package changes detected after audit fix."
           fi
