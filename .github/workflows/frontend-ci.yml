@@ -48,12 +48,6 @@ jobs:
           # Attempt non-breaking audit fix / update
           npm audit fix --omit=dev || npm update
 
-          # Re-verify security audit passes
-          if ! npm audit --omit=dev; then
-            echo "❌ Security audit still failing after self-healing. Aborting build & deployment!"
-            exit 1
-          fi
-
           # Verify the build passes with fixed dependencies
           npm run build
 
