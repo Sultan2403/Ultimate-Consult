@@ -26,6 +26,14 @@ jobs:
   force-upgrade:
     runs-on: ubuntu-latest
     steps:
+      - name: Log Workflow Execution Parameters
+        run: |
+          echo "===================================================="
+          echo "🏁 Starting Manual Force Upgrade Workflow"
+          echo "🎯 Target Workspace: ${{ inputs.target }}"
+          echo "🛡️ Force Audit Fix Enabled: ${{ inputs.force_audit_fix }}"
+          echo "===================================================="
+
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
@@ -37,25 +45,38 @@ jobs:
         with:
           node-version: 24
 
-     # ----------------------------------------------------
+      - name: Log Environment Information
+        run: |
+          echo "ℹ️ Node Version: $(node -v)"
+          echo "ℹ️ NPM Version:  $(npm -v)"
+
+      # ----------------------------------------------------
       # Frontend Upgrade Step
       # ----------------------------------------------------
       - name: Force Upgrade Frontend Dependencies
         if: ${{ inputs.target == 'all' || inputs.target == 'frontend' }}
         run: |
-          echo "🚀 Force updating Frontend dependencies..."
+          echo "===================================================="
+          echo "🚀 [Frontend] Starting dependency update process..."
+          echo "===================================================="
           
           if [ "${{ inputs.force_audit_fix }}" = "true" ]; then
-            # Upgrade package.json dependencies to their latest versions (including majors)
+            echo "📦 [Frontend] Running npm-check-updates to bump package.json dependencies..."
             npx --yes npm-check-updates -u
+            
+            echo "📥 [Frontend] Running npm install..."
             npm install
-            npm audit fix --force || true
+            
+            echo "🩹 [Frontend] Running npm audit fix --force..."
+            npm audit fix --force || echo "⚠️ [Frontend] npm audit fix returned warnings or non-zero exit code (continuing)..."
           else
+            echo "🔄 [Frontend] Running standard npm update..."
             npm update
           fi
           
-          # Verify frontend build passes
+          echo "🏗️ [Frontend] Running verification build (npm run build)..."
           npm run build
+          echo "✅ [Frontend] Build finished successfully."
         working-directory: Frontend
 
       # ----------------------------------------------------
@@ -64,19 +85,27 @@ jobs:
       - name: Force Upgrade Backend Dependencies
         if: ${{ inputs.target == 'all' || inputs.target == 'backend' }}
         run: |
-          echo "🚀 Force updating Backend dependencies..."
+          echo "===================================================="
+          echo "🚀 [Backend] Starting dependency update process..."
+          echo "===================================================="
           
           if [ "${{ inputs.force_audit_fix }}" = "true" ]; then
-            # Upgrade package.json dependencies to their latest versions (including majors)
+            echo "📦 [Backend] Running npm-check-updates to bump package.json dependencies..."
             npx --yes npm-check-updates -u
+            
+            echo "📥 [Backend] Running npm install..."
             npm install
-            npm audit fix --force || true
+            
+            echo "🩹 [Backend] Running npm audit fix --force..."
+            npm audit fix --force || echo "⚠️ [Backend] npm audit fix returned warnings or non-zero exit code (continuing)..."
           else
+            echo "🔄 [Backend] Running standard npm update..."
             npm update
           fi
           
-          # Verify backend entrypoint syntax
+          echo "🔍 [Backend] Verifying server entrypoint syntax (node --check server.js)..."
           node --check server.js
+          echo "✅ [Backend] Entrypoint check finished successfully."
         working-directory: Backend
 
       # ----------------------------------------------------
@@ -86,27 +115,37 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          echo "===================================================="
+          echo "⚙️ [Git] Configuring Git bot identity..."
+          echo "===================================================="
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
+          echo "📂 [Git] Staging package files..."
           git add Frontend/package.json Frontend/package-lock.json Backend/package.json Backend/package-lock.json 2>/dev/null || true
           
+          echo "🔍 [Git] Checking for staged changes..."
           if ! git diff --cached --quiet; then
+            echo "✏️ [Git] Changes detected! Creating commit..."
             git commit -m "chore(deps): manual force upgrade dependencies"
+            
+            echo "🔄 [Git] Pulling latest changes from main with rebase..."
             git pull --rebase origin main
+            
+            echo "🚀 [Git] Pushing commit to main..."
             git push origin main
-            echo "✅ Force upgraded dependencies and pushed to main."
+            echo "✅ [Git] Successfully pushed updated dependencies to main."
             
             # Explicitly trigger downstream CI workflows so deployment happens automatically
             if [ "${{ inputs.target }}" = "all" ] || [ "${{ inputs.target }}" = "frontend" ]; then
-              echo "🔄 Triggering Frontend CI workflow..."
-              gh workflow run frontend-ci.yml --ref main || true
+              echo "🔄 [Dispatch] Triggering Frontend CI workflow (frontend-ci.yml)..."
+              gh workflow run frontend-ci.yml --ref main || echo "⚠️ [Dispatch] Failed to trigger Frontend CI workflow."
             fi
             
             if [ "${{ inputs.target }}" = "all" ] || [ "${{ inputs.target }}" = "backend" ]; then
-              echo "🔄 Triggering Backend CI workflow..."
-              gh workflow run backend-ci.yml --ref main || true
+              echo "🔄 [Dispatch] Triggering Backend CI workflow (backend-ci.yml)..."
+              gh workflow run backend-ci.yml --ref main || echo "⚠️ [Dispatch] Failed to trigger Backend CI workflow."
             fi
           else
-            echo "ℹ️ No package changes detected after force update."
+            echo "ℹ️ [Git] No package changes detected after force update."
           fi
