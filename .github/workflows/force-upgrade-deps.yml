@@ -60,18 +60,18 @@ jobs:
           echo "🚀 [Frontend] Starting dependency update process..."
           echo "===================================================="
           
+          echo "📦 [Frontend] Running npm-check-updates (excluding tailwindcss & postcss)..."
+          npx --yes npm-check-updates -u -x tailwindcss,postcss
+          
+          echo "📥 [Frontend] Installing upgraded dependencies..."
+          npm install
+          
           if [ "${{ inputs.force_audit_fix }}" = "true" ]; then
-            echo "📦 [Frontend] Running npm-check-updates to bump package.json dependencies..."
-            npx --yes npm-check-updates -u
-            
-            echo "📥 [Frontend] Running npm install..."
-            npm install
-            
             echo "🩹 [Frontend] Running npm audit fix --force..."
             npm audit fix --force || echo "⚠️ [Frontend] npm audit fix returned warnings or non-zero exit code (continuing)..."
           else
-            echo "🔄 [Frontend] Running standard npm update..."
-            npm update
+            echo "🩹 [Frontend] Running standard npm audit fix..."
+            npm audit fix || echo "⚠️ [Frontend] npm audit fix returned warnings or non-zero exit code (continuing)..."
           fi
           
           echo "🏗️ [Frontend] Running verification build (npm run build)..."
@@ -89,18 +89,18 @@ jobs:
           echo "🚀 [Backend] Starting dependency update process..."
           echo "===================================================="
           
+          echo "📦 [Backend] Running npm-check-updates to bump package.json dependencies..."
+          npx --yes npm-check-updates -u
+          
+          echo "📥 [Backend] Installing upgraded dependencies..."
+          npm install
+          
           if [ "${{ inputs.force_audit_fix }}" = "true" ]; then
-            echo "📦 [Backend] Running npm-check-updates to bump package.json dependencies..."
-            npx --yes npm-check-updates -u
-            
-            echo "📥 [Backend] Running npm install..."
-            npm install
-            
             echo "🩹 [Backend] Running npm audit fix --force..."
             npm audit fix --force || echo "⚠️ [Backend] npm audit fix returned warnings or non-zero exit code (continuing)..."
           else
-            echo "🔄 [Backend] Running standard npm update..."
-            npm update
+            echo "🩹 [Backend] Running standard npm audit fix..."
+            npm audit fix || echo "⚠️ [Backend] npm audit fix returned warnings or non-zero exit code (continuing)..."
           fi
           
           echo "🔍 [Backend] Verifying server entrypoint syntax (node --check server.js)..."
