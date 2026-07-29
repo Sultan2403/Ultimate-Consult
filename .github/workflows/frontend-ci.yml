@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths:
-      - 'Frontend/**'
-      - '.github/workflows/frontend-ci.yml'
+      - "Frontend/**"
+      - ".github/workflows/frontend-ci.yml"
   workflow_dispatch:
 
 permissions:
@@ -15,7 +15,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages-frontend"
+  group: frontend-ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -44,23 +44,23 @@ jobs:
         if: steps.try_install.outcome == 'failure'
         run: |
           echo "⚠️ Frontend CI step failed due to package/audit errors. Self-healing..."
-          
+
           # Attempt non-breaking audit fix / update
           npm audit fix --omit=dev || npm update
-          
+
           # Re-verify security audit passes
           if ! npm audit --omit=dev; then
             echo "❌ Security audit still failing after self-healing. Aborting build & deployment!"
             exit 1
           fi
-          
+
           # Verify the build passes with fixed dependencies
           npm run build
-          
+
           # Configure Git bot identity
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
+
           # Stage, commit and pull with rebase before pushing
           git add package.json package-lock.json
           if ! git diff --cached --quiet; then

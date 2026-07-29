@@ -22,6 +22,10 @@ permissions:
   contents: write
   actions: write # Needed to trigger downstream CI workflows
 
+concurrency:
+  group: force-upgrade-deps-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   force-upgrade:
     runs-on: ubuntu-latest
