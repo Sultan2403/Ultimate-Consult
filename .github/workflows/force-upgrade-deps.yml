@@ -37,7 +37,7 @@ jobs:
         with:
           node-version: 24
 
-      # ----------------------------------------------------
+     # ----------------------------------------------------
       # Frontend Upgrade Step
       # ----------------------------------------------------
       - name: Force Upgrade Frontend Dependencies
@@ -45,12 +45,12 @@ jobs:
         run: |
           echo "🚀 Force updating Frontend dependencies..."
           
-          # Always run npm update first for non-breaking minor/patch updates
-          npm update
-          
-          # Force audit fix (including major breaking changes) if selected
           if [ "${{ inputs.force_audit_fix }}" = "true" ]; then
+            # Upgrade package.json dependencies to their latest versions (including majors)
+            npx --yes npm-check-updates -u
+            npm install
             npm audit fix --force || true
+          else
             npm update
           fi
           
@@ -66,12 +66,12 @@ jobs:
         run: |
           echo "🚀 Force updating Backend dependencies..."
           
-          # Always run npm update first for non-breaking minor/patch updates
-          npm update
-          
-          # Force audit fix (including major breaking changes) if selected
           if [ "${{ inputs.force_audit_fix }}" = "true" ]; then
+            # Upgrade package.json dependencies to their latest versions (including majors)
+            npx --yes npm-check-updates -u
+            npm install
             npm audit fix --force || true
+          else
             npm update
           fi
           
