@@ -20,6 +20,7 @@ on:
 
 permissions:
   contents: write
+  actions: write # Needed to trigger downstream CI workflows
 
 jobs:
   force-upgrade:
@@ -79,9 +80,11 @@ jobs:
         working-directory: Backend
 
       # ----------------------------------------------------
-      # Commit & Push Changes
+      # Commit & Push Changes, Then Trigger Target CIs
       # ----------------------------------------------------
-      - name: Commit & Push Force Upgrades
+      - name: Commit, Push & Trigger Target CI
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -93,6 +96,17 @@ jobs:
             git pull --rebase origin main
             git push origin main
             echo "✅ Force upgraded dependencies and pushed to main."
+            
+            # Explicitly trigger downstream CI workflows so deployment happens automatically
+            if [ "${{ inputs.target }}" = "all" ] || [ "${{ inputs.target }}" = "frontend" ]; then
+              echo "🔄 Triggering Frontend CI workflow..."
+              gh workflow run frontend-ci.yml --ref main || true
+            fi
+            
+            if [ "${{ inputs.target }}" = "all" ] || [ "${{ inputs.target }}" = "backend" ]; then
+              echo "🔄 Triggering Backend CI workflow..."
+              gh workflow run backend-ci.yml --ref main || true
+            fi
           else
             echo "ℹ️ No package changes detected after force update."
           fi
