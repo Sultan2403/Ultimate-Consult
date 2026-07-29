@@ -1,0 +1,64 @@
+name: Backend CI - Self-Healing & Verification
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Backend/**'
+      - '.github/workflows/backend-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  verify-and-heal-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Try standard npm install & audit check
+        id: try_install
+        continue-on-error: true
+        run: |
+          npm ci && npm audit --omit=dev
+        working-directory: Backend
+
+      - name: Self-heal backend dependencies if audit or install failed
+        if: steps.try_install.outcome == 'failure'
+        run: |
+          echo "⚠️ Backend CI step failed due to package/audit errors. Self-healing dependencies..."
+          
+          # Attempt to fix lockfile and patch audit vulnerabilities
+          npm audit fix --omit=dev || npm update
+          
+          # Verify node syntax / entrypoint validation
+          node --check server.js
+          
+          # Configure Git bot identity
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          # Stage, commit and push changes back to main if package files modified
+          git add package.json package-lock.json
+          if ! git diff --cached --quiet; then
+            git commit -m "fix(deps-backend): auto-heal package dependencies & security audit [skip ci]"
+            git push origin main
+            echo "✅ Auto-fixed Backend package dependencies and committed to main."
+          fi
+        working-directory: Backend
+
+      - name: Verify Backend (Standard run)
+        if: steps.try_install.outcome == 'success'
+        run: |
+          node --check server.js
+        working-directory: Backend

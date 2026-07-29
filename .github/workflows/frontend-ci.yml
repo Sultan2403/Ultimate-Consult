@@ -1,0 +1,86 @@
+name: Frontend CI - Self-Healing & Deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Frontend/**'
+      - '.github/workflows/frontend-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages-frontend"
+  cancel-in-progress: true
+
+jobs:
+  build-and-heal-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Try standard install & audit check
+        id: try_install
+        continue-on-error: true
+        run: |
+          cd Frontend
+          npm ci && npm audit --omit=dev
+
+      - name: Self-heal dependencies if audit or install failed
+        if: steps.try_install.outcome == 'failure'
+        run: |
+          echo "⚠️ Frontend CI step failed due to package/audit errors. Self-healing..."
+          cd Frontend
+          
+          # Attempt to fix lockfile and patch audit vulnerabilities
+          npm audit fix --omit=dev || npm update
+          
+          # Verify the build passes with fixed dependencies
+          npm run build
+          
+          # Configure Git bot identity
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          # Stage, commit and push changes back to main if package files modified
+          git add package.json package-lock.json
+          if ! git diff --cached --quiet; then
+            git commit -m "fix(deps-frontend): auto-heal package dependencies & security audit [skip ci]"
+            git push origin main
+            echo "✅ Auto-fixed Frontend package dependencies and committed to main."
+          fi
+
+      - name: Build app (Standard run)
+        if: steps.try_install.outcome == 'success'
+        run: |
+          cd Frontend
+          npm run build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: Frontend/dist
+
+  deploy-frontend:
+    needs: build-and-heal-frontend
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
