@@ -8,7 +8,7 @@ const QUEUES = {
 };
 
 const JOBS = {
-  NOTIFICATIONS: {
+  NOTIFICATIONS: { 
     // Admin specific
     ADMIN_NEW_CONSULT: "job_admin_new_consultation",
   },
