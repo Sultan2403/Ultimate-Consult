@@ -13,8 +13,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: backend-ci-${{ github.ref }}
-  cancel-in-progress: true
+  group: global-git-push-lock-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   verify-and-heal-backend:

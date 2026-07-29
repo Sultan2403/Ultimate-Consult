@@ -15,8 +15,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: frontend-ci-${{ github.ref }}
-  cancel-in-progress: true
+  group: global-git-push-lock-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build-and-heal-frontend:
