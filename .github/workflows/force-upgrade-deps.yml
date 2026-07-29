@@ -1,0 +1,94 @@
+name: Manual Force Upgrade Dependencies
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Which workspace to upgrade?'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - frontend
+          - backend
+      force_audit_fix:
+        description: 'Force audit fix (includes breaking major updates)?'
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  force-upgrade:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # ----------------------------------------------------
+      # Frontend Upgrade Step
+      # ----------------------------------------------------
+      - name: Force Upgrade Frontend Dependencies
+        if: ${{ inputs.target == 'all' || inputs.target == 'frontend' }}
+        run: |
+          echo "🚀 Force updating Frontend dependencies..."
+          
+          # Force audit fix (including major breaking changes) if selected, or npm update
+          if [ "${{ inputs.force_audit_fix }}" = "true" ]; then
+            npm audit fix --force || npm update
+          else
+            npm update
+          fi
+          
+          # Verify frontend build passes
+          npm run build
+        working-directory: Frontend
+
+      # ----------------------------------------------------
+      # Backend Upgrade Step
+      # ----------------------------------------------------
+      - name: Force Upgrade Backend Dependencies
+        if: ${{ inputs.target == 'all' || inputs.target == 'backend' }}
+        run: |
+          echo "🚀 Force updating Backend dependencies..."
+          
+          # Force audit fix (including major breaking changes) if selected, or npm update
+          if [ "${{ inputs.force_audit_fix }}" = "true" ]; then
+            npm audit fix --force || npm update
+          else
+            npm update
+          fi
+          
+          # Verify backend entrypoint syntax
+          node --check server.js
+        working-directory: Backend
+
+      # ----------------------------------------------------
+      # Commit & Push Changes
+      # ----------------------------------------------------
+      - name: Commit & Push Force Upgrades
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          git add Frontend/package.json Frontend/package-lock.json Backend/package.json Backend/package-lock.json 2>/dev/null || true
+          
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(deps): manual force upgrade dependencies [skip ci]"
+            git pull --rebase origin main
+            git push origin main
+            echo "✅ Force upgraded dependencies and pushed to main."
+          else
+            echo "ℹ️ No package changes detected after force update."
+          fi
