@@ -67,12 +67,12 @@ jobs:
           echo "📊 [Frontend] Initial vulnerability audit report:"
           npm audit || true
           
+          echo "🩹 [Frontend] Running standard npm audit fix (safe fixes first)..."
+          npm audit fix || echo "⚠️ [Frontend] Standard npm audit fix returned warnings (continuing)..."
+          
           if [ "${{ inputs.force_audit_fix }}" = "true" ]; then
-            echo "🩹 [Frontend] Running npm audit fix --force..."
-            npm audit fix --force || echo "⚠️ [Frontend] npm audit fix returned warnings or non-zero exit code (continuing)..."
-          else
-            echo "🩹 [Frontend] Running standard npm audit fix..."
-            npm audit fix || echo "⚠️ [Frontend] npm audit fix returned warnings or non-zero exit code (continuing)..."
+            echo "🩹 [Frontend] Force audit fix enabled. Running npm audit fix --force for remaining issues..."
+            npm audit fix --force || echo "⚠️ [Frontend] npm audit fix --force returned warnings (continuing)..."
           fi
           
           echo "📊 [Frontend] Post-fix vulnerability audit report:"
@@ -96,12 +96,12 @@ jobs:
           echo "📊 [Backend] Initial vulnerability audit report:"
           npm audit || true
           
+          echo "🩹 [Backend] Running standard npm audit fix (safe fixes first)..."
+          npm audit fix || echo "⚠️ [Backend] Standard npm audit fix returned warnings (continuing)..."
+          
           if [ "${{ inputs.force_audit_fix }}" = "true" ]; then
-            echo "🩹 [Backend] Running npm audit fix --force..."
-            npm audit fix --force || echo "⚠️ [Backend] npm audit fix returned warnings or non-zero exit code (continuing)..."
-          else
-            echo "🩹 [Backend] Running standard npm audit fix..."
-            npm audit fix || echo "⚠️ [Backend] npm audit fix returned warnings or non-zero exit code (continuing)..."
+            echo "🩹 [Backend] Force audit fix enabled. Running npm audit fix --force for remaining issues..."
+            npm audit fix --force || echo "⚠️ [Backend] npm audit fix --force returned warnings (continuing)..."
           fi
           
           echo "📊 [Backend] Post-fix vulnerability audit report:"
