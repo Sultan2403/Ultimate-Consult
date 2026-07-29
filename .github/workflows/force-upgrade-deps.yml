@@ -60,6 +60,9 @@ jobs:
           echo "🚀 [Frontend] Starting audit fix process..."
           echo "===================================================="
           
+          echo "📊 [Frontend] Initial vulnerability audit report:"
+          npm audit || true
+          
           if [ "${{ inputs.force_audit_fix }}" = "true" ]; then
             echo "🩹 [Frontend] Running npm audit fix --force..."
             npm audit fix --force || echo "⚠️ [Frontend] npm audit fix returned warnings or non-zero exit code (continuing)..."
@@ -67,6 +70,9 @@ jobs:
             echo "🩹 [Frontend] Running standard npm audit fix..."
             npm audit fix || echo "⚠️ [Frontend] npm audit fix returned warnings or non-zero exit code (continuing)..."
           fi
+          
+          echo "📊 [Frontend] Post-fix vulnerability audit report:"
+          npm audit || true
           
           echo "🏗️ [Frontend] Running verification build (npm run build)..."
           npm run build
@@ -83,6 +89,9 @@ jobs:
           echo "🚀 [Backend] Starting audit fix process..."
           echo "===================================================="
           
+          echo "📊 [Backend] Initial vulnerability audit report:"
+          npm audit || true
+          
           if [ "${{ inputs.force_audit_fix }}" = "true" ]; then
             echo "🩹 [Backend] Running npm audit fix --force..."
             npm audit fix --force || echo "⚠️ [Backend] npm audit fix returned warnings or non-zero exit code (continuing)..."
@@ -90,6 +99,9 @@ jobs:
             echo "🩹 [Backend] Running standard npm audit fix..."
             npm audit fix || echo "⚠️ [Backend] npm audit fix returned warnings or non-zero exit code (continuing)..."
           fi
+          
+          echo "📊 [Backend] Post-fix vulnerability audit report:"
+          npm audit || true
           
           echo "🔍 [Backend] Verifying server entrypoint syntax (node --check server.js)..."
           node --check server.js
