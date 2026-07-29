@@ -45,8 +45,14 @@ jobs:
         run: |
           echo "⚠️ Frontend CI step failed due to package/audit errors. Self-healing..."
           
-          # Attempt to fix lockfile and patch audit vulnerabilities safely
+          # Attempt non-breaking audit fix / update
           npm audit fix --omit=dev || npm update
+          
+          # Re-verify security audit passes
+          if ! npm audit --omit=dev; then
+            echo "❌ Security audit still failing after self-healing. Aborting build & deployment!"
+            exit 1
+          fi
           
           # Verify the build passes with fixed dependencies
           npm run build
@@ -55,7 +61,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
-          # Stage, commit and pull with rebase before pushing to handle race conditions
+          # Stage, commit and pull with rebase before pushing
           git add package.json package-lock.json
           if ! git diff --cached --quiet; then
             git commit -m "fix(deps-frontend): auto-heal package dependencies & security audit [skip ci]"
