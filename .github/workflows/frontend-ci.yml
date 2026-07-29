@@ -26,6 +26,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -36,16 +37,15 @@ jobs:
         id: try_install
         continue-on-error: true
         run: |
-          cd Frontend
           npm ci && npm audit --omit=dev
+        working-directory: Frontend
 
       - name: Self-heal dependencies if audit or install failed
         if: steps.try_install.outcome == 'failure'
         run: |
           echo "⚠️ Frontend CI step failed due to package/audit errors. Self-healing..."
-          cd Frontend
           
-          # Attempt to fix lockfile and patch audit vulnerabilities
+          # Attempt to fix lockfile and patch audit vulnerabilities safely
           npm audit fix --omit=dev || npm update
           
           # Verify the build passes with fixed dependencies
@@ -55,19 +55,21 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
-          # Stage, commit and push changes back to main if package files modified
+          # Stage, commit and pull with rebase before pushing to handle race conditions
           git add package.json package-lock.json
           if ! git diff --cached --quiet; then
             git commit -m "fix(deps-frontend): auto-heal package dependencies & security audit [skip ci]"
+            git pull --rebase origin main
             git push origin main
             echo "✅ Auto-fixed Frontend package dependencies and committed to main."
           fi
+        working-directory: Frontend
 
       - name: Build app (Standard run)
         if: steps.try_install.outcome == 'success'
         run: |
-          cd Frontend
           npm run build
+        working-directory: Frontend
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

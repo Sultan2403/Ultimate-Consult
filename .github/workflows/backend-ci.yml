@@ -20,6 +20,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -38,8 +39,14 @@ jobs:
         run: |
           echo "⚠️ Backend CI step failed due to package/audit errors. Self-healing dependencies..."
           
-          # Attempt to fix lockfile and patch audit vulnerabilities
+          # Attempt non-breaking audit fix / update
           npm audit fix --omit=dev || npm update
+          
+          # Re-check audit status to prevent false positive passes when vulnerabilities remain unfixed
+          if ! npm audit --omit=dev; then
+            echo "❌ Security audit still failing after non-breaking fix. Manual review or breaking fix required."
+            exit 1
+          fi
           
           # Verify node syntax / entrypoint validation
           node --check server.js
@@ -48,10 +55,11 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
-          # Stage, commit and push changes back to main if package files modified
+          # Stage, commit and pull with rebase before pushing
           git add package.json package-lock.json
           if ! git diff --cached --quiet; then
             git commit -m "fix(deps-backend): auto-heal package dependencies & security audit [skip ci]"
+            git pull --rebase origin main
             git push origin main
             echo "✅ Auto-fixed Backend package dependencies and committed to main."
           fi
