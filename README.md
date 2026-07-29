@@ -4,7 +4,7 @@ A full-stack consultation platform for accounting and advisory businesses — bu
 
 ---
 
-## 🚀 Project Snapshot
+## 🚀 Project Snapshot 
 
 Ultimate Consult combines a polished client-facing site with a production-style backend stack:
 
