@@ -44,10 +44,12 @@ jobs:
         run: |
           echo "🚀 Force updating Frontend dependencies..."
           
-          # Force audit fix (including major breaking changes) if selected, or npm update
+          # Always run npm update first for non-breaking minor/patch updates
+          npm update
+          
+          # Force audit fix (including major breaking changes) if selected
           if [ "${{ inputs.force_audit_fix }}" = "true" ]; then
-            npm audit fix --force || npm update
-          else
+            npm audit fix --force || true
             npm update
           fi
           
@@ -63,10 +65,12 @@ jobs:
         run: |
           echo "🚀 Force updating Backend dependencies..."
           
-          # Force audit fix (including major breaking changes) if selected, or npm update
+          # Always run npm update first for non-breaking minor/patch updates
+          npm update
+          
+          # Force audit fix (including major breaking changes) if selected
           if [ "${{ inputs.force_audit_fix }}" = "true" ]; then
-            npm audit fix --force || npm update
-          else
+            npm audit fix --force || true
             npm update
           fi
           
